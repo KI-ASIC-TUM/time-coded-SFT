@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Main file for running the spiking_dft_cfar library
+Module for loading metadata and starting the simulation
 """
 # Standard libraries
 import argparse
@@ -9,7 +9,7 @@ import logging
 import pathlib
 import time
 # Local libraries
-# import snn_dft_cfar.run_dft_cfar
+import spikingFT.spiking_ft
 
 
 def parse_args():
@@ -58,16 +58,16 @@ def load_config(conf_file):
     with open(conf_file) as f:
         config_data = json.load(f)
     fname = config_data["filename"]
-    fpath = pathlib.Path(__file__).resolve().parent.joinpath(fname)
+    data_path = pathlib.Path(__file__).resolve().parent.joinpath(fname)
     #TODO: Load the configuration parameters
     # config = config_data["cfar_args"]["{}D".format(dims)]
     config = {}
-    return fpath, config
+    return data_path, config
 
 
 def conf_logger():
     # Create log folder
-    logpath = pathlib.Path(__file__).resolve().parent.joinpath("log")
+    logpath = pathlib.Path(__file__).resolve().parent.parent.joinpath("log")
     pathlib.Path(logpath).mkdir(parents=True, exist_ok=True)
     datetime = time.strftime("%Y-%m-%d %H:%M:%S")
     fdatetime = time.strftime("%Y%m%d-%H%M%S")
@@ -97,7 +97,7 @@ def run(data_path, config, show_plot):
     """
     Run the algorithm with the loaded configuration
     """
-
+    spikingFT.spiking_ft.run(data_path, config)
     return
 
 
