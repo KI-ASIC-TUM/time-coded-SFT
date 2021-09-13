@@ -1,16 +1,20 @@
 {
-    "filename": "data/BBM/scenario1/samples_ch_3.txt",
+    "datapath": "data/TI_radar",
 
-    "snn_config":
+    "config":
     {
-        "iterations": 100,
-        "mode": "dft"
-    },
+        "snn_config":
+        {
+            "iterations": 100,
+            "mode": "dft",
+            "framework": "loihi"
+        },
 
-    "data":
-    {
-        "samples_per_chirp": 64,
-        "chirps_per_frame": 1,
-        "nframes": 1
+        "data":
+        {
+            "samples_per_chirp": 64,
+            "chirps_per_frame": 1,
+            "nframes": 1
+        }
     }
 }

@@ -57,12 +57,11 @@ def load_config(conf_file):
     # Load configuaration data from local file
     with open(conf_file) as f:
         config_data = json.load(f)
-    fname = config_data["filename"]
-    data_path = pathlib.Path(__file__).resolve().parent.joinpath(fname)
-    #TODO: Load the configuration parameters
-    # config = config_data["cfar_args"]["{}D".format(dims)]
-    config = {}
-    return data_path, config
+    path = config_data["datapath"]
+    datapath = pathlib.Path(__file__).resolve().parent.parent.joinpath(path)
+    # Load the configuration parameters
+    config = config_data["config"]
+    return datapath, config
 
 
 def conf_logger():
@@ -93,11 +92,11 @@ def conf_logger():
     return logger
 
 
-def run(data_path, config, show_plot):
+def run(datapath, config, show_plot):
     """
     Run the algorithm with the loaded configuration
     """
-    spikingFT.spiking_ft.run(data_path, config)
+    spikingFT.spiking_ft.run(datapath, config)
     return
 
 
@@ -105,14 +104,14 @@ def startup(conf_file, show_plot=True):
     """
     Run the DFT and CFAR on BBM data
     """
-    data_path, config = load_config(conf_file)
+    datapath, config = load_config(conf_file)
 
     logger = conf_logger()
     init_message = "Running spiking-FT:"
     init_message += "\n- Configuration file: {}".format(conf_file)
     logger.info(init_message)
 
-    run(data_path, config, show_plot)
+    run(datapath, config, show_plot)
     logger.info("Execution finished")
     return
 
