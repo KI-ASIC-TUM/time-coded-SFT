@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
-Module one-line definition
+Module containing functions for loading data from local folder
 """
 # Standard libraries
+import logging
 import numpy as np
 import pathlib
-# Local libraries
+
+logger = logging.getLogger('spiking-FT')
 
 
 def get_source(dpath):
@@ -25,8 +27,8 @@ def bbm_get_datacube():
     """
     Read file with the BBM simulator data and arrange it in a data cube
     """
-    path = pathlib.Path(__file__).parent.parent.parent
-    filename = path.joinpath("data/BBM/samples_ch_1.txt")
+    rootpath = pathlib.Path(__file__).parent.parent.parent
+    filename = rootpath.joinpath("data/BBM/samples_ch_1.txt")
     data_cube = None
     with open(filename, "r") as f:
         data = f.readlines()
@@ -40,50 +42,70 @@ def bbm_get_datacube():
             data_cube = np.array(row_arr)
         else:
             data_cube = np.vstack((data_cube, row_arr))
-    data_cube = data_cube.transpose()
+    # Reshape the data array so it incudes nframes and nantennas (1 each)
+    nsamples, nchirps = data_cube.shape
+    data_cube = data_cube.reshape([1, nchirps, nsamples, 1])
     return data_cube
 
 
-def get_BBM_data(config):
+def ti_get_datacube():
     """
-    Load BBM datacube and collect subset based on provided config
+    Read file with the BBM simulator data and arrange it in a data cube
     """
+    rootpath = pathlib.Path(__file__).parent.parent.parent
+    filename = rootpath.joinpath("data/TI_radar/1024/corner_reflector_1.npz")
+    data_cube = np.load(filename)['arr_0']
+    return data_cube
+
+
+def get_data(source, config):
+    """
+    Load a datacube and collect a subset based on provided config
+    """
+    # Dataset dimensions limits
+    if source == "TI_sensor":
+        max_frames = 120
+        max_antennas = 8
+        max_chirps = 64
+        max_samples = 1024
+    elif source == "BBM":
+        max_frames = 1
+        max_antennas = 1
+        max_chirps = 128
+        max_samples = 1024
+    # Load configuration
     nframes = config["nframes"]
+    nantennas = config["antennas"]
     nchirps = config["chirps_per_frame"]
     nsamples = config["samples_per_chirp"]
-    # Check that provided config is compatible with BBM dataset
-    if nframes != 1:
+
+    # Check that provided config is compatible with the dataset
+    if not 1 <= nframes <= max_frames:
         err_msg = "Invalid number of frames: {}. ".format(nframes)
-        err_msg += "BBM dataset only contains 1 frame"
+        err_msg += "Maximum amount of frames is {}".format(max_frames)
         raise ValueError(err_msg)
-    if not 1 <= nchirps <= 128:
+    if not 1 <= nantennas <= max_antennas:
+        err_msg = "Invalid number of antennas: {}. ".format(nantennas)
+        err_msg += "Maximum amount of antennas is {}".format(max_antennas)
+        raise ValuError(err_msg)
+    if not 1 <= nchirps <= max_chirps:
         err_msg = "Invalid number of chirps: {}. ".format(nchirps)
-        err_msg += "Amount of chirps must be between 1 and 128"
+        err_msg += "Maximum amount of chirps is {}".format(max_chirps)
         raise ValueError(err_msg)
-    if not 1 <= nsamples <= 1024:
+    if not 1 <= nsamples <= max_samples:
         err_msg = "Invalid number of samples per chirp: {}. ".format(nsamples)
-        err_msg += "Samples per chirp must be between 1 and 1024"
+        err_msg += "Maximum amount of samples is {}".format(max_samples)
         raise ValueError(err_msg)
-    # Load BBM datacube and collect the required amount of data
-    datacube = bbm_get_datacube()
-    data = datacube[:nchirps, :nsamples]
-    return data
 
-
-def get_TI_data(config):
-    """
-    Load a TI datacube and collect a subset based on provided config
-    """
-    raise NotImplementedError
-    data = None
-    return data
-
-
-def get_data(dpath, source, config):
+    # Load the data from corresponding sensor
     if source == "TI_sensor":
-        data = get_TI_data(config)
+        datacube = ti_get_datacube()
     elif source == "BBM":
-        data = get_BBM_data(config)
+        datacube = bbm_get_datacube()
+    data = datacube[:nframes, :nchirps, :nsamples, :nantennas]
+    msg = "Data loaded:\n- Source: {}\n- Nº frames: {}".format(source, nframes)
+    msg += "\n- Nº chirps: {}\n- Nº samples: {}".format(nchirps, nsamples)
+    logger.info(msg)
     return data
 
 
@@ -92,6 +114,5 @@ def load(dpath, config):
     Load the data from the provided path
     """
     source = get_source(dpath)
-    data = get_data(dpath, source, config)
-
+    data = get_data(source, config)
     return data

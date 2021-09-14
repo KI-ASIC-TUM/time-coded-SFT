@@ -14,6 +14,7 @@
         {
             "samples_per_chirp": 1024,
             "chirps_per_frame": 1,
+            "antennas": 1,
             "nframes": 1
         }
     }
