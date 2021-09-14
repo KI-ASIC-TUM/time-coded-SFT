@@ -96,8 +96,9 @@ def run(datapath, config, show_plot):
     """
     Run the algorithm with the loaded configuration
     """
-    spikingFT.spiking_ft.run(datapath, config)
-    return
+    sim_handler = spikingFT.spiking_ft.SimHandler(datapath, config)
+    sim_handler.run()
+    return sim_handler
 
 
 def startup(conf_file, show_plot=True):
@@ -111,9 +112,9 @@ def startup(conf_file, show_plot=True):
     init_message += "\n- Configuration file: {}".format(conf_file)
     logger.info(init_message)
 
-    run(datapath, config, show_plot)
+    sim_handler = run(datapath, config, show_plot)
     logger.info("Execution finished")
-    return
+    return sim_handler
 
 
 if __name__ == "__main__":

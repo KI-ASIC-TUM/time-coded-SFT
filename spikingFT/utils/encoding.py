@@ -110,9 +110,9 @@ class TimeEncoder(Encoder):
         """
         super().__init__()
         # Store encoder parameteres
-        self.t_min = kwargs["t_min"]
+        self.t_min = kwargs.get("t_min", 0)
         self.t_max = kwargs["t_max"]
-        self.x_min = kwargs["x_min"]
+        self.x_min = kwargs.get("x_min", 0)
         self.x_max = kwargs["x_max"]
 
         # Initialize encoder parameters
