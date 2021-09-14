@@ -1,5 +1,5 @@
 {
-    "datapath": "data/TI_radar",
+    "datapath": "data/BBM",
 
     "config":
     {
@@ -12,7 +12,7 @@
 
         "data":
         {
-            "samples_per_chirp": 64,
+            "samples_per_chirp": 1024,
             "chirps_per_frame": 1,
             "nframes": 1
         }

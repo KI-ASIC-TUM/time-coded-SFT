@@ -12,13 +12,14 @@ import spikingFT.utils.load_data
 logger = logging.getLogger('spiking-FT')
 
 
-def get_data(datapath):
+def get_data(datapath, config):
     """
     Load the simulation data from the specified path
     """
     logger.info("Loading data")
 
-    data = spikingFT.utils.load_data.load(datapath)
+    sensor_config = config["data"]
+    data = spikingFT.utils.load_data.load(datapath, sensor_config)
     return data
 
 
@@ -62,7 +63,7 @@ def run(datapath, config):
     Routine for initializing and running the SNN with the desired params
     """
     # Load encoded data
-    data = get_data(datapath)
+    data = get_data(datapath, config)
     # Instantiate the snn class with the specified configuration
     snn = initialize_snn(config)
     # Run the SNN with the collected data
