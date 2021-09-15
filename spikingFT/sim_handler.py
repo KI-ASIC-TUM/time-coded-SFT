@@ -25,6 +25,7 @@ class SimHandler():
         self.config = config
         self.data = None
         self.encoded_data = None
+        self.output = None
         self.snn = None
 
     def get_data(self):
@@ -41,7 +42,8 @@ class SimHandler():
         """
         Encode sensor data using TTFS method. Range is defined by config
         """
-        sim_time = self.config["snn_config"]["iterations"]
+        logger.info("Encoding data to spikes")
+        sim_time = self.config["snn_config"]["sim_time"]
         encoder = spikingFT.utils.encoding.TimeEncoder(t_max=sim_time,
                                                        x_max=self.data.max()
                                                       )
@@ -52,13 +54,18 @@ class SimHandler():
         """
         Instantiation SNN simulation class and initialize its configuration
         """
-        logger.info("Initializaing SNN simulation")
+        logger.info("Initializing SNN simulation")
 
-        framework = self.config["snn_config"]["framework"]
+        # Parse and edit the SNN configuration with required parameters
+        snn_config = self.config["snn_config"]
+        snn_config["nsamples"] = self.config["data"]["samples_per_chirp"]
+
+        # Parse the simulation framework and instantiate the corresponding class
+        framework = snn_config["framework"]
         if framework == "loihi":
-            snn = spikingFT.models.snn_loihi.SNNLoihi()
+            snn = spikingFT.models.snn_loihi.SNNLoihi(**snn_config)
         elif framework == "brian":
-            snn = spikingFT.models.snn_brian.SNNBrian()
+            snn = spikingFT.models.snn_brian.SNNBrian(**snn_config)
         else:
             raise ValueError(
                     "Invalid simulation framework: {}".format(framework)
@@ -69,18 +76,20 @@ class SimHandler():
         """
         Parse SNN output, generate plots, and save results
         """
-        return
+        logger.info("Parsing results of SNN simulation")
+        return result
 
     def run_snn(self):
         """
         Execute the SNN simulation by feeding the provided data
         """
         logger.info("Running SNN simulation")
-
-        # result = snn.run(data)
-        result = None
-        self.parse_results(result)
-        return
+        output = []
+        result = []
+        for frame in range(self.config["data"]["nframes"]):
+            output.append(self.snn.simulate(self.encoded_data[frame]))
+            result.append(self.parse_results(output))
+        return result
 
     def run(self):
         """
@@ -88,9 +97,10 @@ class SimHandler():
         """
         # Load encoded data
         self.data = self.get_data()
-        self.encoded_data = self.encode_data()
+        # Reduce data dimensionality, by ignoring chirp and antenna dimensions
+        self.encoded_data = self.encode_data()[:, 0, :, 0]
         # Instantiate the snn class with the specified configuration
         self.snn = self.initialize_snn()
         # Run the SNN with the collected data
-        self.run_snn()
-        return
+        self.output = self.run_snn()
+        return self.output[0]

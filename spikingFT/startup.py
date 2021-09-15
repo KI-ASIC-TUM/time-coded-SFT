@@ -9,7 +9,7 @@ import logging
 import pathlib
 import time
 # Local libraries
-import spikingFT.spiking_ft
+import spikingFT.sim_handler
 
 
 def parse_args():
@@ -85,7 +85,7 @@ def conf_logger():
 
     # Create console handler
     stream_handler = logging.StreamHandler()
-    stream_handler.setLevel(logging.INFO)
+    stream_handler.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(levelname)s: %(message)s')
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
@@ -96,7 +96,7 @@ def run(datapath, config, show_plot):
     """
     Run the algorithm with the loaded configuration
     """
-    sim_handler = spikingFT.spiking_ft.SimHandler(datapath, config)
+    sim_handler = spikingFT.sim_handler.SimHandler(datapath, config)
     sim_handler.run()
     return sim_handler
 
@@ -108,9 +108,13 @@ def startup(conf_file, show_plot=True):
     datapath, config = load_config(conf_file)
 
     logger = conf_logger()
-    init_message = "Running spiking-FT:"
-    init_message += "\n- Configuration file: {}".format(conf_file)
-    logger.info(init_message)
+    msg = "Running spiking-FT:"
+    msg += "\n- Configuration file: {}".format(conf_file)
+    msg += "\n- FT mode: {}".format(config["snn_config"]["mode"])
+    msg += "\n- Framework: {}".format(config["snn_config"]["framework"])
+    msg += "\n- Test performance: {}".format(config["snn_config"]["measure_performance"])
+    msg += "\n- Nº Samples: {}".format(config["data"]["samples_per_chirp"])
+    logger.info(msg)
 
     sim_handler = run(datapath, config, show_plot)
     logger.info("Execution finished")
