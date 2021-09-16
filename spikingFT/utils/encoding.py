@@ -145,7 +145,7 @@ class TimeEncoder(Encoder):
         self.scale_factor = time_range / value_range
         return
 
-    def run(self, values):
+    def encode(self, values):
         """
         Returns the time encoding of the value(s)
 
@@ -155,5 +155,15 @@ class TimeEncoder(Encoder):
 
         @param values: np.array / float / double to encode
         """
-        self.spike_trains = self.t_max - (values-self.x_min) * self.scale_factor
+        encoded = self.t_max - (values-self.x_min) * self.scale_factor
+        return encoded
+
+    def run(self, values):
+        if values.dtype == "complex64":
+            encoded_real = self.encode(values.real)
+            encoded_imag = self.encode(values.imag)
+            self.spike_trains = encoded_imag * 1j
+            self.spike_trains += encoded_real
+        else:
+            self.spike_trains = self.encode(values).astype(np.complex64)
         return self.spike_trains

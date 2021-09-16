@@ -89,7 +89,8 @@ class SimHandler():
         for frame in range(self.config["data"]["nframes"]):
             output.append(self.snn.simulate(self.encoded_data[frame]))
             result.append(self.parse_results(output))
-        return result
+        # Return first frame
+        return result[0]
 
     def run(self):
         """
@@ -103,4 +104,4 @@ class SimHandler():
         self.snn = self.initialize_snn()
         # Run the SNN with the collected data
         self.output = self.run_snn()
-        return self.output[0]
+        return self.output

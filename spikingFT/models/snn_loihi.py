@@ -256,7 +256,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
 
     def simulate(self, data):
         # Create spike generators and connect them to compartments
-        self.connect_inputs(data, data)
+        self.connect_inputs(data.real, data.imag)
         # Instantiate measurement probes
         if self.measure_performance:
             network.performance_profiling()
