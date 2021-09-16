@@ -92,7 +92,7 @@ def conf_logger():
     return logger
 
 
-def run(datapath, config, show_plot):
+def run(datapath, config):
     """
     Run the algorithm with the loaded configuration
     """
@@ -116,7 +116,7 @@ def startup(conf_file, show_plot=True):
     msg += "\n- Nº Samples: {}".format(config["data"]["samples_per_chirp"])
     logger.info(msg)
 
-    sim_handler = run(datapath, config, show_plot)
+    sim_handler = run(datapath, config)
     logger.info("Execution finished")
     return sim_handler
 

@@ -172,6 +172,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
                                spikeTimes=[real_encoded_data[i]])
             imag_gen.addSpikes(spikeInputPortNodeIds=i,
                                spikeTimes=[imag_encoded_data[i]])
+        return
 
 
     def init_snip(self):
@@ -235,16 +236,16 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
                 binSize=2)
         )
 
-
-    def run(self, spiking_stage_bias=1000):
+    def run(self):
+        charging_stage_bias = int(self.TH_MANT*2/self.sim_time)
         logger.debug("Running simulation")
         # Write bias value during charging stage to the corresponding channel
-        self.bias_channel.write(1, [spiking_stage_bias])
+        self.bias_channel.write(1, [charging_stage_bias])
         # Run charging stage
         self.board.run(self.sim_time*2, aSync=True)
         # Run spiking stage
-        charging_stage_bias = np.zeros(2, int)
-        for bias in charging_stage_bias[1:]:
+        spiking_stage_bias = np.zeros(2, int)
+        for bias in spiking_stage_bias[1:]:
             self.time_channel.read(1)[0]
             self.bias_channel.write(1, [bias])
         # Finish and disconnect
@@ -256,7 +257,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
 
     def simulate(self, data):
         # Create spike generators and connect them to compartments
-        self.connect_inputs(data.real, data.imag)
+        self.connect_inputs(data.real, data.real)
         # Instantiate measurement probes
         if self.measure_performance:
             network.performance_profiling()

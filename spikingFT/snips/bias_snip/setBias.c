@@ -3,7 +3,7 @@
 #include "setBias.h"
 
 // need to be set
-#define SIM_TIME 100
+#define SIM_TIME 200
 #define N_SAMPLES 64
 
 // really constant constant
