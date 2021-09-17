@@ -4,6 +4,7 @@ Module containing a class for implementing the S-FT in Loihi
 """
 # Standard libraries
 import logging
+logger = logging.getLogger('spiking-FT')
 import numpy as np
 import pathlib
 # Local libraries
@@ -14,7 +15,6 @@ except ImportError:
                 "It will not be possible to run simulations with Loihi")
 import spikingFT.models.snn
 
-logger = logging.getLogger('spiking-FT')
 
 
 class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
@@ -236,7 +236,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
                 binSize=2)
         )
 
-    def run(self):
+    def simulate(self):
         charging_stage_bias = int(self.TH_MANT*2/self.sim_time)
         logger.debug("Running simulation")
         # Write bias value during charging stage to the corresponding channel
@@ -255,7 +255,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         self.board.disconnect()
 
 
-    def simulate(self, data):
+    def run(self, data):
         # Create spike generators and connect them to compartments
         self.connect_inputs(data.real, data.real)
         # Instantiate measurement probes
@@ -263,7 +263,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             network.performance_profiling()
         self.init_snip()
         # Run the network
-        self.run()
+        self.simulate()
 
         voltage_probes = (self.l1_real_probes_V[0], self.l1_imag_probes_V[0])
         spike_probes = (self.l1_real_probes_S[0], self.l1_imag_probes_S[0])

@@ -19,16 +19,16 @@ def twiddle_factor(k,N, type='exp'):
     return twiddle_factor
 
 
-def normalize(weights, method):
+def normalize(weights, platform):
     """
     Normalize the weights for computing the 1-D FT
     """
-    if method == "traditional":
+    if platform in ("brian", "numpy"):
         weights /= weights.size
-    if method == "loihi":
+    if platform == "loihi":
         correction_coef = 127 / weights.max()
-        weights_normalized = np.rint(weights * correction_coef)
-    return weights_normalized*2
+        weights = np.rint(weights * correction_coef)*2
+    return weights
 
 
 def dft_connection_matrix(nsamples, platform):

@@ -7,6 +7,7 @@ import logging
 # Local libraries
 import spikingFT.models.snn_brian
 import spikingFT.models.snn_loihi
+import spikingFT.models.snn_numpy
 import spikingFT.utils.load_data
 import spikingFT.utils.encoding
 
@@ -68,10 +69,10 @@ class SimHandler():
             snn = spikingFT.models.snn_loihi.SNNLoihi(**snn_config)
         elif framework == "brian":
             snn = spikingFT.models.snn_brian.SNNBrian(**snn_config)
+        elif framework == "numpy":
+            snn = spikingFT.models.snn_numpy.SNNNumpy(**snn_config)
         else:
-            raise ValueError(
-                    "Invalid simulation framework: {}".format(framework)
-                    )
+            raise ValueError("Invalid framework: {}".format(framework))
         return snn
 
     def parse_results(self, result):
@@ -89,7 +90,7 @@ class SimHandler():
         output = []
         result = []
         for frame in range(self.config["data"]["nframes"]):
-            output.append(self.snn.simulate(self.encoded_data[frame]))
+            output.append(self.snn.run(self.encoded_data[frame]))
             result.append(self.parse_results(output))
         # Return first frame
         return result[0]
