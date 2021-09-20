@@ -12,6 +12,82 @@ import spikingFT.models.snn
 logger = logging.getLogger('S-DFT S-CFAR')
 
 
+class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
+    PLATFORM = "numpy"
+
+    def __init__(self, **kwargs):
+        """
+        Initialize class
+        """
+        super().__init__(**kwargs)
+
+        # SNN simulation parameters
+        self.current_time = 0
+        self.sim_time = kwargs.get("sim_time")
+        self.sim_time = 5
+        self.time_step = 0.001
+        # Neuron properties
+        self.v_threshold = 0.002
+        # Network variables
+        self.n_chirps = 1
+        self.n_input =  kwargs.get("nsamples")
+        self.spikes = np.zeros((self.n_input, 2*self.n_chirps))
+        self.voltage = np.zeros((int(2*self.sim_time/self.time_step), self.n_input, 2*self.n_chirps))
+        self.l1 = self.init_compartments()
+
+    def init_compartments(self):
+        """
+        Initializes compartments depending on the number of samples
+        """
+        l1 = SpikingNeuralLayer(
+                (self.nsamples, 2*self.n_chirps),
+                (self.real_weights, self.imag_weights),
+                v_threshold=self.v_threshold,
+                time_step=self.time_step
+        )
+        return l1
+
+    def simulate(self, spike_trains):
+        logger.info("Layer 1: Charging stage")
+        # Charging stage of layer 1
+        while self.current_time <= self.sim_time:
+            causal_neurons = (spike_trains < self.current_time).reshape(
+                    (self.n_chirps, self.nsamples)
+                )
+            out_l1 = self.l1.update_state(causal_neurons) * self.current_time
+            self.voltage[int(self.current_time/self.time_step)] = self.l1.v_membrane
+            self.spikes += out_l1
+            self.current_time += self.time_step
+
+        logger.info("Layer 1: Spiking stage")
+        # Spiking stage
+        self.l1.bias = 2*self.v_threshold / self.sim_time
+        causal_neurons = np.zeros_like(causal_neurons)
+        while self.current_time <= 2*self.sim_time:
+            relative_time = self.current_time - self.sim_time
+            out_l1 = self.l1.update_state(causal_neurons)
+            self.spikes += out_l1 * (relative_time)
+            self.voltage[int(self.current_time/self.time_step)] = self.l1.v_membrane
+            self.current_time += self.time_step
+
+        # All neurons that didn't spike are forced to spike in the last step,
+        # since the spike-time of 1 corresponds to the lowest possible value.
+        self.spikes = np.where(self.spikes == 0, 1.5*self.sim_time, self.spikes)
+        self.spikes = self.sim_time - self.spikes
+        self.spikes -= 0.5*self.sim_time
+        return self.spikes
+
+    def run(self, spike_trains):
+        """
+        Main routine for running the simulation
+        """
+        spike_trains = spike_trains.real
+        logging.info("Running the NumPy TTFS Spiking-DFT")
+
+        self.simulate(spike_trains)
+        return self.spikes
+
+
 class SpikingNeuralLayer():
     """
     Class for implementing a single spiking-DFT neural layer
@@ -84,78 +160,3 @@ class SpikingNeuralLayer():
         out_spikes = self.generate_spikes()
         return out_spikes
 
-
-class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
-    PLATFORM = "numpy"
-
-    def __init__(self, **kwargs):
-        """
-        Initialize class
-        """
-        super().__init__(**kwargs)
-
-        # SNN simulation parameters
-        self.current_time = 0
-        self.sim_time = kwargs.get("sim_time")
-        self.sim_time = 5
-        self.time_step = 0.001
-        # Neuron properties
-        self.v_threshold = 0.1
-        # Network variables
-        self.n_chirps = 1
-        self.n_input =  kwargs.get("nsamples")
-        self.spikes = np.zeros((self.n_input, 2*self.n_chirps))
-        self.voltage = np.zeros((int(2*self.sim_time), self.n_input, 2*self.n_chirps))
-        self.l1 = self.init_compartments()
-
-    def init_compartments(self):
-        """
-        Initializes compartments depending on the number of samples
-        """
-        l1 = SpikingNeuralLayer(
-                (self.nsamples, 2*self.n_chirps),
-                (self.real_weights, self.imag_weights),
-                v_threshold=self.v_threshold,
-                time_step=self.time_step
-        )
-        return l1
-
-    def simulate(self, spike_trains):
-        logger.info("Layer 1: Charging stage")
-        # Charging stage of layer 1
-        while self.current_time <= self.sim_time:
-            causal_neurons = (spike_trains < self.current_time).reshape(
-                    (self.n_chirps, self.nsamples)
-                )
-            out_l1 = self.l1.update_state(causal_neurons) * self.current_time
-            self.voltage[int(self.current_time)] = self.l1.v_membrane
-            self.spikes += out_l1
-            self.current_time += self.time_step
-
-        logger.info("Layer 1: Spiking stage")
-        # Spiking stage
-        self.l1.bias = 2 * self.v_threshold
-        causal_neurons = np.zeros_like(causal_neurons)
-        while self.current_time <= 2*self.sim_time:
-            relative_time = self.current_time - self.sim_time
-            out_l1 = self.l1.update_state(causal_neurons)
-            self.spikes += out_l1 * (relative_time)
-            self.voltage[int(self.current_time)] = self.l1.v_membrane
-            self.current_time += self.time_step
-
-        # All neurons that didn't spike are forced to spike in the last step,
-        # since the spike-time of 1 corresponds to the lowest possible value.
-        self.spikes = np.where(self.spikes == 0, 1.5*self.sim_time, self.spikes)
-        self.spikes = self.sim_time - self.spikes
-        self.spikes -= 0.5*self.sim_time
-        return self.spikes
-
-    def run(self, spike_trains):
-        """
-        Main routine for running the simulation
-        """
-        spike_trains = spike_trains.real
-        logging.info("Running the NumPy TTFS Spiking-DFT")
-
-        self.simulate(spike_trains)
-        return self.spikes
