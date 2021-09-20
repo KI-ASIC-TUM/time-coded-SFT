@@ -4,12 +4,15 @@ Module for initializing and launching the SNN simulation
 """
 # Standard libraries
 import logging
+import numpy as np
 # Local libraries
 import spikingFT.models.snn_brian
 import spikingFT.models.snn_loihi
 import spikingFT.models.snn_numpy
 import spikingFT.utils.load_data
 import spikingFT.utils.encoding
+import spikingFT.utils.metrics
+
 
 logger = logging.getLogger('spiking-FT')
 
@@ -28,6 +31,7 @@ class SimHandler():
         self.encoded_data = None
         self.output = None
         self.snn = None
+        self.performance = {}
 
     def get_data(self):
         """
@@ -95,6 +99,20 @@ class SimHandler():
         # Return first frame
         return result[0]
 
+    def test(self):
+        """
+        Measure the accuracy of the network
+
+        numpy.fft library is used as reference for the error metrics
+        """
+        # Get reference FT result from NumPy
+        ft_np = np.fft.fft(self.data[0, 0, :, 0])
+        ft_np_modulus = np.abs(ft_np)[1:int(self.snn.nsamples/2)]
+        rmse = spikingFT.utils.metrics.get_rmse(self.output, ft_np_modulus)
+        self.performance["rmse"] = rmse
+        import pdb; pdb.set_trace()
+        return self.performance
+
     def run(self):
         """
         Routine for initializing and running the SNN with the desired params
@@ -107,4 +125,5 @@ class SimHandler():
         self.snn = self.initialize_snn()
         # Run the SNN with the collected data
         self.output = self.run_snn()
+        self.test()
         return self.output
