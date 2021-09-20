@@ -61,6 +61,13 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         super().__init__(**kwargs)
         self.current_decay = kwargs.get("current_decay")
         self.measure_performance = kwargs.get("measure_performance", False)
+        # Warn user in case that specified time step is different than "1"
+        t_step = kwargs.get("time_step")
+        if t_step != 1:
+            logger.warn(
+                "Loihi only admits unitary time steps. "
+                "The provided value will be ignored: {}".format(t_step)
+            )
 
         # Initialize NETWORK and COMPARTMENTS
         self.net = nx.NxNet()
