@@ -96,6 +96,10 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         )
         self.et_probe = None
         self.e_probe = None
+        # Network variables
+        self.n_chirps = 1
+        self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
+        self.voltage = np.zeros((2*self.sim_time, self.nsamples, 2*self.n_chirps))
         return
 
 
@@ -260,6 +264,15 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         self.board.finishRun()
         self.board.disconnect()
 
+    def parse_probes(self):
+        self.voltage[:, :, 0] = self.l1_real_probes_V[0].data.transpose()
+        self.voltage[:, :, 1] = self.l1_imag_probes_V[0].data.transpose()
+        spikes = np.zeros_like(self.voltage)
+        real_spikes = np.argmax(self.l1_real_probes_S[0].data, axis=1)
+        imag_spikes = np.argmax(self.l1_imag_probes_S[0].data, axis=1)
+        self.spikes[:, 0] = real_spikes
+        self.spikes[:, 1] = imag_spikes
+        self.spikes = 1.5*self.sim_time - self.spikes
 
     def run(self, data):
         # Create spike generators and connect them to compartments
@@ -271,7 +284,5 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         # Run the network
         self.simulate()
 
-        voltage_probes = (self.l1_real_probes_V[0], self.l1_imag_probes_V[0])
-        spike_probes = (self.l1_real_probes_S[0], self.l1_imag_probes_S[0])
-        self.output = (voltage_probes, spike_probes)
-        return self.output
+        self.parse_probes()
+        return self.spikes

@@ -10,7 +10,7 @@ import spikingFT.startup
 import spikingFT.utils. plotter
 
 
-def single_run_experiment(conf_filename="../config/test_experiment.json")
+def single_run_experiment(conf_filename="../config/test_experiment.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     nsamples = sim_handler.snn.nsamples
@@ -44,11 +44,15 @@ def single_run_experiment(conf_filename="../config/test_experiment.json")
     ]
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
     error_plotter()
+    return
 
-def sim_times_experiment(conf_filename="../config/test_experiment_simtimes.json")
+def sim_times_experiment(conf_filename="../config/test_experiment_simtimes.json"):
+
+    return
 
 def main():
     single_run_experiment()
+    sim_times_experiment()
 
 
 if __name__ == "__main__":
