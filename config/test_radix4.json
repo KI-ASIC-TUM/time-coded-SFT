@@ -1,0 +1,23 @@
+{
+    "datapath": "data/BBM",
+
+    "config":
+    {
+        "snn_config":
+        {
+            "sim_time": 8,
+            "mode": "fft",
+            "framework": "radix4loihi",
+            "current_decay": 0,
+            "measure_performance": false
+        },
+
+        "data":
+        {
+            "samples_per_chirp": 64,
+            "chirps_per_frame": 1,
+            "antennas": 1,
+            "nframes": 1
+        }
+    }
+}

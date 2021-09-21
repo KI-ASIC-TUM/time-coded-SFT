@@ -92,9 +92,9 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         core_distribution_factor = int(self.nsamples/64)
         
         l_g = [] # nlayers list of compartment groups
-        l = []
-        g = self.net.createCompartmentGroup()
-        for n in range(nlayers):
+        for n in range(self.nlayers):
+            l = []
+            g = self.net.createCompartmentGroup()
             logger.debug('Creating CompartmentPrototypes of Layer {0} ...'.format(n))
             for i in range(self.nsamples*2):
                 l_p = nx.CompartmentPrototype(
@@ -103,12 +103,12 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
                     compartmentVoltageDecay=0,
                     functionalState=nx.COMPARTMENT_FUNCTIONAL_STATE.IDLE,
                     logicalCoreId=int(i/core_distribution_factor) +
-                     n*int(nsamples*2/core_distribution_factor),
+                     n*int(self.nsamples*2/core_distribution_factor),
                     refractoryDelay=self.REFRACTORY_T
                 )
-                g.append(self.net.createCompartment(prototype=l_p))
-            l.addCompartments(g)
-            l_g.append(l)
+                l.append(self.net.createCompartment(prototype=l_p))
+            g.addCompartments(l)
+            l_g.append(g)
 
         logger.debug('Done.')
 
@@ -127,7 +127,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         l_probes_V = []
         l_probes_S = []
 
-        for n in range(nlayers):
+        for n in range(self.nlayers):
             logger.debug('Creating Probes of Layer {0} ...'.format(n))
             l_probes_V.append(self.l_g[n].probe(nx.ProbeParameter.COMPARTMENT_VOLTAGE,
                 probeConditions=None))
@@ -151,7 +151,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         encoded_data = np.hstack([real_encoded_data, imag_encoded_data])
 
-        gen = self.net.createSpikeGenProcess(numPorts=self.nsamples)
+        gen = self.net.createSpikeGenProcess(numPorts=self.nsamples*2)
         
         # Specify spiking time of each generator
         logger.debug("Assigning spike times to input spike generators")
@@ -177,7 +177,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug('Creating connection prototype ...')
         con = nx.ConnectionPrototype(signMode=1, weightExponent=0, compressionMode=0)
 
-        print('Start connecting ...')
+        logger.debug('Start connecting ...')
         for i in range(self.nlayers):
             self.l_g[i-1].connect(self.l_g[i], prototype=con,
                     weight=self.l_weights[i])
@@ -217,7 +217,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug("Starting n2board driver")
         self.board.startDriver()
 
-    def init_auxillary_compartments():
+    def init_auxillary_compartments(self):
         """
         Initialize auxiallary neurons and connect them to the network.
         Auxillary neuron serve as clock neuron and reset neuron.
@@ -235,7 +235,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         for i in range(self.nlayers):
            
             clock = self.net.createSpikeGenProcess(numPorts=1)
-            clock.addSpikes(spikeInputPortNodeIds=0, spikeTimes=[Tc*(i+1)])
+            clock.addSpikes(spikeInputPortNodeIds=0, spikeTimes=[self.sim_time*(i+1)])
             clock.connect(self.l_g[i], prototype=clock_con,
                     weight=(254)*np.ones(self.nsamples*2)/2-np.sum(self.l_weights[i],axis=1)/8)
             clock_g.append(clock)
@@ -247,8 +247,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             reset.connect(self.l_g[i], prototype=reset_con,
                     weight=-256*np.ones(self.nsamples*2))
             reset_g.append(reset)
-            print('Reset neuron connected to layer {0}.'.format(i))
-        print('Done.')
+            logger.debug('Reset neuron connected to layer {0}.'.format(i))
+        logger.debug('Done.')
 
         return clock_g, reset_g
 
@@ -305,6 +305,15 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         #self.board.disconnect()
 
         #TODO: For now use auxillary neurons
+        logger.debug("Compiling n2board ...")
+
+        compiler = nx.N2Compiler()
+        self.board = compiler.compile(self.net)
+        logger.debug("Done.")
+        
+        logger.debug("Starting driver ...")
+        self.board.startDriver()
+        logger.debug("Done.")
 
         logger.debug('Running simulation ... ')
         self.board.run(self.sim_time*(self.nlayers+2))
@@ -326,6 +335,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         #TODO: use snip
         #self.init_snip()
+
 
         # Run the network
         self.simulate()
