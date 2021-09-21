@@ -58,20 +58,20 @@ def dft_connection_matrix(nsamples, platform):
     return (real_weights_norm, imag_weights_norm)
 
 
-def fft_connection_matrix(l):
+def fft_connection_matrix(layer, nsamples):
     """
     Connection matrix for a radix-4 fft
     """
     radix = 4
     n_layers = int(np.log(nsamples)/np.log(radix)) # number of layers
     n_bfs = int(radix**n_layers/radix) # number of butterflies
-    n_blocks = radix**(l) # number of blocks
+    n_blocks = radix**(layer) # number of blocks
     n_bfs_per_block = int(n_bfs/n_blocks) # number of butterflies in one block
-    distance_between_datapoints = radix**(n_layers-l-1) 
-    distance_between_blocks = radix**(l) 
+    distance_between_datapoints = radix**(n_layers-layer-1) 
+    distance_between_blocks = radix**(layer) 
 
-    n = np.tile(np.arange(0,radix**(n_layers-l-1)),radix**(l+1))
-    c = np.tile(np.repeat(np.arange(0,4**(l+1),4**l),4**(n_layers-l-1)),4**l)
+    n = np.tile(np.arange(0,radix**(n_layers-layer-1)),radix**(layer+1))
+    c = np.tile(np.repeat(np.arange(0,4**(layer+1),4**layer),4**(n_layers-layer-1)),4**layer)
 
       # radix4 butterfly
     W = np.array([
@@ -88,8 +88,8 @@ def fft_connection_matrix(l):
     W_ii = np.real(W) # imag input real weights imag output 
 
     # Fancy matrix structure 
-    G = np.eye(4**l, 4**l)
-    B = np.eye(int(nsamples/4**(l+1)), int(nsamples/4**(l+1)))
+    G = np.eye(4**layer, 4**layer)
+    B = np.eye(int(nsamples/4**(layer+1)), int(nsamples/4**(layer+1)))
 
     # Kronecker magic
     M_rr = np.kron(G, np.kron(W_rr, B))
@@ -110,3 +110,21 @@ def fft_connection_matrix(l):
     # Twiddle factors times butterfly matrix
     M = np.matmul(tf.transpose(), M)
     return M
+
+def bit_reverse(res, base, nlayers):
+  '''
+  Change order of input array by reversing bit order.
+
+  Parameters:
+      data (array): 1D data array
+      base (int): base = 4 for radix4
+      nlayers (int): number of layers
+  '''
+
+  ordered_res = res.copy()
+  for i in range(len(res)):
+    base_repr = np.base_repr(i, base=base, padding=0)[::-1]
+    base_repr += (nlayers-len(base_repr))*'0'
+    idx = int(base_repr,base)
+    ordered_res[idx] = res[i]
+  return ordered_res
