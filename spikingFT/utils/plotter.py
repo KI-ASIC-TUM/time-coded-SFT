@@ -33,6 +33,9 @@ class Plotter(ABC):
         self.axis = []
 
     def formatter(self):
+        for ax in self.axis:
+            ax.spines['right'].set_visible(False)
+            ax.spines['top'].set_visible(False)
         return
 
     @abstractmethod
@@ -44,9 +47,9 @@ class Plotter(ABC):
         for i, plot_name in enumerate(self.plot_names):
             self.plot(plot_name, i)
         plt.tight_layout()
+        self.formatter()
         if self.show:
             plt.show()
-        self.formatter()
 
     def __call__(self):
         self.run()
@@ -59,8 +62,8 @@ class SNNSimulationPlotter(Plotter):
     def plot_voltages(self, data, ax):
         nsamples = data.shape[1]
         for sample in range(1, nsamples):
-            ax.plot(data[:, sample, 0])
-            ax.plot(data[:, sample, 1])
+            ax.plot(data[:, sample, 0], linewidth=.5)
+            ax.plot(data[:, sample, 1], linewidth=.5)
         ax.set_xlabel("Time step")
         ax.set_ylabel(r'$V_m$ (mV)')
         ax.set_title("Membrane voltages over simulation time")
@@ -76,9 +79,9 @@ class SNNSimulationPlotter(Plotter):
         return
     
     def plot_spectrum(self, data, ax):
-        ax.plot(data)
+        ax.plot(data, linewidth=.5)
         ax.set_xlabel("FT bin nº")
-        ax.set_ylabel(r'S-FT $n_s$s')
+        ax.set_ylabel(r'S-FT $n_s$')
         ax.set_title("FT modulus")
 
     def plot(self, plot_name, plot_n):
@@ -97,22 +100,24 @@ class RelErrorPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def plot_component(self, data, ax_left, component=""):
+    def plot_component(self, data, ax_left, component="", legend=False):
         ax_right = ax_left.twinx()
-        l1 = ax_left.plot(data[0], color="blue", label="signal")
-        l2 = ax_right.plot(data[1], color="red", linestyle="--", label="error")
+        l1 = ax_left.plot(data[0], color="blue", label="signal", linewidth=.5)
+        l2 = ax_right.plot(data[1], color="red", linestyle="--", label="error", linewidth=.5)
         ax_right.set_ylim([0., 0.05])
         ax_left.set_ylabel("FT")
         ax_right.set_ylabel("Rel. error")
         lines = l1 + l2
         labels = [l.get_label() for l in lines]
-        ax_left.legend(lines, labels)
+        if legend:
+            ax_left.legend(lines, labels, loc='upper right')
         ax_left.set_title("{} spectrum rel. error".format(component))
+        ax_right.spines['top'].set_visible(False)
 
     def plot(self, plot_name, plot_n):
         ax = self.axis[plot_n]
         if plot_name == "real_spectrum":
-            self.plot_component(self.data[plot_n], ax, "Real")
+            self.plot_component(self.data[plot_n], ax, "Real", True)
         elif plot_name == "imag_spectrum":
             self.plot_component(self.data[plot_n], ax, "Imaginary")
         elif plot_name == "modulus":
