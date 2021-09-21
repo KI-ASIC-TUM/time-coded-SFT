@@ -16,7 +16,6 @@ except ImportError:
 import spikingFT.models.snn
 
 
-
 class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
     """
     Class for setting up a network on Loihi for the spiking FT
