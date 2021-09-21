@@ -9,7 +9,7 @@ import time
 # Local libraries
 import spikingFT.models.snn
 
-logger = logging.getLogger('S-DFT S-CFAR')
+logger = logging.getLogger('spiking-FT')
 
 
 class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
@@ -90,7 +90,7 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         Main routine for running the simulation
         """
         spike_trains = spike_trains.real
-        logging.info("Running the NumPy TTFS Spiking-DFT")
+        logger.info("Running the NumPy TTFS Spiking-DFT")
 
         self.simulate(spike_trains)
         return self.spikes
