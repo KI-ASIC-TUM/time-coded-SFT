@@ -46,6 +46,7 @@ class FastFourierTransformSNN(ABC):
                 layer=l,
                 nsamples=self.nsamples,
             )
+            weight_matrix = spikingFT.utils.ft_utils.normalize(weight_matrix, self.PLATFORM)
             weight_matrices.append(weight_matrix)
             biases.append(np.sum(weight_matrix, axis=1)*self.sim_time/2)
 

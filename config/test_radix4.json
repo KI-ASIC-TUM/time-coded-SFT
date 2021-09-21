@@ -5,7 +5,7 @@
     {
         "snn_config":
         {
-            "sim_time": 8,
+            "sim_time": 64,
             "mode": "fft",
             "framework": "radix4loihi",
             "current_decay": 0,

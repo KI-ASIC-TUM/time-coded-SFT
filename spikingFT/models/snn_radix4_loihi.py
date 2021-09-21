@@ -65,6 +65,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         # init and connections
         self.clock_g, self.reset_g = self.init_auxillary_compartments() 
 
+        logger.debug(self.l_weights[0])
+
         # SNIP
         self.board = None
         self.bias_channel = None
@@ -89,7 +91,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
 
         logger.debug('Creating Compartments ...')
-        core_distribution_factor = int(self.nsamples/64)
+        core_distribution_factor = 64
         
         l_g = [] # nlayers list of compartment groups
         for n in range(self.nlayers):
@@ -215,7 +217,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.time_channel.connect(mgmt_snip, None)
 
         logger.debug("Starting n2board driver")
-        self.board.startDriver()
+        self.board.start()
 
     def init_auxillary_compartments(self):
         """
@@ -312,11 +314,11 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug("Done.")
         
         logger.debug("Starting driver ...")
-        self.board.startDriver()
+        self.board.start()
         logger.debug("Done.")
 
         logger.debug('Running simulation ... ')
-        self.board.run(self.sim_time*(self.nlayers+2))
+        self.board.run(int(self.sim_time*(self.nlayers+2)), aSync=True)
 
         logger.info('Finishing Loihi execution. Disconnecting board ...')
         self.board.finishRun()
@@ -339,6 +341,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         # Run the network
         self.simulate()
+        logger.debug('Done.')
 
         self.output = (self.l_probes_V[0], self.l_probes_S[0])
+        logger.debug('Run finished.')
         return self.output
