@@ -10,7 +10,7 @@ import spikingFT.startup
 import spikingFT.utils. plotter
 
 
-def single_run_experiment(conf_filename="../config/test_experiment.json"):
+def main(conf_filename="../config/test_experiment.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     nsamples = sim_handler.snn.nsamples
@@ -45,30 +45,6 @@ def single_run_experiment(conf_filename="../config/test_experiment.json"):
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
     error_plotter()
     return
-
-def sim_times_experiment(conf_filename="../config/test_experiment_simtimes.json"):
-    # Instantiate a simulation handler with specified configuration
-    sim_handler = spikingFT.startup.startup(conf_filename, autorun=False)
-    # Get simulation times from config file
-    exp_config = sim_handler.config["experiment"]
-    sim_times = exp_config["sim_times"]
-    errors = []
-    # Iterate over the different sim times and simulate network
-    for sim_time in sim_times:
-        sim_handler.config["snn_config"]["sim_time"] = sim_time
-        sim_handler.run()
-        errors.append(sim_handler.metrics["rmse"])
-    # Plot results
-    kwargs = {}
-    kwargs["plot_names"] = ["single_nsamples"]
-    kwargs["data"] = [(errors, sim_times)]
-    error_plotter = spikingFT.utils.plotter.RMSEPlotter(**kwargs)
-    error_plotter()
-    return
-
-def main():
-    single_run_experiment()
-    sim_times_experiment()
 
 
 if __name__ == "__main__":
