@@ -33,6 +33,7 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         # occur on the first time step
         self.v_threshold = self.sim_time * self.real_weights.max() * 0.637
         self.v_threshold *= self.nsamples / 2
+        self.v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
         # Network variables
         self.n_chirps = 1
         self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
