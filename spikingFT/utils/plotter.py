@@ -45,6 +45,8 @@ class Plotter(ABC):
 
     def run(self):
         self.fig, self.axis = plt.subplots(self.nplots)
+        if type(self.axis) is not np.ndarray:
+            self.axis = np.array(self.axis).reshape((1,))
         for i, plot_name in enumerate(self.plot_names):
             self.plot(plot_name, i)
         plt.tight_layout()
@@ -134,6 +136,31 @@ class RelErrorPlotter(Plotter):
             self.plot_component(self.data[plot_n], ax, "Absolute", xlabel=True)
         else:
             raise ValueError("Invalid plot name: {}".format(plot_name))
+
+
+class RMSEPlotter(Plotter):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def plot_single_nsamples(self, data, ax):
+        """
+        Plot RMSE evolution for a single nsamples batch
+        """
+        ax.plot(data[1], data[0], c="red")
+        ax.set_title("RMSE over different sim times")
+        ax.set_ylabel("RMSE")
+        ax.set_xlabel("nsamples")
+        ax.spines['left'].set_visible(False)
+        ax.grid(axis='y')
+        ax.tick_params(axis="y", which="both",length=0)
+        ax.set_ylim(0, 0.05)
+        ax.locator_params(axis='x', nbins=5)
+        return
+
+    def plot(self, plot_name, plot_n):
+        ax = self.axis[plot_n]
+        if plot_name == "single_nsamples":
+            self.plot_single_nsamples(self.data[plot_n], ax)
 
 
 def align_yaxes(axes, nbins=4):

@@ -61,6 +61,11 @@ def load_config(conf_file):
     datapath = pathlib.Path(__file__).resolve().parent.parent.joinpath(path)
     # Load the configuration parameters
     config = config_data["config"]
+    # Add experiment configuration, if exists
+    try:
+        config["experiment"] = config_data["experiment"]
+    except KeyError:
+        pass
     return datapath, config
 
 

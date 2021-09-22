@@ -65,6 +65,7 @@ class SimHandler():
 
         # Parse and edit the SNN configuration with required parameters
         snn_config = self.config["snn_config"]
+        snn_config.pop("experiment", None)
         snn_config["nsamples"] = self.config["data"]["samples_per_chirp"]
 
         # Parse the simulation framework and instantiate the corresponding class
