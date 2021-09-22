@@ -142,14 +142,14 @@ class RMSEPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def plot_single_nsamples(self, data, ax):
+    def plot_single_line(self, data, ax):
         """
         Plot RMSE evolution for a single nsamples batch
         """
         ax.plot(data[1], data[0], c="red")
         ax.set_title("RMSE over different sim times")
         ax.set_ylabel("RMSE")
-        ax.set_xlabel("nsamples")
+        ax.set_xlabel("Nº simulation steps")
         ax.spines['left'].set_visible(False)
         ax.grid(axis='y')
         ax.tick_params(axis="y", which="both",length=0)
@@ -157,10 +157,33 @@ class RMSEPlotter(Plotter):
         ax.locator_params(axis='x', nbins=5)
         return
 
+    def plot_multiple_lines(self, data, ax):
+        """
+        Plot RMSE evolution for a single nsamples batch
+        """
+        for i, data_stream in enumerate(data[0]):
+            tsteps = data[1]
+            nbins = data[2][i]
+            ax.plot(tsteps, data_stream, label="{} bins".format(nbins))
+        ax.set_title("RMSE over different sim times")
+        ax.set_ylabel("RMSE")
+        ax.set_xlabel("Nº simulation steps")
+        ax.spines['left'].set_visible(False)
+        ax.grid(axis='y')
+        ax.tick_params(axis="y", which="both",length=0)
+        ax.set_ylim(0, 0.05)
+        ax.locator_params(axis='x', nbins=5)
+        ax.legend()
+        return
+
     def plot(self, plot_name, plot_n):
         ax = self.axis[plot_n]
-        if plot_name == "single_nsamples":
-            self.plot_single_nsamples(self.data[plot_n], ax)
+        if plot_name == "single_line":
+            self.plot_single_line(self.data[plot_n], ax)
+        elif plot_name == "multiple_lines":
+            self.plot_multiple_lines(self.data[plot_n], ax)
+        else:
+            raise ValueError("Invalid plot name: {}".format(plot_name))
 
 
 def align_yaxes(axes, nbins=4):
