@@ -122,9 +122,9 @@ def bit_reverse(data, base, nlayers):
   '''
 
   ordered_res = data.copy()
-  for i in range(len(res)):
+  for i in range(len(data)):
     base_repr = np.base_repr(i, base=base, padding=0)[::-1]
     base_repr += (nlayers-len(base_repr))*'0'
     idx = int(base_repr,base)
-    ordered_res[idx] = res[i]
+    ordered_res[idx] = data[i]
   return ordered_res

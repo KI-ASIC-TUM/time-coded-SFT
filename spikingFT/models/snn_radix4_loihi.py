@@ -60,15 +60,13 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.measure_performance = kwargs.get("measure_performance", False)
 
         # TODO: total sim time vs sim time
-        self.total_sim_time = int(self.sim_time*(self.nlayers+2)),
+        self.total_sim_time = int(self.sim_time*(self.nlayers+2))
 
         # Initialize NETWORK and COMPARTMENTS
         self.net = nx.NxNet()
         self.l_g = self.init_compartments()
         # init and connections
         self.clock_g, self.reset_g = self.init_auxillary_compartments() 
-
-        logger.debug(self.l_weights[0])
 
         # SNIP
         self.board = None
@@ -79,7 +77,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.l_probes_V, self.l_probes_S = self.init_probes()
 
         self.spikes = np.zeros((self.nsamples, 2))
-        self.voltage = np.zeros((total_sim_time, self.nsamples, 2))
+        self.voltage = np.zeros((self.total_sim_time, self.nsamples, 2))
         
         self.et_probe = None
         self.e_probe = None
@@ -329,13 +327,13 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.board.finishRun()
         self.board.disconnect()
 
-    def def parse_probes(self):
+    def parse_probes(self):
 
-        self.voltage[:, :, 0] = self.l_probes_V[0][:self.nsamples].data.transpose()
-        self.voltage[:, :, 1] = self.l_probes_V[0][self.nsamples:].data.transpose()
+        self.voltage[:, :, 0] = self.l_probes_V[-1][0].data[:self.nsamples,:].T
+        self.voltage[:, :, 1] = self.l_probes_V[-1][0].data[self.nsamples:,:].T
 
-        real_spikes = np.argmax(self.l_probes_S[0][:self.nsamples].data, axis=1)
-        imag_spikes = np.argmax(self.l_probes_S[0][self.nsamples:].data, axis=1)
+        real_spikes = np.argmax(self.l_probes_S[-1][0].data[:self.nsamples], axis=1)
+        imag_spikes = np.argmax(self.l_probes_S[-1][0].data[self.nsamples:], axis=1)
         self.spikes[:, 0] = spikingFT.utils.ft_utils.bit_reverse(real_spikes,
                 base=4, nlayers=self.nlayers)
         self.spikes[:, 1] = spikingFT.utils.ft_utils.bit_reverse(imag_spikes,
@@ -362,6 +360,6 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         # Run the network
         self.simulate()
         logger.debug('Done.')
-        parse_probes()
+        self.parse_probes()
         logger.debug('Run finished.')
         return self.spikes
