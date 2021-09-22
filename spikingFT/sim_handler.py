@@ -120,4 +120,5 @@ class SimHandler():
         # Run the SNN with the collected data
         self.output = self.run_snn()
         self.test()
+        logger.info("Execution finished")
         return self.output

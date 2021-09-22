@@ -47,11 +47,14 @@ def single_run_experiment(conf_filename="../config/test_experiment.json"):
     return
 
 def sim_times_experiment(conf_filename="../config/test_experiment_simtimes.json"):
-
+    sim_handler = spikingFT.startup.startup(conf_filename, autorun=False)
+    sim_handler.run()
+    real_spikes = sim_handler.output[:, 0]
+    print(real_spikes)
     return
 
 def main():
-    single_run_experiment()
+    # single_run_experiment()
     sim_times_experiment()
 
 
