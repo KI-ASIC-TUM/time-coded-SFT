@@ -59,6 +59,9 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.current_decay = kwargs.get("current_decay")
         self.measure_performance = kwargs.get("measure_performance", False)
 
+        # TODO: total sim time vs sim time
+        self.total_sim_time = int(self.sim_time*(self.nlayers+2)),
+
         # Initialize NETWORK and COMPARTMENTS
         self.net = nx.NxNet()
         self.l_g = self.init_compartments()
@@ -75,6 +78,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         # PROBES
         self.l_probes_V, self.l_probes_S = self.init_probes()
 
+        self.spikes = np.zeros((self.nsamples, 2))
+        self.voltage = np.zeros((total_sim_time, self.nsamples, 2))
         
         self.et_probe = None
         self.e_probe = None
@@ -318,11 +323,26 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug("Done.")
 
         logger.debug('Running simulation ... ')
-        self.board.run(int(self.sim_time*(self.nlayers+2)), aSync=True)
+        self.board.run(self.total_sim_time, aSync=True)
 
         logger.info('Finishing Loihi execution. Disconnecting board ...')
         self.board.finishRun()
         self.board.disconnect()
+
+    def def parse_probes(self):
+
+        self.voltage[:, :, 0] = self.l_probes_V[0][:self.nsamples].data.transpose()
+        self.voltage[:, :, 1] = self.l_probes_V[0][self.nsamples:].data.transpose()
+
+        real_spikes = np.argmax(self.l_probes_S[0][:self.nsamples].data, axis=1)
+        imag_spikes = np.argmax(self.l_probes_S[0][self.nsamples:].data, axis=1)
+        self.spikes[:, 0] = spikingFT.utils.ft_utils.bit_reverse(real_spikes,
+                base=4, nlayers=self.nlayers)
+        self.spikes[:, 1] = spikingFT.utils.ft_utils.bit_reverse(imag_spikes,
+                base=4, nlayers=self.nlayers)
+        self.spikes = self.total_sim_time - self.spikes - self.sim_time/2
+
+
 
 
     def run(self, data):
@@ -342,7 +362,6 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         # Run the network
         self.simulate()
         logger.debug('Done.')
-
-        self.output = (self.l_probes_V[0], self.l_probes_S[0])
+        parse_probes()
         logger.debug('Run finished.')
-        return self.output
+        return self.spikes

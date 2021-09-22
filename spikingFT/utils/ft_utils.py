@@ -111,7 +111,7 @@ def fft_connection_matrix(layer, nsamples):
     M = np.matmul(tf.transpose(), M)
     return M
 
-def bit_reverse(res, base, nlayers):
+def bit_reverse(data, base, nlayers):
   '''
   Change order of input array by reversing bit order.
 
@@ -121,7 +121,7 @@ def bit_reverse(res, base, nlayers):
       nlayers (int): number of layers
   '''
 
-  ordered_res = res.copy()
+  ordered_res = data.copy()
   for i in range(len(res)):
     base_repr = np.base_repr(i, base=base, padding=0)[::-1]
     base_repr += (nlayers-len(base_repr))*'0'
