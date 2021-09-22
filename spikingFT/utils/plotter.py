@@ -5,6 +5,7 @@ Module with functions for generating different experiment plots
 # Standard libraries
 from abc import ABC, abstractmethod
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Plotter(ABC):
@@ -81,7 +82,7 @@ class SNNSimulationPlotter(Plotter):
     def plot_spectrum(self, data, ax):
         ax.plot(data, linewidth=.5)
         ax.set_xlabel("FT bin nº")
-        ax.set_ylabel(r'S-FT $n_s$')
+        ax.set_ylabel(r'S-FT $t_s$')
         ax.set_title("FT modulus")
 
     def plot(self, plot_name, plot_n):
@@ -100,7 +101,7 @@ class RelErrorPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def plot_component(self, data, ax_left, component="", legend=False):
+    def plot_component(self, data, ax_left, component="", legend=False, xlabel=False):
         ax_right = ax_left.twinx()
         l1 = ax_left.plot(data[0], color="blue", label="signal", linewidth=.5)
         l2 = ax_right.plot(data[1], color="red", linestyle="--", label="error", linewidth=.5)
@@ -111,16 +112,74 @@ class RelErrorPlotter(Plotter):
         labels = [l.get_label() for l in lines]
         if legend:
             ax_left.legend(lines, labels, loc='upper right')
+        if xlabel:
+            ax_left.set_xlabel("Bin Nº")
         ax_left.set_title("{} spectrum rel. error".format(component))
-        ax_right.spines['top'].set_visible(False)
+        for ax in (ax_right, ax_left):
+            ax.spines['top'].set_visible(False)
+            ax.spines['left'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            ax.tick_params(axis="y", which="both",length=0)
+        # Align right and left ticks
+        align_yaxes([ax_left, ax_right])
+        ax_left.grid(axis='y')
 
     def plot(self, plot_name, plot_n):
         ax = self.axis[plot_n]
         if plot_name == "real_spectrum":
-            self.plot_component(self.data[plot_n], ax, "Real", True)
+            self.plot_component(self.data[plot_n], ax, "Real", legend=True)
         elif plot_name == "imag_spectrum":
             self.plot_component(self.data[plot_n], ax, "Imaginary")
         elif plot_name == "modulus":
-            self.plot_component(self.data[plot_n], ax, "Absolute")
+            self.plot_component(self.data[plot_n], ax, "Absolute", xlabel=True)
         else:
             raise ValueError("Invalid plot name: {}".format(plot_name))
+
+
+def align_yaxes(axes, nbins=4):
+    """
+    Align the ticks of multiple y axes
+
+    Args:
+        axes (list): list of axes objects whose yaxis ticks are to be aligned.
+    Returns:
+        new_ticks (list): a list of new ticks for each axis in <axes>.
+        A new sets of ticks are computed for each axis in <axes> but with equal
+        length.
+    """
+    nax = len(axes)
+    ticks = [aii.get_yticks() for aii in axes]
+    aligns = [ticks[ii][0] for ii in range(nax)]
+    bounds = [aii.get_ylim() for aii in axes]
+    # align at some points
+    ticks_align = [ticks[ii]-aligns[ii] for ii in range(nax)]
+    # scale the range to 1-100
+    ranges = [tii[-1]-tii[0] for tii in ticks]
+    lgs = [-np.log10(rii)+2. for rii in ranges]
+    igs = [np.floor(ii) for ii in lgs]
+    log_ticks = [ticks_align[ii]*(10.**igs[ii]) for ii in range(nax)]
+    # put all axes ticks into a single array, then compute new ticks for all
+    comb_ticks = np.concatenate(log_ticks)
+    comb_ticks.sort()
+    locator = plt.MaxNLocator(nbins=nbins, steps=[1, 2, 2.5, 3, 4, 5, 8, 10])
+    new_ticks = locator.tick_values(comb_ticks[0], comb_ticks[-1])
+    new_ticks = [new_ticks/10.**igs[ii] for ii in range(nax)]
+    new_ticks = [new_ticks[ii]+aligns[ii] for ii in range(nax)]
+    # find the lower bound
+    idx_l = 0
+    for i in range(len(new_ticks[0])):
+        if any([new_ticks[jj][i] > bounds[jj][0] for jj in range(nax)]):
+            idx_l = i-1
+            break
+    # find the upper bound
+    idx_r = 0
+    for i in range(len(new_ticks[0])):
+        if all([new_ticks[jj][i] > bounds[jj][1] for jj in range(nax)]):
+            idx_r = i
+            break
+    # trim tick lists by bounds
+    new_ticks = [tii[idx_l:idx_r+1] for tii in new_ticks]
+    # set ticks for each axis
+    for axii, tii in zip(axes, new_ticks):
+        axii.set_yticks(tii)
+    return new_ticks
