@@ -9,7 +9,7 @@ import time
 # Local libraries
 import spikingFT.models.snn
 
-logger = logging.getLogger('S-DFT S-CFAR')
+logger = logging.getLogger('spiking-FT')
 
 
 class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
@@ -24,16 +24,22 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         # SNN simulation parameters
         self.current_time = 0
         self.sim_time = kwargs.get("sim_time")
-        self.sim_time = 5
-        self.time_step = 0.001
+        self.time_step = kwargs.get("time_step")
+        self.nsteps = int(self.sim_time / self.time_step)
         # Neuron properties
-        self.v_threshold = 0.002
+        # Max possible voltage during charging stage is the average absolute
+        # value of the weight matrix applied during the whole simulation time,
+        # assuming half of the inputs (the ones connected to positive weights)
+        # occur on the first time step
+        self.v_threshold = self.sim_time * self.real_weights.max() * 0.637
+        self.v_threshold *= self.nsamples / 2
+        self.v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
         # Network variables
         self.n_chirps = 1
-        self.n_input =  kwargs.get("nsamples")
-        self.spikes = np.zeros((self.n_input, 2*self.n_chirps))
-        self.voltage = np.zeros((int(2*self.sim_time/self.time_step), self.n_input, 2*self.n_chirps))
+        self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
+        self.voltage = np.zeros((2*self.nsteps, self.nsamples, 2*self.n_chirps))
         self.l1 = self.init_compartments()
+
 
     def init_compartments(self):
         """
@@ -50,25 +56,28 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
     def simulate(self, spike_trains):
         logger.info("Layer 1: Charging stage")
         # Charging stage of layer 1
-        while self.current_time <= self.sim_time:
+        counter = 0
+        while counter < self.nsteps:
             causal_neurons = (spike_trains < self.current_time).reshape(
                     (self.n_chirps, self.nsamples)
                 )
             out_l1 = self.l1.update_state(causal_neurons) * self.current_time
-            self.voltage[int(self.current_time/self.time_step)] = self.l1.v_membrane
+            self.voltage[counter] = self.l1.v_membrane
             self.spikes += out_l1
-            self.current_time += self.time_step
+            self.current_time = counter * self.time_step
+            counter += 1
 
         logger.info("Layer 1: Spiking stage")
         # Spiking stage
         self.l1.bias = 2*self.v_threshold / self.sim_time
         causal_neurons = np.zeros_like(causal_neurons)
-        while self.current_time <= 2*self.sim_time:
+        while counter < 2*self.nsteps:
             relative_time = self.current_time - self.sim_time
             out_l1 = self.l1.update_state(causal_neurons)
             self.spikes += out_l1 * (relative_time)
-            self.voltage[int(self.current_time/self.time_step)] = self.l1.v_membrane
-            self.current_time += self.time_step
+            self.voltage[counter] = self.l1.v_membrane
+            self.current_time = counter * self.time_step
+            counter += 1
 
         # All neurons that didn't spike are forced to spike in the last step,
         # since the spike-time of 1 corresponds to the lowest possible value.
@@ -82,7 +91,7 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         Main routine for running the simulation
         """
         spike_trains = spike_trains.real
-        logging.info("Running the NumPy TTFS Spiking-DFT")
+        logger.info("Running the NumPy TTFS Spiking-DFT")
 
         self.simulate(spike_trains)
         return self.spikes

@@ -4,6 +4,7 @@ Module for initializing and launching the SNN simulation
 """
 # Standard libraries
 import logging
+import numpy as np
 # Local libraries
 import spikingFT.models.snn_brian
 import spikingFT.models.snn_loihi
@@ -11,6 +12,8 @@ import spikingFT.models.snn_numpy
 import spikingFT.models.snn_radix4_loihi
 import spikingFT.utils.load_data
 import spikingFT.utils.encoding
+import spikingFT.utils.metrics
+
 
 logger = logging.getLogger('spiking-FT')
 
@@ -29,6 +32,7 @@ class SimHandler():
         self.encoded_data = None
         self.output = None
         self.snn = None
+        self.metrics = {}
 
     def get_data(self):
         """
@@ -47,7 +51,7 @@ class SimHandler():
         logger.info("Encoding data to spikes")
         sim_time = self.config["snn_config"]["sim_time"]
 
-        encoder = spikingFT.utils.encoding.TimeEncoder(t_max=1,
+        encoder = spikingFT.utils.encoding.TimeEncoder(t_max=sim_time,
                                                        x_max=self.data.max(),
                                                        x_min = self.data.min()
                                                       )
@@ -62,6 +66,7 @@ class SimHandler():
 
         # Parse and edit the SNN configuration with required parameters
         snn_config = self.config["snn_config"]
+        snn_config.pop("experiment", None)
         snn_config["nsamples"] = self.config["data"]["samples_per_chirp"]
 
         # Parse the simulation framework and instantiate the corresponding class
@@ -78,25 +83,33 @@ class SimHandler():
             raise ValueError("Invalid framework: {}".format(framework))
         return snn
 
-    def parse_results(self, result):
-        """
-        Parse SNN output, generate plots, and save results
-        """
-        logger.info("Parsing results of SNN simulation")
-        return result
-
     def run_snn(self):
         """
         Execute the SNN simulation by feeding the provided data
         """
         logger.info("Running SNN simulation")
         output = []
-        result = []
         for frame in range(self.config["data"]["nframes"]):
             output.append(self.snn.run(self.encoded_data[frame]))
-            result.append(self.parse_results(output))
         # Return first frame
-        return result[0]
+        return output[0]
+
+    def test(self):
+        """
+        Measure accuracy metrics of the network
+
+        numpy.fft library is used as reference for the error metrics
+        """
+        # Get reference FT result from NumPy on the same format as the output
+        ftnp = np.fft.fft(self.data[0, 0, :, 0])
+        ref = np.vstack((ftnp.real, ftnp.imag)).transpose()
+        # Calculate the metrics
+        rmse = spikingFT.utils.metrics.get_rmse(self.output, ref)
+        rel_error = spikingFT.utils.metrics.get_error_hist(self.output, ref)
+        self.metrics["rmse"] = rmse
+        self.metrics["rel_error"] = rel_error
+        logger.debug("Resulting RMSE: {}".format(self.metrics["rmse"]))
+        return self.metrics
 
     def run(self):
         """
@@ -110,4 +123,6 @@ class SimHandler():
         self.snn = self.initialize_snn()
         # Run the SNN with the collected data
         self.output = self.run_snn()
+        self.test()
+        logger.info("Execution finished")
         return self.output

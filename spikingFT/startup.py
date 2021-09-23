@@ -61,6 +61,11 @@ def load_config(conf_file):
     datapath = pathlib.Path(__file__).resolve().parent.parent.joinpath(path)
     # Load the configuration parameters
     config = config_data["config"]
+    # Add experiment configuration, if exists
+    try:
+        config["experiment"] = config_data["experiment"]
+    except KeyError:
+        pass
     return datapath, config
 
 
@@ -92,16 +97,17 @@ def conf_logger():
     return logger
 
 
-def run(datapath, config):
+def run(datapath, config, autorun):
     """
     Run the algorithm with the loaded configuration
     """
     sim_handler = spikingFT.sim_handler.SimHandler(datapath, config)
-    sim_handler.run()
+    if autorun:
+        sim_handler.run()
     return sim_handler
 
 
-def startup(conf_file, show_plot=True):
+def startup(conf_file, show_plot=True, autorun=True):
     """
     Run the DFT and CFAR on BBM data
     """
@@ -116,8 +122,7 @@ def startup(conf_file, show_plot=True):
     msg += "\n- Nº Samples: {}".format(config["data"]["samples_per_chirp"])
     logger.info(msg)
 
-    sim_handler = run(datapath, config)
-    logger.info("Execution finished")
+    sim_handler = run(datapath, config, autorun)
     return sim_handler
 
 
