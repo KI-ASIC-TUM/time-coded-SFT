@@ -1,5 +1,5 @@
 {
-    "datapath": "data/TI_radar",
+    "datapath": "data/BBM",
 
     "config":
     {
@@ -8,7 +8,7 @@
             "sim_time": 200,
             "time_step": 1,
             "mode": "dft",
-            "framework": "numpy",
+            "framework": "loihi",
             "current_decay": 0,
             "measure_performance": false
         },

@@ -1,2 +1,0 @@
-# Spiking FT Loihi
-

@@ -101,7 +101,7 @@ class SimHandler():
         numpy.fft library is used as reference for the error metrics
         """
         # Get reference FT result from NumPy on the same format as the output
-        ftnp = np.fft.fft(self.data[0, 0, :, 0])
+        ftnp = np.fft.fft(self.data[0, 0, :, 0].real)
         ref = np.vstack((ftnp.real, ftnp.imag)).transpose()
         # Calculate the metrics
         rmse = spikingFT.utils.metrics.get_rmse(self.output, ref)
@@ -116,13 +116,14 @@ class SimHandler():
         Routine for initializing and running the SNN with the desired params
         """
         # Load encoded data
-        self.data = self.get_data()
+        self.data = self.get_data().real
         # Reduce data dimensionality, by ignoring chirp and antenna dimensions
         self.encoded_data = self.encode_data()[:, 0, :, 0]
         # Instantiate the snn class with the specified configuration
         self.snn = self.initialize_snn()
         # Run the SNN with the collected data
         self.output = self.run_snn()
-        self.test()
+        if not self.config["snn_config"]["measure_performance"]:
+            self.test()
         logger.info("Execution finished")
         return self.output

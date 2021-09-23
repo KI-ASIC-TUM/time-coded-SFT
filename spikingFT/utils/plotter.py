@@ -82,7 +82,8 @@ class SNNSimulationPlotter(Plotter):
         return
     
     def plot_spectrum(self, data, ax):
-        ax.plot(data, linewidth=.5)
+        ax.plot(data[0], linewidth=.5)
+        ax.plot(data[1], linewidth=.5)
         ax.set_xlabel("FT bin nº")
         ax.set_ylabel(r'S-FT $t_s$')
         ax.set_title("FT modulus")
@@ -107,7 +108,7 @@ class RelErrorPlotter(Plotter):
         ax_right = ax_left.twinx()
         l1 = ax_left.plot(data[0], color="blue", label="signal", linewidth=.5)
         l2 = ax_right.plot(data[1], color="red", linestyle="--", label="error", linewidth=.5)
-        ax_right.set_ylim([0., 0.05])
+        ax_right.set_ylim([0., 0.25])
         ax_left.set_ylabel("FT")
         ax_right.set_ylabel("Rel. error")
         lines = l1 + l2

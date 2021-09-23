@@ -53,7 +53,7 @@ def ti_get_datacube():
     Read file with the BBM simulator data and arrange it in a data cube
     """
     rootpath = pathlib.Path(__file__).parent.parent.parent
-    filename = rootpath.joinpath("data/TI_radar/raw11.npz")
+    filename = rootpath.joinpath("data/TI_radar/1024/corner_reflector_1.npz")
     data_cube = np.load(filename)['arr_0']
     return data_cube
 
