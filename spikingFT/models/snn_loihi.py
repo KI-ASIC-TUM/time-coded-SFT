@@ -10,6 +10,8 @@ import pathlib
 # Local libraries
 try:
     import nxsdk.api.n2a as nx
+    from nxsdk.api.enums.api_enums import ProbeParameter
+    from nxsdk.graph.monitor.probes import PerformanceProbeCondition
 except ImportError:
     logger.warn("Intel NxSDK cannot be found. "
                 "It will not be possible to run simulations with Loihi")
@@ -78,6 +80,21 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         self.time_channel = None
 
         # PROBES
+        self.l1_real_probes_V = None
+        self.l1_imag_probes_V = None
+        self.l1_real_probes_S = None
+        self.l1_imag_probes_S = None
+        self.et_probe = None
+        self.e_probe = None
+        self.power_stats = None
+        # Network variables
+        self.n_chirps = 1
+        self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
+        self.voltage = np.zeros((2*self.sim_time, self.nsamples, 2*self.n_chirps))
+        return
+
+
+    def init_probes(self):
         self.l1_real_probes_V = self.l1_real_g.probe(
                 nx.ProbeParameter.COMPARTMENT_VOLTAGE,
                 probeConditions=None
@@ -94,13 +111,6 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
                 nx.ProbeParameter.SPIKE,
                 probeConditions=None
         )
-        self.et_probe = None
-        self.e_probe = None
-        # Network variables
-        self.n_chirps = 1
-        self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
-        self.voltage = np.zeros((2*self.sim_time, self.nsamples, 2*self.n_chirps))
-        return
 
 
     def init_compartments(self):
@@ -227,26 +237,23 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
 
         time stamps t_H and t_LMT of the two probes differ
         """
-        logger.debug("Instantiating performance boards")
-        self.et_probe = self.board.probe(
-            probeType=nx.ProbeParameter.EXECUTION_TIME,
-            probeCondition=nx.PerformanceProbeCondition(
-                tStart=1,
-                tEnd=self.sim_time*2,
-                bufferSize=1024,
-                binSize=2)
-        )
-
+        logger.debug("Instantiating performance probe")
+        
         self.e_probe = self.board.probe(
-            probeType=nx.ProbeParameter.ENERGY,
-            probeCondition=nx.PerformanceProbeCondition(
-                tStart=1,
-                tEnd=self.sim_time*2,
-                bufferSize=1024,
-                binSize=2)
+            probeType=ProbeParameter.ENERGY, 
+            probeCondition=PerformanceProbeCondition(
+            tStart=1, 
+            tEnd=self.sim_time*2, 
+            bufferSize=1024, 
+            binSize=1)
         )
+        import pdb; pdb.set_trace()
+
 
     def simulate(self):
+        """
+        Run the SNN in the Loihi chip
+        """
         charging_stage_bias = int(self.TH_MANT*2/self.sim_time)
         logger.debug("Running simulation")
         # Write bias value during charging stage to the corresponding channel
@@ -263,26 +270,52 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         # Run spiking stage
         self.board.finishRun()
         self.board.disconnect()
+        self.power_stats = self.board.energyTimeMonitor.powerProfileStats
+
 
     def parse_probes(self):
+        """
+        Format the voltage and spike values in the board probes
+        """
+        # Fetch membrane voltages during simulation
         self.voltage[:, :, 0] = self.l1_real_probes_V[0].data.transpose()
         self.voltage[:, :, 1] = self.l1_imag_probes_V[0].data.transpose()
         spikes = np.zeros_like(self.voltage)
+        # Fetch spikes during simulation
         real_spikes = np.argmax(self.l1_real_probes_S[0].data, axis=1)
         imag_spikes = np.argmax(self.l1_imag_probes_S[0].data, axis=1)
         self.spikes[:, 0] = real_spikes
         self.spikes[:, 1] = imag_spikes
         self.spikes = 1.5*self.sim_time - self.spikes
 
+
+    def parse_energy_probe(self):
+        """
+        Calculate consumed energy from the collected power stats
+        """
+        power_vals = np.array(self.power_stats.power['core']['dynamic'])
+        time_vals = np.array(self.power_stats.timePerTimestep)
+        energy = power_vals * time_vals
+        return energy
+
+
     def run(self, data):
+        """
+        Set-up, run, and parse the results of the SNN simulation
+        """
+        if not self.measure_performance:
+            self.init_probes()
         # Create spike generators and connect them to compartments
         self.connect_inputs(data.real, data.real)
+        self.init_snip()
         # Instantiate measurement probes
         if self.measure_performance:
-            network.performance_profiling()
-        self.init_snip()
+            self.performance_profiling()
         # Run the network
         self.simulate()
 
-        self.parse_probes()
+        if self.measure_performance:
+            self.parse_energy_probe()
+        else:
+            self.parse_probes()
         return self.spikes

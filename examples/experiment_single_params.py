@@ -10,7 +10,7 @@ import spikingFT.startup
 import spikingFT.utils. plotter
 
 
-def main(conf_filename="../config/test_experiment.json"):
+def main(conf_filename="../config/test_experiment_loihi.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     nsamples = sim_handler.snn.nsamples
