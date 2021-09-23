@@ -21,7 +21,7 @@ def main(conf_filename="../config/test_experiment_loihi.json"):
     imag_spikes_norm = sim_handler.output[:, 1][1:int(nsamples/2)]
     sft_modulus = np.sqrt(real_spikes_norm**2 + imag_spikes_norm**2)
     sft_modulus /= sft_modulus.max()
-    ft_modulus = np.abs(np.fft.fft(sim_handler.data[0, 0, :, 0].real))[1:int(nsamples/2)]
+    ft_modulus = np.abs(np.fft.fft(sim_handler.data[0, :]))[1:int(nsamples/2)]
     ft_modulus /= ft_modulus.max()
 
     # Plot S-FT result and reference result

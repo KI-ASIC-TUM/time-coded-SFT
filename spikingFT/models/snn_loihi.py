@@ -48,7 +48,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
     PLATFORM = "loihi"
     # Loihi threshold equation: v_th = th_mant * 2**th_exp
     TH_MANT_MAX = 131071
-    TH_EXP = 6
+    TH_EXP = 4
     BIAS_EXP = 6
     REFRACTORY_T = 63
 
@@ -136,7 +136,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             l1_imag_g: compartment group with nsamples compartments for
              the imag coefficients of the DFT
         """
-        core_distribution_factor = int(self.nsamples/64)
+        core_distribution_factor = int(self.nsamples/4)
         # Real layer
         l1_real = []
         l1_real_g = self.net.createCompartmentGroup()
