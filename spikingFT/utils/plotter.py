@@ -75,8 +75,9 @@ class SNNSimulationPlotter(Plotter):
         nsamples = data[0].size
         for sample_n in range(nsamples):
             ax.scatter(data[0][sample_n], sample_n,  s=4, c="#1f77b4")
-            ax.scatter(data[0][sample_n], sample_n+nsamples,  s=4, c="#1f77b4")
-        ax.set_xlabel("Relative simulation time step")
+            ax.scatter(data[1][sample_n], sample_n+nsamples,  s=4, c="#1f77b4")
+        ax.set_xlim(0, data[2])
+        ax.set_xlabel("simulation time")
         ax.set_ylabel("Neuron")
         ax.set_title("Output scatter plot")
         return

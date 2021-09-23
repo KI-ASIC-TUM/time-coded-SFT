@@ -98,9 +98,11 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         self.et_probe = None
         self.e_probe = None
         self.power_stats = None
+
         # Network variables
         self.n_chirps = 1
         self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
+        self.output = np.copy(self.spikes)
         self.voltage = np.zeros((2*self.sim_time, self.nsamples, 2*self.n_chirps))
         return
 
@@ -297,7 +299,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         imag_spikes = np.argmax(self.l1_imag_probes_S[0].data, axis=1)
         self.spikes[:, 0] = real_spikes
         self.spikes[:, 1] = imag_spikes
-        self.spikes = 1.5*self.sim_time - self.spikes
+        self.output = 1.5*self.sim_time - self.spikes
 
 
     def parse_energy_probe(self):
@@ -329,4 +331,4 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             self.parse_energy_probe()
         else:
             self.parse_probes()
-        return self.spikes
+        return self.output
