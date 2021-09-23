@@ -46,7 +46,9 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         e_probe: energy consumption probe
     """
     PLATFORM = "loihi"
-    TH_MANT = 131071
+    # Loihi threshold equation: v_th = th_mant * 2**th_exp
+    TH_MANT_MAX = 131071
+    TH_EXP = 6
     BIAS_EXP = 6
     REFRACTORY_T = 63
 
@@ -69,6 +71,15 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
                 "Loihi only admits unitary time steps. "
                 "The provided value will be ignored: {}".format(t_step)
             )
+        # Calculate and set threshold voltage
+        v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
+        self.vth_mant = int(v_threshold / (2**self.TH_EXP))
+        if self.vth_mant > self.TH_MANT_MAX:
+            logger.warn("V_th mantissa is larger than maximum possible value: "
+                        "{} > {} --> The value will be reset to the maximum"
+                        "".format(self.vth_mant, self.TH_MANT_MAX)
+                       )
+            self.vth_mant = self.TH_MANT_MAX
 
         # Initialize NETWORK and COMPARTMENTS
         self.net = nx.NxNet()
@@ -129,7 +140,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         l1_real_g = self.net.createCompartmentGroup()
         for i in range(self.nsamples):
             l1_real_p = nx.CompartmentPrototype(
-                vThMant=self.TH_MANT,
+                vThMant=self.vth_mant,
                 biasMant=0,
                 biasExp=self.BIAS_EXP,
                 compartmentCurrentDecay=self.current_decay,
@@ -145,7 +156,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         l1_imag_g = self.net.createCompartmentGroup()
         for i in range(self.nsamples):
             l1_imag_p = nx.CompartmentPrototype(
-                vThMant=self.TH_MANT,
+                vThMant=self.vth_mant,
                 biasMant=0,
                 biasExp=self.BIAS_EXP,
                 compartmentCurrentDecay=self.current_decay,
@@ -254,7 +265,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         """
         Run the SNN in the Loihi chip
         """
-        charging_stage_bias = int(self.TH_MANT*2/self.sim_time)
+        charging_stage_bias = int(self.vth_mant*2/self.sim_time)
         logger.debug("Running simulation")
         # Write bias value during charging stage to the corresponding channel
         self.bias_channel.write(1, [charging_stage_bias])

@@ -27,12 +27,8 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         self.time_step = kwargs.get("time_step")
         self.nsteps = int(self.sim_time / self.time_step)
         # Neuron properties
-        # Max possible voltage during charging stage is the average absolute
-        # value of the weight matrix applied during the whole simulation time,
-        # assuming half of the inputs (the ones connected to positive weights)
-        # occur on the first time step
-        self.v_threshold = self.sim_time * self.real_weights.max() * 0.637
-        self.v_threshold *= self.nsamples / 2
+        # Max possible voltage during charging stage is the zero-mode intensity
+        # for a wave containing a flat x_max divided by two
         self.v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
         # Network variables
         self.n_chirps = 1
