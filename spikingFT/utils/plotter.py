@@ -37,6 +37,26 @@ class Plotter(ABC):
         for ax in self.axis:
             ax.spines['right'].set_visible(False)
             ax.spines['top'].set_visible(False)
+        plt.rcParams['font.size'] = 20
+        #    plt.rcParams['font.family'] = 'Times New Roman'
+        plt.rcParams['axes.labelsize'] = 0.5*plt.rcParams['font.size']
+        plt.rcParams['axes.titlesize'] = plt.rcParams['font.size']
+        plt.rcParams['legend.fontsize'] = 0.5*plt.rcParams['font.size']
+        plt.rcParams['xtick.labelsize'] = 0.4*plt.rcParams['font.size']
+        plt.rcParams['ytick.labelsize'] = 0.4*plt.rcParams['font.size']
+        plt.rcParams['xtick.major.size'] = 3
+        plt.rcParams['xtick.minor.size'] = 3
+        plt.rcParams['xtick.major.width'] = 1
+        plt.rcParams['xtick.minor.width'] = 1
+        plt.rcParams['ytick.major.size'] = 3
+        plt.rcParams['ytick.minor.size'] = 3
+        plt.rcParams['ytick.major.width'] = 1
+        plt.rcParams['ytick.minor.width'] = 1
+        plt.rcParams['legend.frameon'] = True
+        plt.rcParams['legend.loc'] = 'upper right'
+        plt.rcParams['axes.linewidth'] = 1
+        plt.rcParams['lines.linewidth'] = 1
+        plt.rcParams['lines.markersize'] = 3
         return
 
     @abstractmethod
@@ -49,13 +69,14 @@ class Plotter(ABC):
             self.axis = np.array(self.axis).reshape((1,))
         for i, plot_name in enumerate(self.plot_names):
             self.plot(plot_name, i)
-        plt.tight_layout()
         self.formatter()
+        plt.tight_layout()
         if self.show:
             plt.show()
+        return self.fig
 
     def __call__(self):
-        self.run()
+        return self.run()
 
 
 class SNNSimulationPlotter(Plotter):
@@ -68,7 +89,9 @@ class SNNSimulationPlotter(Plotter):
             ax.plot(data[:, sample, 0], linewidth=.5)
             ax.plot(data[:, sample, 1], linewidth=.5)
         ax.set_xlabel("Time step")
-        ax.set_ylabel(r'$V_m$ (mV)')
+        # ax.set_ylabel(r'$V_m$ (mV)')
+        ax.spines['left'].set_visible(False)
+        ax.set_yticks([])
         ax.set_title("Membrane voltages over simulation time")
 
     def plot_spikes(self, data, ax):
@@ -78,7 +101,9 @@ class SNNSimulationPlotter(Plotter):
             ax.scatter(data[1][sample_n], sample_n+nsamples,  s=4, c="#1f77b4")
         ax.set_xlim(0, data[2])
         ax.set_xlabel("simulation time")
-        ax.set_ylabel("Neuron")
+        # ax.set_ylabel("Neuron")
+        ax.spines['left'].set_visible(False)
+        ax.set_yticks([])
         ax.set_title("Output scatter plot")
         return
     
@@ -86,7 +111,9 @@ class SNNSimulationPlotter(Plotter):
         ax.plot(data[0], linewidth=.5)
         ax.plot(data[1], linewidth=.5)
         ax.set_xlabel("FT bin nº")
-        ax.set_ylabel(r'S-FT $t_s$')
+        # ax.set_ylabel(r'S-FT $t_s$')
+        ax.spines['left'].set_visible(False)
+        ax.set_yticks([])
         ax.set_title("FT modulus")
 
     def plot(self, plot_name, plot_n):
@@ -111,7 +138,7 @@ class RelErrorPlotter(Plotter):
         l2 = ax_right.plot(data[1], color="red", linestyle="--", label="error", linewidth=.5)
         ax_right.set_ylim([0., 0.25])
         ax_left.set_ylabel("FT")
-        ax_right.set_ylabel("Rel. error")
+        ax_right.set_ylabel(r'$\varepsilon$')
         lines = l1 + l2
         labels = [l.get_label() for l in lines]
         if legend:
@@ -188,7 +215,7 @@ class RMSEPlotter(Plotter):
             raise ValueError("Invalid plot name: {}".format(plot_name))
 
 
-def align_yaxes(axes, nbins=4):
+def align_yaxes(axes, nbins=3):
     """
     Align the ticks of multiple y axes
 

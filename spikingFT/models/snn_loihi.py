@@ -48,7 +48,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
     PLATFORM = "loihi"
     # Loihi threshold equation: v_th = th_mant * 2**th_exp
     TH_MANT_MAX = 131071
-    TH_EXP = 4
+    TH_EXP = 6
     BIAS_EXP = 6
     REFRACTORY_T = 63
 
@@ -73,6 +73,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             )
         # Calculate and set threshold voltage
         v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
+        v_threshold *= 8
         self.vth_mant = int(v_threshold / (2**self.TH_EXP))
         if self.vth_mant > self.TH_MANT_MAX:
             logger.warn("V_th mantissa is larger than maximum possible value: "
@@ -136,7 +137,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             l1_imag_g: compartment group with nsamples compartments for
              the imag coefficients of the DFT
         """
-        core_distribution_factor = int(self.nsamples/4)
+        core_distribution_factor = 64
         # Real layer
         l1_real = []
         l1_real_g = self.net.createCompartmentGroup()

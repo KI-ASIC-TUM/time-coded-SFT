@@ -33,7 +33,8 @@ def main(conf_filename="../config/test_experiment_loihi.json"):
         (sft_modulus, ft_modulus)
     ]
     sim_plotter = spikingFT.utils.plotter.SNNSimulationPlotter(**kwargs)
-    sim_plotter()
+    fig = sim_plotter()
+    fig.savefig("./simulation_plot.pdf", dpi=150, bbox_inches='tight')
 
     # Plot relative error histograms
     rel_error = sim_handler.metrics["rel_error"]
@@ -48,7 +49,8 @@ def main(conf_filename="../config/test_experiment_loihi.json"):
         (sft_modulus, abs_error)
     ]
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
-    error_plotter()
+    fig = error_plotter()
+    fig.savefig("./error_plot.pdf", dpi=150, bbox_inches='tight')
     return
 
 

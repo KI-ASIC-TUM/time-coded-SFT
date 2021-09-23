@@ -4,7 +4,7 @@
 
 // need to be set
 #define SIM_TIME 200
-#define N_SAMPLES 64
+#define N_SAMPLES 128
 
 // really constant constant
 #define MAX_DECAY 4095
