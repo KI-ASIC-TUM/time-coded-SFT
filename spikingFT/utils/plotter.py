@@ -128,6 +128,57 @@ class SNNSimulationPlotter(Plotter):
             raise ValueError("Invalid plot name: {}".format(plot_name))
 
 
+class SNNLayersPlotter(Plotter):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def plot_voltages(self, data, ax):
+        nsamples = data.shape[1]
+        for sample in range(1, nsamples):
+            t = np.linspace(0, data.shape[0], data.shape[0])
+            ax.plot(t, data[:, sample, 0], linewidth=.5)
+            ax.plot(t, data[:, sample, 1], linewidth=.5)
+        ax.set_yticks([])
+        ax.set_xticks([])
+        ax.set_xlim(xmin=0)
+        ax.set_ylabel(r'${v_m}$')
+        ax.spines['left'].set_position('zero')
+        ax.spines['bottom'].set_position('zero')
+        ax.plot((1), (0), ls="", marker=">", ms=2, color="k",
+            transform=ax.get_yaxis_transform(), clip_on=False)
+        ax.plot((0), (1), ls="", marker="^", ms=2, color="k",
+                transform=ax.get_xaxis_transform(), clip_on=False)
+
+    def plot_spikes(self, data, ax, color="#1f77b4"):
+        nsamples = data[0].size
+        for sample_n in range(nsamples):
+            ax.scatter(data[0][sample_n], sample_n,  s=4, c=color)
+            ax.scatter(data[1][sample_n], sample_n+nsamples,  s=4, c=color)
+        ax.set_xlim(0, data[-1])
+        ax.set_yticks([])
+        ax.set_xticks([])
+        ax.set_ylabel(r'$t_s$')
+        ax.spines['left'].set_position('zero')
+        ax.spines['bottom'].set_position('zero')
+        ax.plot((1), (0), ls="", marker=">", ms=2, color="k",
+            transform=ax.get_yaxis_transform(), clip_on=False)
+        ax.plot((0), (1), ls="", marker="^", ms=2, color="k",
+                transform=ax.get_xaxis_transform(), clip_on=False)
+
+    def plot(self, plot_name, plot_n):
+        ax = self.axis[plot_n]
+        if plot_name == "voltages":
+            self.plot_voltages(self.data[plot_n], ax)
+        elif plot_name == "spikes":
+            if plot_n == 0:
+                color = "red"
+            else:
+                color = "#1f77b4"
+            self.plot_spikes(self.data[plot_n], ax, color)
+        else:
+            raise ValueError("Invalid plot name: {}".format(plot_name))
+
+
 class RelErrorPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
