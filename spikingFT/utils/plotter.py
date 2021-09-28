@@ -186,8 +186,10 @@ class RelErrorPlotter(Plotter):
     def plot_component(self, data, ax_left, component="", legend=False, xlabel=False):
         ax_right = ax_left.twinx()
         l1 = ax_left.plot(data[0], color="blue", label="signal", linewidth=.5)
-        l2 = ax_right.plot(data[1], color="red", linestyle="--", label="error", linewidth=.5)
-        ax_right.set_ylim([0., 0.25])
+        ax_left.plot(data[1], color="orange", label="signal", linewidth=.5)
+        l2 = ax_right.plot(data[-1], color="red", linestyle="--", label="error", linewidth=.5)
+        ax_right.set_ylim([0., 0.1])
+        ax_left.set_ylim([0., 1])
         ax_left.set_ylabel("FT")
         ax_right.set_ylabel(r'$\varepsilon$')
         lines = l1 + l2
