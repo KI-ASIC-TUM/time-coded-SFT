@@ -23,13 +23,14 @@ def plot_single_chirp(sim_handler, plot_spikes=True):
     sft_modulus -= sft_modulus.min()
     sft_modulus /= sft_modulus.max()
     ft_np = np.fft.fft(sim_handler.data[0, :])
-    ft_np = np.vstack((ft_np.real, ft_np.imag)).transpose()
-    ft_np = spikingFT.utils.metrics.simplify_ft(ft_np)
-    ft_real = ft_np[:, 0]
-    ft_imag = ft_np[:, 1]
-    ft_modulus = np.sqrt(ft_real**2 + ft_imag**2)
+    ft_np_comps = np.vstack((ft_np.real, ft_np.imag)).transpose()
+    ft_np_norm = spikingFT.utils.metrics.simplify_ft(ft_np_comps)
+    ft_real = ft_np_norm[:, 0]
+    ft_imag = ft_np_norm[:, 1]
+    ft_modulus = np.abs(ft_np)[1:int(nsamples/2)]
     ft_modulus -= ft_modulus.min()
     ft_modulus /= ft_modulus.max()
+
 
     if plot_spikes:
         # Plot S-FT result and reference result
@@ -55,7 +56,7 @@ def plot_single_chirp(sim_handler, plot_spikes=True):
         (imag_spikes, ft_imag, imag_error),
         (sft_modulus, ft_modulus, abs_error)
     ]
-    error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
+    error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs, show=False)
     fig = error_plotter()
     return fig
 
@@ -63,10 +64,13 @@ def plot_single_chirp(sim_handler, plot_spikes=True):
 def special_cases(filename="../config/experiment_special_cases.json"):
     sim_handler = spikingFT.startup.startup(filename, autorun=False)
     n_chirps = sim_handler.config["data"]["chirps_per_frame"]
+    platform = sim_handler.config["snn_config"]["framework"]
     figs = []
     for chirp_n in range(n_chirps):
         sim_handler.run(chirp_n)
         figs.append(plot_single_chirp(sim_handler, False))
+        figs[-1].savefig("./{}_results/error_plot_{}.pdf".format(platform, chirp_n),
+                         dpi=150, bbox_inches='tight')
     return
 
 

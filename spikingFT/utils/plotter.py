@@ -37,13 +37,13 @@ class Plotter(ABC):
         for ax in self.axis:
             ax.spines['right'].set_visible(False)
             ax.spines['top'].set_visible(False)
-        plt.rcParams['font.size'] = 20
+        plt.rcParams['font.size'] = 18
         #    plt.rcParams['font.family'] = 'Times New Roman'
-        plt.rcParams['axes.labelsize'] = 0.5*plt.rcParams['font.size']
-        plt.rcParams['axes.titlesize'] = plt.rcParams['font.size']
-        plt.rcParams['legend.fontsize'] = 0.5*plt.rcParams['font.size']
-        plt.rcParams['xtick.labelsize'] = 0.4*plt.rcParams['font.size']
-        plt.rcParams['ytick.labelsize'] = 0.4*plt.rcParams['font.size']
+        plt.rcParams['axes.labelsize'] = 0.9*plt.rcParams['font.size']
+        plt.rcParams['axes.titlesize'] = 1.1*plt.rcParams['font.size']
+        plt.rcParams['legend.fontsize'] = 0.9*plt.rcParams['font.size']
+        plt.rcParams['xtick.labelsize'] = 0.8*plt.rcParams['font.size']
+        plt.rcParams['ytick.labelsize'] = 0.8*plt.rcParams['font.size']
         plt.rcParams['xtick.major.size'] = 3
         plt.rcParams['xtick.minor.size'] = 3
         plt.rcParams['xtick.major.width'] = 1
@@ -64,12 +64,12 @@ class Plotter(ABC):
         return
 
     def run(self):
+        self.formatter()
         self.fig, self.axis = plt.subplots(self.nplots)
         if type(self.axis) is not np.ndarray:
             self.axis = np.array(self.axis).reshape((1,))
         for i, plot_name in enumerate(self.plot_names):
             self.plot(plot_name, i)
-        self.formatter()
         plt.tight_layout()
         if self.show:
             plt.show()
@@ -185,20 +185,21 @@ class RelErrorPlotter(Plotter):
 
     def plot_component(self, data, ax_left, component="", legend=False, xlabel=False):
         ax_right = ax_left.twinx()
-        l1 = ax_left.plot(data[0], color="blue", label="signal", linewidth=.5)
-        ax_left.plot(data[1], color="orange", label="signal", linewidth=.5)
-        l2 = ax_right.plot(data[-1], color="red", linestyle="--", label="error", linewidth=.5)
-        ax_right.set_ylim([0., 0.1])
+        l1 = ax_left.plot(data[0], color="blue", label="signal", linewidth=.3)
+        l2 = ax_left.plot(data[1], color="orange", label="ref", linewidth=.3)
+        l3 = ax_right.plot(data[-1], color="red", linestyle="--", label="error", linewidth=.1)
+        ax_right.set_ylim([0., 0.25])
         ax_left.set_ylim([0., 1])
-        ax_left.set_ylabel("FT")
-        ax_right.set_ylabel(r'$\varepsilon$')
-        lines = l1 + l2
+        ax_left.set_ylabel("FT", rotation=0, labelpad=15)
+        ax_right.set_ylabel(r'$\varepsilon$', rotation=0, labelpad=10)
+        lines = l1 + l2 +l3
         labels = [l.get_label() for l in lines]
         if legend:
-            ax_left.legend(lines, labels, loc='upper right')
+            ax_left.legend(lines, labels, bbox_to_anchor=(0.0, 0.9, 1., .102),
+                           loc='upper right', ncol=3)
         if xlabel:
             ax_left.set_xlabel("Bin Nº")
-        ax_left.set_title("{} spectrum rel. error".format(component))
+        ax_left.set_title("{}(F)".format(component))
         for ax in (ax_right, ax_left):
             ax.spines['top'].set_visible(False)
             ax.spines['left'].set_visible(False)
@@ -211,14 +212,14 @@ class RelErrorPlotter(Plotter):
     def plot(self, plot_name, plot_n):
         ax = self.axis[plot_n]
         if plot_name == "real_spectrum":
-            self.plot_component(self.data[plot_n], ax, "Real", legend=True)
+            self.plot_component(self.data[plot_n], ax, "Re", legend=True)
         elif plot_name == "imag_spectrum":
-            self.plot_component(self.data[plot_n], ax, "Imaginary")
+            self.plot_component(self.data[plot_n], ax, "Im")
         elif plot_name == "modulus":
-            self.plot_component(self.data[plot_n], ax, "Absolute", xlabel=True)
+            self.plot_component(self.data[plot_n], ax, "Abs", xlabel=True)
         else:
             raise ValueError("Invalid plot name: {}".format(plot_name))
-
+        self.fig.set_size_inches(8, 12)
 
 class RMSEPlotter(Plotter):
     def __init__(self, **kwargs):
