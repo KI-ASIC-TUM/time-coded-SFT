@@ -10,6 +10,10 @@ import spikingFT.startup
 import spikingFT.utils. plotter
 
 
+def special_cases(filename="../config/experiment_special_cases.json"):
+    return
+
+
 def main(conf_filename="../config/test_experiment_loihi.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
