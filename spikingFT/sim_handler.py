@@ -108,12 +108,12 @@ class SimHandler():
         logger.debug("Resulting RMSE: {}".format(self.metrics["rmse"]))
         return self.metrics
 
-    def run(self):
+    def run(self, chirp_n=0):
         """
         Routine for initializing and running the SNN with the desired params
         """
         # Load encoded data
-        self.data = self.get_data()[:, -1, :, 0].real
+        self.data = self.get_data()[:, chirp_n, :, 0].real
         # Reduce data dimensionality, by ignoring chirp and antenna dimensions
         self.encoded_data = self.encode_data()
         # Instantiate the snn class with the specified configuration

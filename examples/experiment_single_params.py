@@ -10,13 +10,7 @@ import spikingFT.startup
 import spikingFT.utils. plotter
 
 
-def special_cases(filename="../config/experiment_special_cases.json"):
-    return
-
-
-def main(conf_filename="../config/test_experiment_loihi.json"):
-    # Instantiate a simulation handler and run spiking FT with sample data
-    sim_handler = spikingFT.startup.startup(conf_filename)
+def plot_single_chirp(sim_handler):
     nsamples = sim_handler.snn.nsamples
     sim_time = sim_handler.config["snn_config"]["sim_time"]
     real_spikes = sim_handler.snn.spikes[:, 0][1:int(nsamples/2)]
@@ -54,9 +48,26 @@ def main(conf_filename="../config/test_experiment_loihi.json"):
     ]
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
     fig = error_plotter()
+    return fig
+
+
+def special_cases(filename="../config/experiment_special_cases.json"):
+    sim_handler = spikingFT.startup.startup(filename, autorun=False)
+    n_chirps = sim_handler.config["data"]["chirps_per_frame"]
+    figs = []
+    for chirp_n in range(n_chirps):
+        sim_handler.run(chirp_n)
+        figs.append(plot_single_chirp(sim_handler))
+    return
+
+
+def main(conf_filename="../config/test_experiment_loihi.json"):
+    # Instantiate a simulation handler and run spiking FT with sample data
+    sim_handler = spikingFT.startup.startup(conf_filename)
+    fig = plot_single_chirp(sim_handler)
     fig.savefig("./error_plot.pdf", dpi=150, bbox_inches='tight')
     return
 
 
 if __name__ == "__main__":
-    main()
+    special_cases()

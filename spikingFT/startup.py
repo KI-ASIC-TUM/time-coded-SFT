@@ -114,12 +114,13 @@ def startup(conf_file, show_plot=True, autorun=True):
     datapath, config = load_config(conf_file)
 
     logger = conf_logger()
-    msg = "Running spiking-FT:"
+    msg = "Starting up spiking-FT:"
     msg += "\n- Configuration file: {}".format(conf_file)
+    msg += "\n- Simulation time: {}".format(config["snn_config"]["sim_time"])
+    msg += "\n- Time step: {}".format(config["snn_config"]["time_step"])
     msg += "\n- FT mode: {}".format(config["snn_config"]["mode"])
     msg += "\n- Framework: {}".format(config["snn_config"]["framework"])
     msg += "\n- Test performance: {}".format(config["snn_config"]["measure_performance"])
-    msg += "\n- Nº Samples: {}".format(config["data"]["samples_per_chirp"])
     logger.info(msg)
 
     sim_handler = run(datapath, config, autorun)

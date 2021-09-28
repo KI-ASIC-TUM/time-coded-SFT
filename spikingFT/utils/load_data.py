@@ -16,6 +16,8 @@ def get_source(dpath):
     """
     if dpath.name == "TI_radar":
         source = "TI_sensor"
+    elif dpath.name == "special_cases":
+        source = "TI_sensor_special"
     elif dpath.name == "BBM":
         source = "BBM"
     else:
@@ -50,11 +52,23 @@ def bbm_get_datacube():
 
 def ti_get_datacube():
     """
-    Read file with the BBM simulator data and arrange it in a data cube
+    Read file with the TI dataset and arrange it in a data cube
     """
     rootpath = pathlib.Path(__file__).parent.parent.parent
     filename = rootpath.joinpath("data/TI_radar/1024/corner_reflector_1.npz")
     data_cube = np.load(filename)['arr_0']
+    return data_cube
+
+
+def ti_special_get_datacube():
+    """
+    Read file with TI sensor special cases and arrange it in a data cube
+    """
+    rootpath = pathlib.Path(__file__).parent.parent.parent
+    filename = rootpath.joinpath("data/TI_radar/special_cases/data_tum.npy")
+    raw_data = np.load(filename)
+    # Add extra dimensions for having the standard data format
+    data_cube = raw_data.reshape((1, raw_data.shape[0], raw_data.shape[1], 1))
     return data_cube
 
 
@@ -67,6 +81,11 @@ def get_data(source, config):
         max_frames = 120
         max_antennas = 8
         max_chirps = 64
+        max_samples = 1024
+    elif source == "TI_sensor_special":
+        max_frames = 1
+        max_antennas = 1
+        max_chirps = 4
         max_samples = 1024
     elif source == "BBM":
         max_frames = 1
@@ -100,11 +119,14 @@ def get_data(source, config):
     # Load the data from corresponding sensor
     if source == "TI_sensor":
         datacube = ti_get_datacube()
+    elif source == "TI_sensor_special":
+        datacube = ti_special_get_datacube()
     elif source == "BBM":
         datacube = bbm_get_datacube()
     data = datacube[:nframes, :nchirps, :nsamples, :nantennas]
     msg = "Data loaded:\n- Source: {}\n- Nº frames: {}".format(source, nframes)
     msg += "\n- Nº chirps: {}\n- Nº samples: {}".format(nchirps, nsamples)
+    msg += "\n- Nº antennas: {}".format(nantennas)
     logger.info(msg)
     return data
 
