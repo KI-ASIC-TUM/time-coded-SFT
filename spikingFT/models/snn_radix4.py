@@ -32,13 +32,14 @@ class FastFourierTransformSNN(ABC):
         #TODO: take care of sim_time and cycle time
         self.sim_time = kwargs.get("sim_time")
         # WEIGHTS and BIASES
-        self.l_weights, self.l_biases = self.calculate_weights()
+        self.l_weights, self.l_offsets, self.l_thresholds = self.calculate_weights()
         return
 
     def calculate_weights(self):
 
         weight_matrices = []
-        biases = []
+        offsets = []
+        thresholds = []
 
         for l in range(self.nlayers):
 
@@ -48,9 +49,20 @@ class FastFourierTransformSNN(ABC):
             )
             weight_matrix = spikingFT.utils.ft_utils.normalize(weight_matrix, self.PLATFORM)
             weight_matrices.append(weight_matrix)
-            biases.append(np.sum(weight_matrix, axis=1)*self.sim_time/2)
+            offsets.append(np.sum(weight_matrix, axis=1)*self.sim_time/2)
+            
+            # Both thresholds are fine
+            # TODO: Test for best performance
+            # 4*256 should be the optimum
+   
+            thresholds.append(4*254*(self.sim_time-1)/2)
+            #thresholds.append(0.9*np.max(np.sum(np.abs(weight_matrix), axis=1))*(self.sim_time-1)/2)
 
-        return weight_matrices, biases
+
+            
+            
+
+        return weight_matrices, offsets, thresholds
 
     @abstractmethod
     def run(self, data, *args):

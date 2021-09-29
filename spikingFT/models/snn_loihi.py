@@ -73,6 +73,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             )
         # Calculate and set threshold voltage
         v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
+        v_threshold *= 8
         self.vth_mant = int(v_threshold / (2**self.TH_EXP))
         if self.vth_mant > self.TH_MANT_MAX:
             logger.warn("V_th mantissa is larger than maximum possible value: "
@@ -98,9 +99,11 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         self.et_probe = None
         self.e_probe = None
         self.power_stats = None
+
         # Network variables
         self.n_chirps = 1
         self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
+        self.output = np.copy(self.spikes)
         self.voltage = np.zeros((2*self.sim_time, self.nsamples, 2*self.n_chirps))
         return
 
@@ -134,7 +137,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             l1_imag_g: compartment group with nsamples compartments for
              the imag coefficients of the DFT
         """
-        core_distribution_factor = int(self.nsamples/64)
+        core_distribution_factor = 64
         # Real layer
         l1_real = []
         l1_real_g = self.net.createCompartmentGroup()
@@ -297,7 +300,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         imag_spikes = np.argmax(self.l1_imag_probes_S[0].data, axis=1)
         self.spikes[:, 0] = real_spikes
         self.spikes[:, 1] = imag_spikes
-        self.spikes = 1.5*self.sim_time - self.spikes
+        self.output = 1.5*self.sim_time - self.spikes
 
 
     def parse_energy_probe(self):
@@ -329,4 +332,4 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             self.parse_energy_probe()
         else:
             self.parse_probes()
-        return self.spikes
+        return self.output
