@@ -34,6 +34,7 @@ def main(conf_filename="../config/test_experiment.json"):
         sim_handler.snn.voltage,
         (real_spikes, imag_spikes, 2*sim_time),
     ]
+    kwargs["sim_time"] = sim_time
     sim_plotter = spikingFT.utils.plotter.SNNLayersPlotter(**kwargs)
     fig = sim_plotter()
     fig.savefig("./simulation_plot.pdf", dpi=150, bbox_inches='tight')
