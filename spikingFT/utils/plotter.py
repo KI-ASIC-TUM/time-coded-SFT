@@ -44,7 +44,7 @@ class Plotter(ABC):
         return
 
     def run(self):
-        self.fig, self.axis = plt.subplots(self.nplots)
+        self.fig, self.axis = plt.subplots(self.nplots, figsize=(16,10))
         if type(self.axis) is not np.ndarray:
             self.axis = np.array(self.axis).reshape((1,))
         for i, plot_name in enumerate(self.plot_names):

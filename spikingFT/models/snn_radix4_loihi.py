@@ -14,6 +14,7 @@ except ImportError:
     logger.warn("Intel NxSDK cannot be found. "
                 "It will not be possible to run simulations with Loihi")
 import spikingFT.models.snn_radix4
+import spikingFT.utils.ft_utils
 
 class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
     """
@@ -103,7 +104,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             logger.debug('Creating CompartmentPrototypes of Layer {0} ...'.format(n))
             for i in range(self.nsamples*2):
                 l_p = nx.CompartmentPrototype(
-                    vThMant=self.l_thresholds[n] + self.l_biases[n][i],
+                    vThMant=self.l_thresholds[n] + self.l_offsets[n][i],
                     compartmentCurrentDecay=self.current_decay,
                     compartmentVoltageDecay=0,
                     functionalState=nx.COMPARTMENT_FUNCTIONAL_STATE.IDLE,
@@ -237,19 +238,21 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         reset_con = nx.ConnectionPrototype(signMode=1, weightExponent=4, compressionMode=0)
         
         logger.debug('Creating auxillary neurons ...')
+        
+        
         for i in range(self.nlayers):
-           
+            
+            bias = 2*self.l_thresholds[i]/self.sim_time
             clock = self.net.createSpikeGenProcess(numPorts=1)
             clock.addSpikes(spikeInputPortNodeIds=0, spikeTimes=[self.sim_time*(i+1)])
             clock.connect(self.l_g[i], prototype=clock_con,
-                    #weight=(254)*np.ones(self.nsamples*2)/2-np.sum(self.l_weights[i],axis=1)/8)
-                    weight=2*self.l_thresholds[i]/self.sim_time/8*np.ones(self.nsamples*2))
+                    weight=(bias*np.ones(2*self.nsamples)-np.sum(self.l_weights[i], axis=1))/8)
             clock_g.append(clock)
             logger.debug('Clock neuron connected to layer {0}.'.format(i))
             
             reset = self.net.createSpikeGenProcess(numPorts=1)
             reset.addSpikes(spikeInputPortNodeIds=0,
-                    spikeTimes=[(i+2)*self.sim_time+32])
+                    spikeTimes=[(i+2)*self.sim_time+4])
             reset.connect(self.l_g[i], prototype=reset_con,
                     weight=-256*np.ones(self.nsamples*2))
             reset_g.append(reset)
@@ -362,4 +365,4 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug('Done.')
         self.parse_probes()
         logger.debug('Run finished.')
-        return self.nlayers*self.sim_time - self.spikes[:,:,-1] + self.sim_time/2
+        return self.spikes[:,:,-1] - (self.nlayers+0.5)*self.sim_time
