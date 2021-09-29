@@ -36,7 +36,8 @@ def single_nsamples(sim_handler):
     kwargs["plot_names"] = ["single_line"]
     kwargs["data"] = [(errors, nsteps)]
     error_plotter = spikingFT.utils.plotter.RMSEPlotter(**kwargs)
-    error_plotter()
+    fig = error_plotter()
+    fig.savefig("./single_rmse.pdf", dpi=150)
 
 
 def multiple_nsamples(sim_handler):
@@ -57,13 +58,14 @@ def multiple_nsamples(sim_handler):
     kwargs["plot_names"] = ["multiple_lines"]
     kwargs["data"] = [(errors, nsteps, samples_per_chirp)]
     error_plotter = spikingFT.utils.plotter.RMSEPlotter(**kwargs)
-    error_plotter()
+    fig = error_plotter()
+    fig.savefig("./rmse_plot_multi.pdf", dpi=150)
 
 
 def main(conf_filename="../config/test_experiment_simtimes.json"):
     # Instantiate a simulation handler with specified configuration
     sim_handler = spikingFT.startup.startup(conf_filename, autorun=False)
-    single_nsamples(sim_handler)
+    # single_nsamples(sim_handler)
     multiple_nsamples(sim_handler)
     return
 

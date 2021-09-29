@@ -27,16 +27,13 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         self.time_step = kwargs.get("time_step")
         self.nsteps = int(self.sim_time / self.time_step)
         # Neuron properties
-        # Max possible voltage during charging stage is the average absolute
-        # value of the weight matrix applied during the whole simulation time,
-        # assuming half of the inputs (the ones connected to positive weights)
-        # occur on the first time step
-        self.v_threshold = self.sim_time * self.real_weights.max() * 0.637
-        self.v_threshold *= self.nsamples / 2
+        # Max possible voltage during charging stage is the zero-mode intensity
+        # for a wave containing a flat x_max divided by two
         self.v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
         # Network variables
         self.n_chirps = 1
         self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
+        self.output = np.copy(self.spikes)
         self.voltage = np.zeros((2*self.nsteps, self.nsamples, 2*self.n_chirps))
         self.l1 = self.init_compartments()
 
@@ -72,9 +69,8 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         self.l1.bias = 2*self.v_threshold / self.sim_time
         causal_neurons = np.zeros_like(causal_neurons)
         while counter < 2*self.nsteps:
-            relative_time = self.current_time - self.sim_time
             out_l1 = self.l1.update_state(causal_neurons)
-            self.spikes += out_l1 * (relative_time)
+            self.spikes += out_l1 * (self.current_time)
             self.voltage[counter] = self.l1.v_membrane
             self.current_time = counter * self.time_step
             counter += 1
@@ -82,9 +78,8 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         # All neurons that didn't spike are forced to spike in the last step,
         # since the spike-time of 1 corresponds to the lowest possible value.
         self.spikes = np.where(self.spikes == 0, 1.5*self.sim_time, self.spikes)
-        self.spikes = self.sim_time - self.spikes
-        self.spikes -= 0.5*self.sim_time
-        return self.spikes
+        self.output = 1.5*self.sim_time - self.spikes
+        return self.output
 
     def run(self, spike_trains):
         """
@@ -94,7 +89,7 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         logger.info("Running the NumPy TTFS Spiking-DFT")
 
         self.simulate(spike_trains)
-        return self.spikes
+        return self.output
 
 
 class SpikingNeuralLayer():

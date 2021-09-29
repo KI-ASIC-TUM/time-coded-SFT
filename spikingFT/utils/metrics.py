@@ -22,8 +22,8 @@ def simplify_ft(data):
     half_length = int(data.shape[0]/2)
     cropped = data[1:half_length, :]
     # Normalize resulting FT
-    result = cropped - cropped.min()
-    result /= result.max()
+    result = cropped - cropped.min(axis=0)
+    result /= result.max(axis=0)
     return result
 
 
@@ -55,10 +55,11 @@ def get_error_hist(signal, ref):
     Get the histogram of the relative error along the output
     """
     # Add small value for avoding divide-by-zero situations
-    signal = np.abs(simplify_ft(signal)) + 0.001
-    ref = np.abs(simplify_ft(ref)) + 0.001
+    signal = np.abs(simplify_ft(signal))
+    ref = np.abs(simplify_ft(ref))
     # Get the absolute error of each bin.
     diff = np.abs(signal - ref)
     # Get the relative error by dividing by the ideal intensity
-    relative_error = diff / ref
+    # relative_error = diff / ref
+    relative_error = diff
     return relative_error
