@@ -7,6 +7,8 @@ from abc import ABC, abstractmethod
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.style.use('ggplot')
+
 
 class Plotter(ABC):
     """
@@ -34,29 +36,33 @@ class Plotter(ABC):
         self.axis = []
 
     def formatter(self):
+        plt.rcParams['font.size'] = 18
+        #    plt.rcParams['font.family'] = 'Times New Roman'
+        # plt.rcParams['axes.labelsize'] = 0.9*plt.rcParams['font.size']
+        # plt.rcParams['axes.titlesize'] = 1.1*plt.rcParams['font.size']
+        # plt.rcParams['legend.fontsize'] = 0.9*plt.rcParams['font.size']
+        # plt.rcParams['xtick.labelsize'] = 0.8*plt.rcParams['font.size']
+        # plt.rcParams['ytick.labelsize'] = 0.8*plt.rcParams['font.size']
+        # plt.rcParams['xtick.major.size'] = 3
+        # plt.rcParams['xtick.minor.size'] = 3
+        # plt.rcParams['xtick.major.width'] = 1
+        # plt.rcParams['xtick.minor.width'] = 1
+        # plt.rcParams['ytick.major.size'] = 3
+        # plt.rcParams['ytick.minor.size'] = 3
+        # plt.rcParams['ytick.major.width'] = 1
+        # plt.rcParams['ytick.minor.width'] = 1
+        # plt.rcParams['legend.frameon'] = True
+        # plt.rcParams['legend.loc'] = 'upper right'
+        # plt.rcParams['axes.linewidth'] = 1
+        # plt.rcParams['lines.linewidth'] = 1
+        # plt.rcParams['lines.markersize'] = 3
+        plt.rcParams['axes.grid'] = False
+        plt.rcParams['grid.color'] = "lightgrey"
+        plt.rcParams['axes.facecolor'] = "white"
+        plt.rcParams['axes.edgecolor'] = "black"
         for ax in self.axis:
             ax.spines['right'].set_visible(False)
             ax.spines['top'].set_visible(False)
-        plt.rcParams['font.size'] = 18
-        #    plt.rcParams['font.family'] = 'Times New Roman'
-        plt.rcParams['axes.labelsize'] = 0.9*plt.rcParams['font.size']
-        plt.rcParams['axes.titlesize'] = 1.1*plt.rcParams['font.size']
-        plt.rcParams['legend.fontsize'] = 0.9*plt.rcParams['font.size']
-        plt.rcParams['xtick.labelsize'] = 0.8*plt.rcParams['font.size']
-        plt.rcParams['ytick.labelsize'] = 0.8*plt.rcParams['font.size']
-        plt.rcParams['xtick.major.size'] = 3
-        plt.rcParams['xtick.minor.size'] = 3
-        plt.rcParams['xtick.major.width'] = 1
-        plt.rcParams['xtick.minor.width'] = 1
-        plt.rcParams['ytick.major.size'] = 3
-        plt.rcParams['ytick.minor.size'] = 3
-        plt.rcParams['ytick.major.width'] = 1
-        plt.rcParams['ytick.minor.width'] = 1
-        plt.rcParams['legend.frameon'] = True
-        plt.rcParams['legend.loc'] = 'upper right'
-        plt.rcParams['axes.linewidth'] = 1
-        plt.rcParams['lines.linewidth'] = 1
-        plt.rcParams['lines.markersize'] = 3
         return
 
     @abstractmethod
@@ -70,7 +76,7 @@ class Plotter(ABC):
             self.axis = np.array(self.axis).reshape((1,))
         for i, plot_name in enumerate(self.plot_names):
             self.plot(plot_name, i)
-        plt.tight_layout()
+        # plt.tight_layout()
         if self.show:
             plt.show()
         return self.fig
@@ -131,6 +137,7 @@ class SNNSimulationPlotter(Plotter):
 class SNNLayersPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.sim_time = kwargs.get("sim_time")
 
     def plot_voltages(self, data, ax):
         nsamples = data.shape[1]
@@ -140,10 +147,13 @@ class SNNLayersPlotter(Plotter):
             ax.plot(t, data[:, sample, 1], linewidth=.5)
         ax.set_yticks([])
         ax.set_xticks([])
-        ax.set_xlim(xmin=0)
+        ax.set_xlim(0, 400)
         ax.set_ylabel(r'${v_m}$')
-        ax.spines['left'].set_position('zero')
+        ax.axvline(x=self.sim_time, linestyle="--", linewidth="1", color="grey")
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
         ax.spines['bottom'].set_position('zero')
+        ax.spines['left'].set_position('zero')
         ax.plot((1), (0), ls="", marker=">", ms=2, color="k",
             transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot((0), (1), ls="", marker="^", ms=2, color="k",
@@ -158,8 +168,11 @@ class SNNLayersPlotter(Plotter):
         ax.set_yticks([])
         ax.set_xticks([])
         ax.set_ylabel(r'$t_s$')
+        ax.axvline(x=self.sim_time, linestyle="--", linewidth="1", color="grey")
         ax.spines['left'].set_position('zero')
         ax.spines['bottom'].set_position('zero')
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
         ax.plot((1), (0), ls="", marker=">", ms=2, color="k",
             transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot((0), (1), ls="", marker="^", ms=2, color="k",
@@ -171,12 +184,18 @@ class SNNLayersPlotter(Plotter):
             self.plot_voltages(self.data[plot_n], ax)
         elif plot_name == "spikes":
             if plot_n == 0:
-                color = "red"
+                color = "#E24A33"
             else:
                 color = "#1f77b4"
             self.plot_spikes(self.data[plot_n], ax, color)
         else:
             raise ValueError("Invalid plot name: {}".format(plot_name))
+        self.fig.subplots_adjust(left=0.1,
+                    bottom=0.1,
+                    right=0.9,
+                    top=0.9,
+                    wspace=0.001,
+                    hspace=0.1)
 
 
 class RelErrorPlotter(Plotter):
@@ -185,9 +204,9 @@ class RelErrorPlotter(Plotter):
 
     def plot_component(self, data, ax_left, component="", legend=False, xlabel=False):
         ax_right = ax_left.twinx()
-        l1 = ax_left.plot(data[0], color="blue", label="signal", linewidth=.3)
-        l2 = ax_left.plot(data[1], color="orange", label="ref", linewidth=.3)
-        l3 = ax_right.plot(data[-1], color="red", linestyle="--", label="error", linewidth=.1)
+        l1 = ax_left.plot(data[0], label="signal", color='#348ABD', linewidth=.5)
+        l2 = ax_left.plot(data[1], label="ref", color='#FBC15E', linewidth=.5)
+        l3 = ax_right.plot(data[-1], linestyle="--", label="error", color='#E24A33', linewidth=.1)
         ax_right.set_ylim([0., 0.25])
         ax_left.set_ylim([0., 1])
         ax_left.set_ylabel("FT", rotation=0, labelpad=15)
@@ -207,7 +226,8 @@ class RelErrorPlotter(Plotter):
             ax.tick_params(axis="y", which="both",length=0)
         # Align right and left ticks
         align_yaxes([ax_left, ax_right])
-        ax_left.grid(axis='y')
+        # ax.set_facecolor('white')
+        ax.grid(axis='y')
 
     def plot(self, plot_name, plot_n):
         ax = self.axis[plot_n]
