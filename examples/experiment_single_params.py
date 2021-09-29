@@ -10,12 +10,12 @@ import spikingFT.startup
 import spikingFT.utils. plotter
 
 
-def main(conf_filename="../config/test_experiment.json"):
+def main(conf_filename="../config/test_radix4.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     nsamples = sim_handler.snn.nsamples
-    real_spikes = sim_handler.output[:, 0][1:int(nsamples/2)]
-    imag_spikes = sim_handler.output[:, 1][1:int(nsamples/2)]
+    real_spikes = sim_handler.output[:, 0][1:]
+    imag_spikes = sim_handler.output[:, 1][1:]
     sft_modulus = np.sqrt(real_spikes**2 + imag_spikes**2)
 
     # Plot S-FT result and reference result
@@ -28,6 +28,7 @@ def main(conf_filename="../config/test_experiment.json"):
     ]
     sim_plotter = spikingFT.utils.plotter.SNNSimulationPlotter(**kwargs)
     sim_plotter()
+    plt.savefig('results')
 
     # Plot relative error histograms
     rel_error = sim_handler.metrics["rel_error"]
@@ -44,6 +45,7 @@ def main(conf_filename="../config/test_experiment.json"):
     ]
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
     error_plotter()
+    plt.savefig('error')
     return
 
 
