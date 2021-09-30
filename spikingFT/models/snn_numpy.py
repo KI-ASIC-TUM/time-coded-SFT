@@ -32,9 +32,14 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         self.v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
         # Network variables
         self.n_chirps = 1
-        self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
-        self.output = np.copy(self.spikes)
-        self.voltage = np.zeros((2*self.nsteps, self.nsamples, 2*self.n_chirps))
+        self.spikes = np.zeros((self.nsamples, 2*self.n_chirps, self.nlayers))
+        self.output = np.copy(self.spikes[:, :, 0])
+        self.voltage = np.zeros((
+                2*self.nsteps,
+                self.nsamples,
+                2*self.n_chirps,
+                self.nlayers
+        ))
         self.l1 = self.init_compartments()
 
 
@@ -43,7 +48,7 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         Initializes compartments depending on the number of samples
         """
         l1 = SpikingNeuralLayer(
-                (self.nsamples, 2*self.n_chirps),
+                (self.nsamples, 2*self.n_chirps, self.nlayers),
                 (self.real_weights, self.imag_weights),
                 v_threshold=self.v_threshold,
                 time_step=self.time_step
@@ -77,8 +82,8 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
 
         # All neurons that didn't spike are forced to spike in the last step,
         # since the spike-time of 1 corresponds to the lowest possible value.
-        self.spikes = np.where(self.spikes == 0, 1.5*self.sim_time, self.spikes)
-        self.output = 1.5*self.sim_time - self.spikes
+        self.spikes = np.where(self.spikes == 0, 2*self.sim_time, self.spikes)
+        self.output = 1.5*self.sim_time - self.spikes.reshape(self.output.shape)
         return self.output
 
     def run(self, spike_trains):
@@ -132,6 +137,7 @@ class SpikingNeuralLayer():
         # Add bias to the result and multiply by time_step
         z += self.bias
         z *= self.time_step
+        z = z.reshape(self.v_membrane.shape)
         return z
 
     def update_membrane_potential(self, z):
