@@ -87,7 +87,8 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         for l in range(self.nlayers):
             layer = brian.NeuronGroup(2*self.nsamples, self.neuron_model, 
                                 threshold='v > ' + str(self.l_thresholds[l]), reset='v = 0; g = 0',
-                                refractory=self.total_sim_time*brian.ms, method='exponential_euler', 
+                                refractory=self.total_sim_time*brian.ms,
+                                method='rk2', 
                                 name='layer'+str(l)) 
             layer[:].v = -self.l_offsets[l]
             layers.append(layer)

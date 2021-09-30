@@ -7,6 +7,8 @@ from abc import ABC, abstractmethod
 import numpy as np
 # Local libraries
 import spikingFT.utils.ft_utils
+import logging
+logger = logging.getLogger('spiking-FT')
 
 
 class FastFourierTransformSNN(ABC):
@@ -55,7 +57,9 @@ class FastFourierTransformSNN(ABC):
                 nsamples=self.nsamples,
                 platform = self.PLATFORM
             )
-            weight_matrix = spikingFT.utils.ft_utils.normalize(weight_matrix, self.PLATFORM)
+            weight_matrix = np.round(spikingFT.utils.ft_utils.normalize(weight_matrix,
+                    self.PLATFORM)*128,0)/128
+            logger.debug(weight_matrix)
             weight_matrices.append(weight_matrix)
             offsets.append(np.sum(weight_matrix, axis=axis)*self.sim_time/2)
             

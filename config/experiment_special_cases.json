@@ -5,17 +5,17 @@
     {
         "snn_config":
         {
-            "sim_time": 200,
-            "time_step": 1,
-            "mode": "dft",
-            "framework": "numpy",
+            "sim_time": 128,
+            "time_step": 0.1,
+            "mode": "fft",
+            "framework": "radix4brian",
             "current_decay": 0,
             "measure_performance": false
         },
 
         "data":
         {
-            "samples_per_chirp": 128,
+            "samples_per_chirp": 256,
             "chirps_per_frame": 4,
             "antennas": 1,
             "nframes": 1
