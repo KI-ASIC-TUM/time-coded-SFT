@@ -10,7 +10,7 @@ import numpy as np
 import pathlib
 # Local libraries
 try:
-    from brian2 import *
+    import brian2 as brian
 except ImportError:
     logger.warn("Brian2 cannot be found. "
                 "It will not be possible to run simulation with Brian2.")
@@ -85,9 +85,9 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         
         layers = [] # nlayers list of compartment groups
         for l in range(self.nlayers):
-            layer = NeuronGroup(2*self.nsamples, self.neuron_model, 
+            layer = brian.NeuronGroup(2*self.nsamples, self.neuron_model, 
                                 threshold='v > ' + str(self.l_thresholds[l]), reset='v = 0; g = 0',
-                                refractory=self.total_sim_time*ms, method='exponential_euler', 
+                                refractory=self.total_sim_time*brian.ms, method='exponential_euler', 
                                 name='layer'+str(l)) 
             layer[:].v = -self.l_offsets[l]
             layers.append(layer)
@@ -111,8 +111,8 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug('Initiliazing input layer and inputs ...')
 
         indices = np.arange(2*self.nsamples)
-        encoded_data = np.hstack([real_encoded_data, imag_encoded_data])*ms
-        input_layer = SpikeGeneratorGroup(2*self.nsamples, indices, encoded_data, name='input_layer')
+        encoded_data = np.hstack([real_encoded_data, imag_encoded_data])*brian.ms
+        input_layer = brian.SpikeGeneratorGroup(2*self.nsamples, indices, encoded_data, name='input_layer')
         
         self.layers.append(input_layer)
         logger.debug('Done.')
@@ -133,12 +133,12 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         clock_neurons = []
         clock_synapses = []
         for l in range(self.nlayers):
-          spike_times = np.array(np.arange((l+1)*self.sim_time, self.total_sim_time, self.total_sim_time))*ms
+          spike_times = np.array(np.arange((l+1)*self.sim_time, self.total_sim_time, self.total_sim_time))*brian.ms
           indices = np.array([0]*len(spike_times))
-          clock = SpikeGeneratorGroup(1, indices, spike_times, name='clock_neurons' + str(l))
+          clock = brian.SpikeGeneratorGroup(1, indices, spike_times, name='clock_neurons' + str(l))
           clock_neurons.append(clock)
 
-          clock_synapse = Synapses(clock, self.layers[l], on_pre='g =' + str(2*self.l_thresholds[l]/self.sim_time))
+          clock_synapse = brian.Synapses(clock, self.layers[l], on_pre='g =' + str(2*self.l_thresholds[l]/self.sim_time))
           clock_synapse.connect()
           clock_synapses.append(clock_synapse)
 
@@ -159,8 +159,8 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         #self.l_probes_S.append(SpikeMonitor(self.layers[-1]))
 
         for l in range(self.nlayers): 
-          probes_S = (SpikeMonitor(self.layers[l], name='probes_spikes'+str(l)))
-          probes_V = (StateMonitor(self.layers[l], 'v', record=np.arange(0,2*self.nsamples), 
+          probes_S = (brian.SpikeMonitor(self.layers[l], name='probes_spikes'+str(l)))
+          probes_V = (brian.StateMonitor(self.layers[l], 'v', record=np.arange(0,2*self.nsamples), 
                                     name='probes_voltage'+str(l)))
           self.l_probes_S.append(probes_S)
           self.l_probes_V.append(probes_V)
@@ -182,7 +182,7 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         for l in range(self.nlayers):
 
             # create synapses
-            synapse = Synapses(self.layers[l-1], self.layers[l], 
+            synapse = brian.Synapses(self.layers[l-1], self.layers[l], 
                                 model='w : 1', on_pre='g += w', name='s'+str(l))
 
             # connect only non zero synapses
@@ -203,10 +203,10 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         for l in range(self.nlayers):
             spike_times = [] 
             for t in self.l_probes_S[l].spike_trains():
-                if not (self.l_probes_S[l].spike_trains()[t])/(1*ms):
+                if not (self.l_probes_S[l].spike_trains()[t])/(1*brian.ms):
                     spike_times.append(0)
                 else:
-                    spike_times.append(self.l_probes_S[l].spike_trains()[t][0]/(1*ms))
+                    spike_times.append(self.l_probes_S[l].spike_trains()[t][0]/(1*brian.ms))
 
             self.spikes[:, 0, l] = spikingFT.utils.ft_utils.bit_reverse(np.array(spike_times)[:self.nsamples],
                                       base=4, nlayers=self.nlayers)
@@ -220,13 +220,13 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
     def simulate(self):
 
         logger.debug('Setting up network ... ')
-        self.net = Network(self.layers, self.synapses, 
+        self.net = brian.Network(self.layers, self.synapses, 
                            self.aux_neurons, self.aux_synapses, 
                            self.l_probes_S, self.l_probes_V)
         logger.debug('Done.')
 
         logger.debug('Running Brian2 simulation ... ')
-        self.net.run(self.total_sim_time * ms)
+        self.net.run(self.total_sim_time * brian.ms)
         logger.info('Finishing Brian2 simulation ...')
 
 
@@ -234,7 +234,7 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         # Create spike generators
         self.init_inputs(data.real, data.imag)
-        # Connect all layers
+        # Connect all layers:W
         self.connect()
         # Init probes
         self.init_probes()
