@@ -10,6 +10,7 @@ import spikingFT.models.snn_brian
 import spikingFT.models.snn_loihi
 import spikingFT.models.snn_numpy
 import spikingFT.models.snn_radix4_loihi
+import spikingFT.models.snn_radix4_brian
 import spikingFT.utils.load_data
 import spikingFT.utils.encoding
 import spikingFT.utils.metrics
@@ -79,6 +80,8 @@ class SimHandler():
             snn = spikingFT.models.snn_numpy.SNNNumpy(**snn_config)
         elif framework == "radix4loihi":
             snn = spikingFT.models.snn_radix4_loihi.SNNRadix4Loihi(**snn_config)
+        elif framework == "radix4brian":
+            snn = spikingFT.models.snn_radix4_brian.SNNRadix4Brian(**snn_config)
         else:
             raise ValueError("Invalid framework: {}".format(framework))
         return snn

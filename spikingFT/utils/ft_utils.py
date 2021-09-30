@@ -23,11 +23,13 @@ def normalize(weights, platform):
     """
     Normalize the weights for computing the 1-D FT
     """
-    if platform in ("brian", "numpy"):
+    if platform in ("numpy"):
         weights /= weights.size
     if platform == "loihi":
         correction_coef = 127 / weights.max()
         weights = np.rint(weights * correction_coef)*2
+    if platform == "brian":
+        weights = weights
     return weights
 
 
@@ -58,7 +60,7 @@ def dft_connection_matrix(nsamples, platform):
     return (real_weights_norm, imag_weights_norm)
 
 
-def fft_connection_matrix(layer, nsamples):
+def fft_connection_matrix(layer, nsamples, platform):
     """
     Connection matrix for a radix-4 fft
     """
@@ -109,6 +111,7 @@ def fft_connection_matrix(layer, nsamples):
 
     # Twiddle factors times butterfly matrix
     M = np.matmul(tf.transpose(), M)
+
     return M
 
 def bit_reverse(data, base, nlayers):

@@ -43,20 +43,28 @@ class FastFourierTransformSNN(ABC):
 
         for l in range(self.nlayers):
 
+            if self.PLATFORM == 'loihi':
+                axis = 1
+            elif self.PLATFORM =='brian':
+                axis = 0
+            else:
+                axis = 0
+
             weight_matrix = spikingFT.utils.ft_utils.fft_connection_matrix(
                 layer=l,
                 nsamples=self.nsamples,
+                platform = self.PLATFORM
             )
             weight_matrix = spikingFT.utils.ft_utils.normalize(weight_matrix, self.PLATFORM)
             weight_matrices.append(weight_matrix)
-            offsets.append(np.sum(weight_matrix, axis=1)*self.sim_time/2)
+            offsets.append(np.sum(weight_matrix, axis=axis)*self.sim_time/2)
             
             # Both thresholds are fine
             # TODO: Test for best performance
             # 4*256 should be the optimum
    
-            thresholds.append(4*254*(self.sim_time-1)/2)
-            #thresholds.append(0.9*np.max(np.sum(np.abs(weight_matrix), axis=1))*(self.sim_time-1)/2)
+            thresholds.append(4*(self.sim_time)/2)
+            #thresholds.append(np.max(np.sum(np.abs(weight_matrix), axis=axis))*(self.sim_time)/4)
 
 
             

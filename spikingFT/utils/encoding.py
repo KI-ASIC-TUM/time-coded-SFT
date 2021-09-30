@@ -110,6 +110,7 @@ class TimeEncoder(Encoder):
         """
         super().__init__()
         # Store encoder parameteres
+        # TODO: t_min = time_step 
         self.t_min = kwargs.get("t_min", 1)
         self.t_max = kwargs["t_max"]
         self.x_min = kwargs.get("x_min", 0)

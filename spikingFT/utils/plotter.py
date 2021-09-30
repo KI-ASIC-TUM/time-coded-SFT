@@ -27,6 +27,7 @@ class Plotter(ABC):
         self.plot_names = kwargs.get("plot_names")
         self.data = kwargs.get("data")
         self.show = kwargs.get("show", True)
+        self.figsize = kwargs.get("figsize")
         if len(self.plot_names) != len(self.data):
             raise ValueError("Sizes of names and data lists do not match")
         self.nplots = len(self.plot_names)
@@ -65,7 +66,7 @@ class Plotter(ABC):
 
     def run(self):
         self.formatter()
-        self.fig, self.axis = plt.subplots(self.nplots)
+        self.fig, self.axis = plt.subplots(self.nplots, figsize=self.figsize)
         if type(self.axis) is not np.ndarray:
             self.axis = np.array(self.axis).reshape((1,))
         for i, plot_name in enumerate(self.plot_names):
