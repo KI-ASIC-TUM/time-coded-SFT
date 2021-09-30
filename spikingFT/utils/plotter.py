@@ -150,6 +150,7 @@ class SNNLayersPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.sim_time = kwargs.get("sim_time")
+        self.time_step = kwargs.get("time_step")
         self.nlayers = kwargs.get("nlayers", 1)
 
     def plot_voltages(self, data, ax, layern=1):
@@ -164,7 +165,7 @@ class SNNLayersPlotter(Plotter):
         ax.set_ylabel(f'$V_{{{layern}}}$', rotation=0, labelpad=10)
         for n in range(self.nlayers+1):
             ax.axvline(
-                x=self.sim_time*(n+1),
+                x=self.sim_time*(n+1)/self.time_step,
                 linestyle=":",
                 linewidth=".7",
                 color="grey"
