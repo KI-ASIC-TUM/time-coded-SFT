@@ -10,15 +10,16 @@ import spikingFT.startup
 import spikingFT.utils.plotter
 
 
-def main(conf_filename="../config/test_radix4.json"):
+def main(conf_filename="../config/test_experiment_brian.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     nsamples = sim_handler.snn.nsamples
     nlayers = sim_handler.snn.nlayers
     sim_time = sim_handler.config["snn_config"]["sim_time"]
-    total_time = sim_time * (nlayers+2)
-    real_spikes = sim_handler.snn.spikes[:, 0][1:int(nsamples/2), :]
-    imag_spikes = sim_handler.snn.spikes[:, 1][1:int(nsamples/2), :]
+    time_step = sim_handler.config["snn_config"]["time_step"]
+    total_time = sim_time * (nlayers+1)
+    real_spikes = sim_handler.snn.spikes[:, 0][1:int(nsamples), :]
+    imag_spikes = sim_handler.snn.spikes[:, 1][1:int(nsamples), :]
 
     # Split input spikes in two subgroups,
     # so it has the same format as an SNN layer
@@ -40,6 +41,7 @@ def main(conf_filename="../config/test_radix4.json"):
     kwargs["sim_time"] = sim_time
     kwargs["tight_layout"] = False
     kwargs["nlayers"] = nlayers
+    kwargs["time_step"] = time_step
     sim_plotter = spikingFT.utils.plotter.SNNLayersPlotter(**kwargs)
     fig = sim_plotter()
     fig.savefig("./simulation_plot.pdf", dpi=150, bbox_inches='tight')
