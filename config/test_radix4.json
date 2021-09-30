@@ -6,6 +6,7 @@
         "snn_config":
         {
             "sim_time": 127,
+            "time_step": 1,
             "mode": "fft",
             "framework": "radix4loihi",
             "current_decay": 0,

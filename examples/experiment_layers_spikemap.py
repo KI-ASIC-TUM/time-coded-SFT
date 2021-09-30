@@ -10,15 +10,13 @@ import spikingFT.startup
 import spikingFT.utils.plotter
 
 
-def main(conf_filename="../config/test_experiment.json"):
+def main(conf_filename="../config/test_experiment_loihi.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     nsamples = sim_handler.snn.nsamples
     sim_time = sim_handler.config["snn_config"]["sim_time"]
     real_spikes = sim_handler.snn.spikes[:, 0][1:int(nsamples/2)]
     imag_spikes = sim_handler.snn.spikes[:, 1][1:int(nsamples/2)]
-    real_spikes_norm = sim_handler.output[:, 0][1:int(nsamples/2)]
-    imag_spikes_norm = sim_handler.output[:, 1][1:int(nsamples/2)]
 
     input_spikes = sim_handler.encoded_data.real
     # Split input spikes in two subgroups,

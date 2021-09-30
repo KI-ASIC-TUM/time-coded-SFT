@@ -29,6 +29,7 @@ class Plotter(ABC):
         self.plot_names = kwargs.get("plot_names")
         self.data = kwargs.get("data")
         self.show = kwargs.get("show", True)
+        self.tight_layout = kwargs.get("tight_layout", True)
         if len(self.plot_names) != len(self.data):
             raise ValueError("Sizes of names and data lists do not match")
         self.nplots = len(self.plot_names)
@@ -76,7 +77,8 @@ class Plotter(ABC):
             self.axis = np.array(self.axis).reshape((1,))
         for i, plot_name in enumerate(self.plot_names):
             self.plot(plot_name, i)
-        # plt.tight_layout()
+        if self.tight_layout:
+            plt.tight_layout()
         if self.show:
             plt.show()
         return self.fig
@@ -97,8 +99,10 @@ class SNNSimulationPlotter(Plotter):
         ax.set_xlabel("Time step")
         # ax.set_ylabel(r'$V_m$ (mV)')
         ax.spines['left'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
         ax.set_yticks([])
-        ax.set_title("Membrane voltages over simulation time")
+        ax.set_title("Membrane voltages")
 
     def plot_spikes(self, data, ax):
         nsamples = data[0].size
@@ -109,6 +113,8 @@ class SNNSimulationPlotter(Plotter):
         ax.set_xlabel("simulation time")
         # ax.set_ylabel("Neuron")
         ax.spines['left'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
         ax.set_yticks([])
         ax.set_title("Output scatter plot")
         return
