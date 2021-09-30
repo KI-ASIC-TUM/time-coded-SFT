@@ -26,6 +26,7 @@ class FourierTransformSNN(ABC):
         self.output = None
         self.nsamples = kwargs.get("nsamples")
         self.sim_time = kwargs.get("sim_time")
+        self.nlayers = 1
         # WEIGHTS
         self.real_weights, self.imag_weights = self.calculate_weights()
         return

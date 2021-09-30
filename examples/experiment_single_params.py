@@ -5,6 +5,7 @@ Script for testing the SNNNumpy class with sample data
 # Standard libraries
 import matplotlib.pyplot as plt
 import numpy as np
+import pathlib
 # Local libraries
 import spikingFT.startup
 import spikingFT.utils.plotter
@@ -46,7 +47,7 @@ def plot_error(nsamples, data, output, spikes, rel_error):
     """
     Plot relative error histograms
     """
-    spikes = spikingFT.utils.metrics.simplify_ft(spikes)
+    spikes = spikingFT.utils.metrics.simplify_ft(spikes[:, -1])
     real_spikes = 1 - spikes[:, 0]
     imag_spikes = 1 - spikes[:, 1]
     real_spikes_norm = output[:, 0][1:int(nsamples/2)]
@@ -56,14 +57,21 @@ def plot_error(nsamples, data, output, spikes, rel_error):
     sft_modulus /= sft_modulus.max()
     ft_real, ft_imag, ft_modulus = get_ft_components(nsamples, data)
 
+    real_spikes_norm -= real_spikes_norm.min()
+    real_spikes_norm /= real_spikes_norm.max()
+    real_spikes_norm = 1 - real_spikes_norm
+    imag_spikes_norm -= imag_spikes_norm.min()
+    imag_spikes_norm /= imag_spikes_norm.max()
+    imag_spikes_norm = 1 - imag_spikes_norm
+
     real_error = rel_error[:, 0]
     imag_error = rel_error[:, 1]
     abs_error = (real_error + imag_error) / 2
     kwargs = {}
     kwargs["plot_names"] = ["real_spectrum", "imag_spectrum", "modulus"]
     kwargs["data"] = [
-        (real_spikes, ft_real, real_error),
-        (imag_spikes, ft_imag, imag_error),
+        (real_spikes_norm, ft_real, real_error),
+        (imag_spikes_norm, ft_imag, imag_error),
         (sft_modulus, ft_modulus, abs_error)
     ]
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
@@ -87,11 +95,14 @@ def special_cases(filename="../config/experiment_special_cases.json"):
     sim_handler = spikingFT.startup.startup(filename, autorun=False)
     n_chirps = sim_handler.config["data"]["chirps_per_frame"]
     platform = sim_handler.config["snn_config"]["framework"]
+    mode = sim_handler.config["snn_config"]["mode"]
     figs = []
+    folder_path = "./{}_{}_results/".format(mode, platform)
+    pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
     for chirp_n in range(n_chirps):
         sim_handler.run(chirp_n)
         figs.append(plot_single_chirp(sim_handler, False))
-        figs[-1].savefig("./{}_results/error_plot_{}.pdf".format(platform, chirp_n),
+        figs[-1].savefig("./{}/error_plot_{}.pdf".format(folder_path, chirp_n),
                          dpi=150, bbox_inches='tight')
     return
 
@@ -105,4 +116,4 @@ def main(conf_filename="../config/test_experiment.json"):
 
 
 if __name__ == "__main__":
-    main()
+    special_cases()

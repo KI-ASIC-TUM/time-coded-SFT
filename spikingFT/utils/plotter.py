@@ -17,7 +17,7 @@ class Plotter(ABC):
     Any plot that has to be run in the library shall be created as
     an instance of this class
     """
-    def __init__(self, **kwargs, style="classic"):
+    def __init__(self, style="classic", **kwargs):
         """
         Initialize plotter
 
@@ -30,7 +30,7 @@ class Plotter(ABC):
         self.data = kwargs.get("data")
         self.show = kwargs.get("show", True)
         self.tight_layout = kwargs.get("tight_layout", True)
-        self.style = kwargs.get("style", "classic")
+        self.style = style
         if len(self.plot_names) != len(self.data):
             raise ValueError("Sizes of names and data lists do not match")
         self.nplots = len(self.plot_names)
