@@ -110,7 +110,8 @@ class TimeEncoder(Encoder):
         """
         super().__init__()
         # Store encoder parameteres
-        self.t_min = kwargs.get("t_min", 0)
+        # TODO: t_min = time_step 
+        self.t_min = kwargs.get("t_min", 1)
         self.t_max = kwargs["t_max"]
         self.x_min = kwargs.get("x_min", 0)
         self.x_max = kwargs["x_max"]
@@ -155,7 +156,7 @@ class TimeEncoder(Encoder):
 
         @param values: np.array / float / double to encode
         """
-        encoded = self.t_max - (values-self.x_min) * self.scale_factor
+        encoded = self.t_min + (self.x_max - values) * self.scale_factor
         return encoded
 
     def run(self, values):

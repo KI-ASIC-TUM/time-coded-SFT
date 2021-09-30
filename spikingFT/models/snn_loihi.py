@@ -102,9 +102,14 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
 
         # Network variables
         self.n_chirps = 1
-        self.spikes = np.zeros((self.nsamples, 2*self.n_chirps))
-        self.output = np.copy(self.spikes)
-        self.voltage = np.zeros((2*self.sim_time, self.nsamples, 2*self.n_chirps))
+        self.spikes = np.zeros((self.nsamples, 2*self.n_chirps, self.nlayers))
+        self.output = np.copy(self.spikes[:, :, 0])
+        self.voltage = np.zeros((
+                2*self.sim_time,
+                self.nsamples,
+                2*self.n_chirps,
+                self.nlayers
+        ))
         return
 
 
@@ -292,15 +297,14 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         Format the voltage and spike values in the board probes
         """
         # Fetch membrane voltages during simulation
-        self.voltage[:, :, 0] = self.l1_real_probes_V[0].data.transpose()
-        self.voltage[:, :, 1] = self.l1_imag_probes_V[0].data.transpose()
-        spikes = np.zeros_like(self.voltage)
+        self.voltage[:, :, 0, 0] = self.l1_real_probes_V[0].data.transpose()
+        self.voltage[:, :, 1, 0] = self.l1_imag_probes_V[0].data.transpose()
         # Fetch spikes during simulation
         real_spikes = np.argmax(self.l1_real_probes_S[0].data, axis=1)
         imag_spikes = np.argmax(self.l1_imag_probes_S[0].data, axis=1)
-        self.spikes[:, 0] = real_spikes
-        self.spikes[:, 1] = imag_spikes
-        self.output = 1.5*self.sim_time - self.spikes
+        self.spikes[:, 0, 0] = real_spikes
+        self.spikes[:, 1, 0] = imag_spikes
+        self.output = 1.5*self.sim_time - self.spikes.reshape(self.output.shape)
 
 
     def parse_energy_probe(self):
