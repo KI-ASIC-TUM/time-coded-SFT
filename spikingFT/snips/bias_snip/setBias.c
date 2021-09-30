@@ -32,6 +32,8 @@ void runMgmt(runState *s) {
     // Get channels
     int biasChannelID = getChannelID("biasChannel");
     int timeChannelID  = getChannelID("timeChannel");
+    // int simTimeChannelID  = getChannelID("simTimeChannel");
+    // int nSamplesChannelID  = getChannelID("nSamplesChannel");
     //int voltageChannelID  = getChannelID("voltageChannel");
     if( biasChannelID == -1 || timeChannelID == -1) {
       printf("Invalid Channel ID\n");
@@ -40,12 +42,9 @@ void runMgmt(runState *s) {
 
     // get the value
     int bias;
-    int data[] = {0, simTime, nSamples};
-    readChannel(biasChannelID,data,3);
-
-    bias = data[0];
-    simTime = data[1];
-    nSamples = data[2];
+    readChannel(biasChannelID,&bias,1);
+    // readChannel(simTimeChannelID,&simTime,1);
+    // readChannel(nSamplesChannelID,&nSamples,1);
 
     int i;
     for (i=0;i<(nSamples*2);++i){
