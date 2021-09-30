@@ -37,7 +37,7 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         # Initialize SIMULATION parameters
         self.time_step = 0.1
-        self.total_sim_time = (self.nlayers+2)*self.sim_time
+        self.total_sim_time = (self.nlayers+1)*self.sim_time
 
         # Initialize NEURON MODEL
         self.neuron_model = self.init_neuron_model()
@@ -65,7 +65,7 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
 
         eq = '''
-        dv/dt = g/(1*ms): 1
+        dv/dt = g/(1*ms): 1 (unless refractory)
         g : 1
         '''
 
@@ -156,7 +156,7 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
         logger.debug('Creating Probes ...')
 
-        self.l_probes_S.append(SpikeMonitor(self.layers[-1]))
+        #self.l_probes_S.append(SpikeMonitor(self.layers[-1]))
 
         for l in range(self.nlayers): 
           probes_S = (SpikeMonitor(self.layers[l], name='probes_spikes'+str(l)))
@@ -245,4 +245,4 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         self.parse_probes()
         logger.debug('Simulation finished.')
-        return (self.nlayers+0.5)*self.sim_time - self.spikes[:,:,-1]
+        return (self.nlayers+1.5)*self.sim_time - self.spikes[:,:,-1]
