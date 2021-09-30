@@ -47,22 +47,20 @@ def plot_error(nsamples, data, output, spikes, rel_error):
     """
     Plot relative error histograms
     """
-    spikes = spikingFT.utils.metrics.simplify_ft(spikes[:, -1])
-    real_spikes = 1 - spikes[:, 0]
-    imag_spikes = 1 - spikes[:, 1]
-    real_spikes_norm = output[:, 0][1:int(nsamples/2)]
-    imag_spikes_norm = output[:, 1][1:int(nsamples/2)]
-    sft_modulus = np.sqrt(real_spikes_norm**2 + imag_spikes_norm**2)
+    spikes = spikingFT.utils.metrics.simplify_ft(spikes[:, :, -1])
+    real_spikes = output[:, 0][1:int(nsamples/2)]
+    imag_spikes = output[:, 1][1:int(nsamples/2)]
+    sft_modulus = np.sqrt(real_spikes**2 + imag_spikes**2)
     sft_modulus -= sft_modulus.min()
     sft_modulus /= sft_modulus.max()
     ft_real, ft_imag, ft_modulus = get_ft_components(nsamples, data)
 
-    real_spikes_norm -= real_spikes_norm.min()
-    real_spikes_norm /= real_spikes_norm.max()
-    real_spikes_norm = 1 - real_spikes_norm
-    imag_spikes_norm -= imag_spikes_norm.min()
-    imag_spikes_norm /= imag_spikes_norm.max()
-    imag_spikes_norm = 1 - imag_spikes_norm
+    real_spikes -= real_spikes.min()
+    real_spikes /= real_spikes.max()
+    # real_spikes = 1 - real_spikes
+    imag_spikes -= imag_spikes.min()
+    imag_spikes /= imag_spikes.max()
+    # imag_spikes = 1 - imag_spikes
 
     real_error = rel_error[:, 0]
     imag_error = rel_error[:, 1]
@@ -70,8 +68,8 @@ def plot_error(nsamples, data, output, spikes, rel_error):
     kwargs = {}
     kwargs["plot_names"] = ["real_spectrum", "imag_spectrum", "modulus"]
     kwargs["data"] = [
-        (real_spikes_norm, ft_real, real_error),
-        (imag_spikes_norm, ft_imag, imag_error),
+        (real_spikes, ft_real, real_error),
+        (imag_spikes, ft_imag, imag_error),
         (sft_modulus, ft_modulus, abs_error)
     ]
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
