@@ -50,17 +50,13 @@ def plot_error(nsamples, data, output, spikes, rel_error):
     spikes = spikingFT.utils.metrics.simplify_ft(spikes[:, :, -1])
     real_spikes = output[:, 0][1:int(nsamples/2)]
     imag_spikes = output[:, 1][1:int(nsamples/2)]
+    simplified_output = spikingFT.utils.metrics.simplify_ft(output)
+    sft_real = simplified_output[:, 0]
+    sft_imag = simplified_output[:, 1]
     sft_modulus = np.sqrt(real_spikes**2 + imag_spikes**2)
     sft_modulus -= sft_modulus.min()
     sft_modulus /= sft_modulus.max()
     ft_real, ft_imag, ft_modulus = get_ft_components(nsamples, data)
-
-    real_spikes -= real_spikes.min()
-    real_spikes /= real_spikes.max()
-    # real_spikes = 1 - real_spikes
-    imag_spikes -= imag_spikes.min()
-    imag_spikes /= imag_spikes.max()
-    # imag_spikes = 1 - imag_spikes
 
     real_error = rel_error[:, 0]
     imag_error = rel_error[:, 1]
@@ -68,8 +64,8 @@ def plot_error(nsamples, data, output, spikes, rel_error):
     kwargs = {}
     kwargs["plot_names"] = ["real_spectrum", "imag_spectrum", "modulus"]
     kwargs["data"] = [
-        (real_spikes, ft_real, real_error),
-        (imag_spikes, ft_imag, imag_error),
+        (sft_real, ft_real, real_error),
+        (sft_imag, ft_imag, imag_error),
         (sft_modulus, ft_modulus, abs_error)
     ]
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
