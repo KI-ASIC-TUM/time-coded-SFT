@@ -29,7 +29,7 @@ def normalize(weights, platform):
         correction_coef = 127 / weights.max()
         weights = np.rint(weights * correction_coef)*2
     if platform == "brian":
-        weights = weights
+        weights = weights.T
     return weights
 
 
@@ -103,14 +103,14 @@ def fft_connection_matrix(layer, nsamples, platform):
     M = np.vstack([np.hstack([M_rr, M_ir]), np.hstack([M_ri, M_ii])])
 
     # twiddle factor as 2x2 matrix
-    tf_real = np.hstack([np.diag(twiddle_factor(n*c, nsamples, 'cos')),
+    tf_real = np.vstack([np.diag(twiddle_factor(n*c, nsamples, 'cos')),
                          -np.diag(twiddle_factor(n*c,nsamples,'sin'))])
-    tf_imag = np.hstack([np.diag(twiddle_factor(n*c, nsamples, 'sin')),
+    tf_imag = np.vstack([np.diag(twiddle_factor(n*c, nsamples, 'sin')),
                          np.diag(twiddle_factor(n*c,nsamples,'cos'))])
-    tf = np.vstack([tf_real, tf_imag])
+    tf = np.hstack([tf_real, tf_imag])
 
     # Twiddle factors times butterfly matrix
-    M = np.matmul(tf.transpose(), M)
+    M = np.matmul(tf, M)
 
     return M
 

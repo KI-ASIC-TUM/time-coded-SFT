@@ -63,6 +63,23 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         # TODO: total sim time vs sim time
         self.total_sim_time = int(self.sim_time*(self.nlayers+2))
 
+        # Initialize NETWORK PARAMETRS
+        self.l_thresholds = []
+        self.l_offsets = []
+        if self.PLATFORM == 'loihi':
+            axis = 1
+        elif self.PLATFORM =='brian':
+            axis = 0
+        else:
+            axis = 0
+
+        for l in range(self.nlayers):
+            self.l_thresholds.append(4*254*self.sim_time/2)
+            #self.l_thresholds.append(np.max(np.sum(np.abs(weight_matrix), axis=axis))*(self.sim_time)/2)
+
+            self.offsets.append(np.sum(self.l_weights[l], axis =
+                axis)*self.sim_time/2)
+
         # Initialize NETWORK and COMPARTMENTS
         self.net = nx.NxNet()
         self.l_g = self.init_compartments()
@@ -73,6 +90,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.board = None
         self.bias_channel = None
         self.time_channel = None
+
 
         # PROBES
         self.l_probes_V, self.l_probes_S = self.init_probes()

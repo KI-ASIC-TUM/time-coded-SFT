@@ -42,11 +42,33 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         # Initialize NEURON MODEL
         self.neuron_model = self.init_neuron_model()
 
+        # Initialize NETWORK PARAMETRS
+
+        self.l_thresholds = []
+        self.l_offsets = []
+        if self.PLATFORM == 'loihi':
+            axis = 1
+        elif self.PLATFORM =='brian':
+            axis = 0
+        else:
+            axis = 0
+
+        for l in range(self.nlayers):
+            self.l_weights[l] = 2*np.floor(self.l_weights[l]*127)
+
+            #self.l_thresholds.append(8*254*self.sim_time/2)
+            self.l_thresholds.append(2*np.floor(np.max(np.sum(np.abs(self.l_weights[l]),
+                axis=axis))*(self.sim_time)/2/2))
+
+            self.l_offsets.append(2*np.floor(np.sum(self.l_weights[l], axis =
+                axis)*self.sim_time/2/2))
+
         # Initialize NETWORK
         self.layers = self.init_layers()
         self.synapses = []
         self.aux_neurons, self.aux_synapses = self.init_auxillary_neurons()
         self.net = None
+
 
         # PROBES
         self.l_probes_V = []
@@ -216,6 +238,8 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
             self.voltage[:,:,0,l] = self.l_probes_V[l].v[:self.nsamples].T
             self.voltage[:,:,1,l] = self.l_probes_V[l].v[self.nsamples:].T
+            
+            self.output = (self.nlayers+0.5)*self.sim_time - self.spikes[:,:,-1]
 
 
     def simulate(self):
@@ -245,5 +269,7 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.simulate()
 
         self.parse_probes()
+
         logger.debug('Simulation finished.')
-        return (self.nlayers+1.5)*self.sim_time - self.spikes[:,:,-1]
+
+        return self.output
