@@ -42,6 +42,7 @@ def main(conf_filename="../config/test_experiment_brian.json"):
     kwargs["tight_layout"] = False
     kwargs["nlayers"] = nlayers
     kwargs["time_step"] = time_step
+    kwargs["figsize"] = (6, 7)
     sim_plotter = spikingFT.utils.plotter.SNNLayersPlotter(**kwargs)
     fig = sim_plotter()
     fig.savefig("./simulation_plot.pdf", dpi=150, bbox_inches='tight')

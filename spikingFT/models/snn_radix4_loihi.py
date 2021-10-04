@@ -342,8 +342,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
                     base=4, nlayers=self.nlayers)
             self.spikes[:, 1, l] = spikingFT.utils.ft_utils.bit_reverse(imag_spikes,
                     base=4, nlayers=self.nlayers)
-
-
+        self.output = (self.nlayers+0.5)*self.sim_time - self.spikes[:,:, -1]
 
 
     def run(self, data):
@@ -365,4 +364,4 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug('Done.')
         self.parse_probes()
         logger.debug('Run finished.')
-        return self.spikes[:,:,-1] - (self.nlayers+0.5)*self.sim_time
+        return self.output

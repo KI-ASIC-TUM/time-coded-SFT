@@ -7,7 +7,7 @@ import numpy as np
 # Local libraries
 
 
-def simplify_ft(data):
+def simplify_ft(data, normalize=True):
     """
     Remove irrelevant bins and normalize the FT data between 0 and 1
 
@@ -22,8 +22,9 @@ def simplify_ft(data):
     half_length = int(data.shape[0]/2)
     cropped = data[1:half_length, :]
     # Normalize resulting FT
-    result = cropped - cropped.min(axis=0)
-    result /= result.max(axis=0)
+    result = cropped - cropped.min()
+    if normalize:
+        result /= result.max()
     return result
 
 
@@ -35,7 +36,7 @@ def get_mse(signal, ref):
     """
     signal = simplify_ft(signal)
     ref = simplify_ft(ref)
-    quadratic_diff = ((signal- ref)**2)
+    quadratic_diff = ((signal - ref)**2)
     mse = quadratic_diff.sum() / ref.size
     return mse
 

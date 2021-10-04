@@ -266,7 +266,6 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             bufferSize=1024, 
             binSize=1)
         )
-        import pdb; pdb.set_trace()
 
 
     def simulate(self):

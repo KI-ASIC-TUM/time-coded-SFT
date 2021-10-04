@@ -67,12 +67,8 @@ class FastFourierTransformSNN(ABC):
             # TODO: Test for best performance
             # 4*256 should be the optimum
    
-            thresholds.append(4*(self.sim_time)/2)
+            thresholds.append(4*254*(self.sim_time)/2)
             #thresholds.append(np.max(np.sum(np.abs(weight_matrix), axis=axis))*(self.sim_time)/4)
-
-
-            
-            
 
         return weight_matrices, offsets, thresholds
 
