@@ -64,6 +64,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.total_sim_time = int(self.sim_time*(self.nlayers+2))
 
         # Initialize NETWORK PARAMETRS
+        self.weight_exp = -2
         self.l_thresholds = []
         self.l_offsets = []
         if self.PLATFORM == 'loihi':
@@ -74,10 +75,10 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             axis = 0
 
         for l in range(self.nlayers):
-            self.l_thresholds.append(4*254*self.sim_time/2)
+            self.l_thresholds.append(4*254*self.sim_time/2*2**self.weight_exp)
             #self.l_thresholds.append(np.max(np.sum(np.abs(weight_matrix), axis=axis))*(self.sim_time)/2)
 
-            self.l_offsets.append(np.sum(self.l_weights[l], axis =
+            self.l_offsets.append(np.sum(self.l_weights[l]*2**self.weight_exp, axis =
                 axis)*self.sim_time/2)
 
         # Initialize NETWORK and COMPARTMENTS
@@ -199,9 +200,14 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug('Connecting layers ...')
         
         logger.debug('Creating connection prototype ...')
-        con = nx.ConnectionPrototype(signMode=1, weightExponent=0, compressionMode=0)
-        con2 = nx.ConnectionPrototype(signMode=2, weightExponent=0, compressionMode=1)
-        con3 = nx.ConnectionPrototype(signMode=3, weightExponent=0, compressionMode=1)
+        
+        # TODO: make weight tests
+        con = nx.ConnectionPrototype(signMode=1, weightExponent=self.weight_exp, compressionMode=3)
+        
+        con2 = nx.ConnectionPrototype(signMode=2, weightExponent=self.weight_exp, compressionMode=3)
+        con3 = nx.ConnectionPrototype(signMode=3, weightExponent=self.weight_exp, compressionMode=3)
+        
+        inhibit_con = nx.ConnectionPrototype(signMode=3, weightExponent=4, compressionMode=0)
 
         logger.debug('Start connecting ...')
         for i in range(self.nlayers):
@@ -212,10 +218,15 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             weights2[idx3] = 0
             weights3[idx2] = 0
             
-            self.l_g[i-1].connect(self.l_g[i], prototype=con2,
-                    weight=weights2)
-            self.l_g[i-1].connect(self.l_g[i], prototype=con3,
-                    weight=weights3)
+            #self.l_g[i-1].connect(self.l_g[i], prototype=con2,
+            #        weight=weights2)
+            #self.l_g[i-1].connect(self.l_g[i], prototype=con3,
+            #        weight=weights3)
+            
+            self.l_g[i-1].connect(self.l_g[i], prototype=con,
+                    weight=self.l_weights[i])
+            self.l_g[i].connect(self.l_g[i], prototype=inhibit_con,
+                    weight=-254*np.eye(2*self.nsamples))
             logger.debug('Layer {0} connected to Layer {1}'.format(i, i+1))
         logger.debug('Done.')
 
@@ -263,8 +274,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug('Creating ConnectionPrototype ...')
         clock_g = []
         reset_g = []
-        clock_con = nx.ConnectionPrototype(signMode=2, weightExponent=3, compressionMode=0)
-        reset_con = nx.ConnectionPrototype(signMode=1, weightExponent=4, compressionMode=0)
+        clock_con = nx.ConnectionPrototype(signMode=1, weightExponent=0, compressionMode=0)
+        reset_con = nx.ConnectionPrototype(signMode=3, weightExponent=4, compressionMode=0)
         
         logger.debug('Creating auxillary neurons ...')
         
@@ -275,16 +286,17 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             clock = self.net.createSpikeGenProcess(numPorts=1)
             clock.addSpikes(spikeInputPortNodeIds=0, spikeTimes=[self.sim_time*(i+1)])
             clock.connect(self.l_g[i], prototype=clock_con,
-                    weight=(bias*np.ones(2*self.nsamples)-np.sum(self.l_weights[i], axis=1))/8)
+                    weight=(bias*np.ones(2*self.nsamples)-np.sum(self.l_weights[i], axis=1)*2**self.weight_exp))
             clock_g.append(clock)
             logger.debug('Clock neuron connected to layer {0}.'.format(i))
             
-            reset = self.net.createSpikeGenProcess(numPorts=1)
-            reset.addSpikes(spikeInputPortNodeIds=0,
-                    spikeTimes=[(i+2)*self.sim_time+4])
-            reset.connect(self.l_g[i], prototype=reset_con,
-                    weight=-256*np.ones(self.nsamples*2))
-            reset_g.append(reset)
+            #reset = self.net.createSpikeGenProcess(numPorts=1)
+            #reset.addSpikes(spikeInputPortNodeIds=0,
+            #        spikeTimes=[(i+2)*self.sim_time+4])
+            #reset.connect(self.l_g[i], prototype=reset_con,
+            #        weight=-254*np.ones(self.nsamples*2))
+            #reset_g.append(reset)
+            
             logger.debug('Reset neuron connected to layer {0}.'.format(i))
         logger.debug('Done.')
 
@@ -367,7 +379,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
     def run(self, data):
 
         # Create spike generators
-        self.init_inputs(data.real, data.real)
+        self.init_inputs(data.real, data.imag)
         # Connect all layers
         self.connect()
         # Instantiate measurement probes

@@ -48,7 +48,7 @@ class FastFourierTransformSNN(ABC):
             elif self.PLATFORM =='brian':
                 axis = 0
             else:
-                axis = 0
+                axis = 1
 
             weight_matrix = spikingFT.utils.ft_utils.fft_connection_matrix(
                 layer=l,
