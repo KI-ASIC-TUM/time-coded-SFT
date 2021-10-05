@@ -5,8 +5,8 @@
     {
         "snn_config":
         {
-            "sim_time": 128,
-            "time_step": 1,
+            "sim_time": 12.8,
+            "time_step": 0.1,
             "mode": "fft",
             "framework": "radix4brian",
             "current_decay": 0,
