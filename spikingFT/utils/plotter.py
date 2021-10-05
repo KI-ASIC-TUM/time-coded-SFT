@@ -240,13 +240,11 @@ class RelErrorPlotter(Plotter):
     def plot_component(self, data, ax_left, component="", legend=False, xlabel=False):
         ax_right = ax_left.twinx()
         l1 = ax_left.plot(data[0], label="signal", color='#348ABD', linewidth=.5)
-        l2 = ax_left.plot(data[1], label="ref", color='#FBC15E', linewidth=.5)
-        l3 = ax_right.plot(data[-1], linestyle="--", label="error", color='#E24A33', linewidth=.1)
-        ax_right.set_ylim([0., 0.25])
-        ax_left.set_ylim([0., 1])
+        l2 = ax_left.plot(data[1], label="ref", color='#E24A33', linewidth=.5)
+        ax_right.set_ylim([0., 0.1])
+        ax_left.set_ylim([-1., 1])
         ax_left.set_ylabel("FT", rotation=0, labelpad=15)
-        ax_right.set_ylabel(r'$\varepsilon$', rotation=0, labelpad=10)
-        lines = l1 + l2 +l3
+        lines = l1 + l2
         labels = [l.get_label() for l in lines]
         if legend:
             ax_left.legend(lines, labels, bbox_to_anchor=(0.0, 0.9, 1., .102),
@@ -260,8 +258,8 @@ class RelErrorPlotter(Plotter):
             ax.spines['right'].set_visible(False)
             ax.tick_params(axis="y", which="both",length=0)
         # Align right and left ticks
-        align_yaxes([ax_left, ax_right])
-        # ax.set_facecolor('white')
+        ax_left.set_yticks(np.arange(-1, 2, 1.0))
+        ax_right.set_yticks([])
         ax.grid(axis='y')
 
     def plot(self, plot_name, plot_n):
