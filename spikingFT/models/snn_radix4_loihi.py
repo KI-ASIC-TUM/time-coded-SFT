@@ -77,7 +77,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             self.l_thresholds.append(4*254*self.sim_time/2)
             #self.l_thresholds.append(np.max(np.sum(np.abs(weight_matrix), axis=axis))*(self.sim_time)/2)
 
-            self.offsets.append(np.sum(self.l_weights[l], axis =
+            self.l_offsets.append(np.sum(self.l_weights[l], axis =
                 axis)*self.sim_time/2)
 
         # Initialize NETWORK and COMPARTMENTS
@@ -200,11 +200,22 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         
         logger.debug('Creating connection prototype ...')
         con = nx.ConnectionPrototype(signMode=1, weightExponent=0, compressionMode=0)
+        con2 = nx.ConnectionPrototype(signMode=2, weightExponent=0, compressionMode=1)
+        con3 = nx.ConnectionPrototype(signMode=3, weightExponent=0, compressionMode=1)
 
         logger.debug('Start connecting ...')
         for i in range(self.nlayers):
-            self.l_g[i-1].connect(self.l_g[i], prototype=con,
-                    weight=self.l_weights[i])
+            weights2 = self.l_weights[i].copy()
+            weights3 = self.l_weights[i].copy()
+            idx2 = self.l_weights[i] > 0
+            idx3 = self.l_weights[i] < 0
+            weights2[idx3] = 0
+            weights3[idx2] = 0
+            
+            self.l_g[i-1].connect(self.l_g[i], prototype=con2,
+                    weight=weights2)
+            self.l_g[i-1].connect(self.l_g[i], prototype=con3,
+                    weight=weights3)
             logger.debug('Layer {0} connected to Layer {1}'.format(i, i+1))
         logger.debug('Done.')
 
@@ -332,22 +343,12 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         #self.board.disconnect()
 
         #TODO: For now use auxillary neurons
-        logger.debug("Compiling n2board ...")
-
-        compiler = nx.N2Compiler()
-        self.board = compiler.compile(self.net)
-        logger.debug("Done.")
-        
-        logger.debug("Starting driver ...")
-        self.board.start()
-        logger.debug("Done.")
 
         logger.debug('Running simulation ... ')
-        self.board.run(self.total_sim_time, aSync=True)
+        self.net.run(self.total_sim_time)
 
         logger.info('Finishing Loihi execution. Disconnecting board ...')
-        self.board.finishRun()
-        self.board.disconnect()
+        self.net.disconnect()
 
     def parse_probes(self):
         for l in range(self.nlayers):

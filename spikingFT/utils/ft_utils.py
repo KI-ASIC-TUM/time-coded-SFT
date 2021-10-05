@@ -27,7 +27,7 @@ def normalize(weights, platform):
         weights /= weights.size
     if platform == "loihi":
         correction_coef = 127 / weights.max()
-        weights = np.rint(weights * correction_coef)*2
+        weights = np.ceil(weights * 127 - 0.5)*2
     if platform == "brian":
         weights = weights.T
     return weights

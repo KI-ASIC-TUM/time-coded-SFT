@@ -5,10 +5,10 @@
     {
         "snn_config":
         {
-            "sim_time": 12.8,
-            "time_step": 0.1,
+            "sim_time": 127,
+            "time_step": 1,
             "mode": "fft",
-            "framework": "radix4brian",
+            "framework": "radix4loihi",
             "current_decay": 0,
             "measure_performance": false
         },
