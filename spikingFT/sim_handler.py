@@ -72,15 +72,16 @@ class SimHandler():
 
         # Parse the simulation framework and instantiate the corresponding class
         framework = snn_config["framework"]
+        mode = snn_config["mode"]
         if framework == "loihi":
             snn = spikingFT.models.snn_loihi.SNNLoihi(**snn_config)
         elif framework == "brian":
             snn = spikingFT.models.snn_brian.SNNBrian(**snn_config)
         elif framework == "numpy":
             snn = spikingFT.models.snn_numpy.SNNNumpy(**snn_config)
-        elif framework == "radix4loihi":
+        elif framework == "loihi" and mode == 'fft':
             snn = spikingFT.models.snn_radix4_loihi.SNNRadix4Loihi(**snn_config)
-        elif framework == "radix4brian":
+        elif framework == "brian" and mode == 'fft':
             snn = spikingFT.models.snn_radix4_brian.SNNRadix4Brian(**snn_config)
         else:
             raise ValueError("Invalid framework: {}".format(framework))

@@ -59,12 +59,13 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         super().__init__(**kwargs)
         self.current_decay = kwargs.get("current_decay")
         self.measure_performance = kwargs.get("measure_performance", False)
+        self.debug = False
 
         # TODO: total sim time vs sim time
         self.total_sim_time = int(self.sim_time*(self.nlayers+2))
 
         # Initialize NETWORK PARAMETRS
-        self.weight_exp = -2
+        self.weight_exp = 0
         self.l_thresholds = []
         self.l_offsets = []
         if self.PLATFORM == 'loihi':
@@ -151,14 +152,20 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         
         l_probes_V = []
         l_probes_S = []
-
-        for n in range(self.nlayers):
-            logger.debug('Creating Probes of Layer {0} ...'.format(n))
-            l_probes_V.append(self.l_g[n].probe(nx.ProbeParameter.COMPARTMENT_VOLTAGE,
+        
+        if self.debug:
+            for n in range(self.nlayers):
+                logger.debug('Creating Probes of Layer {0} ...'.format(n))
+                l_probes_V.append(self.l_g[n].probe(nx.ProbeParameter.COMPARTMENT_VOLTAGE,
+                    probeConditions=None))
+                l_probes_S.append(self.l_g[n].probe(nx.ProbeParameter.SPIKE,
+                    probeConditions=None))
+        else:
+            logger.debug('Creating Probes of Layer {0} ...'.format(self.nlayers))
+            l_probes_S.append(self.l_g[-1].probe(nx.ProbeParameter.SPIKE,
                 probeConditions=None))
-            l_probes_S.append(self.l_g[n].probe(nx.ProbeParameter.SPIKE,
-                probeConditions=None))
 
+    
         logger.debug('Done.')
 
         return l_probes_V, l_probes_S
@@ -202,7 +209,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.debug('Creating connection prototype ...')
         
         # TODO: make weight tests
-        con = nx.ConnectionPrototype(signMode=1, weightExponent=self.weight_exp, compressionMode=3)
+        con = nx.ConnectionPrototype(signMode=1, weightExponent=self.weight_exp,
+                compressionMode=0)
         
         con2 = nx.ConnectionPrototype(signMode=2, weightExponent=self.weight_exp, compressionMode=3)
         con3 = nx.ConnectionPrototype(signMode=3, weightExponent=self.weight_exp, compressionMode=3)
@@ -222,11 +230,13 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             #        weight=weights2)
             #self.l_g[i-1].connect(self.l_g[i], prototype=con3,
             #        weight=weights3)
-            
+            mask = np.abs(self.l_weights[i])>0
+
             self.l_g[i-1].connect(self.l_g[i], prototype=con,
-                    weight=self.l_weights[i])
+                    weight=self.l_weights[i], connectionMask=mask)
             self.l_g[i].connect(self.l_g[i], prototype=inhibit_con,
-                    weight=-254*np.eye(2*self.nsamples))
+                    weight=-254*np.eye(2*self.nsamples),
+                    connectionMask=np.eye(2*self.nsamples))
             logger.debug('Layer {0} connected to Layer {1}'.format(i, i+1))
         logger.debug('Done.')
 
@@ -363,16 +373,25 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.net.disconnect()
 
     def parse_probes(self):
-        for l in range(self.nlayers):
-            self.voltage[:, :, 0, l] = self.l_probes_V[l][0].data[:self.nsamples,:].T
-            self.voltage[:, :, 1, l] = self.l_probes_V[l][0].data[self.nsamples:,:].T
+        if self.debug:
+            for l in range(self.nlayers):
+                self.voltage[:, :, 0, l] = self.l_probes_V[l][0].data[:self.nsamples,:].T
+                self.voltage[:, :, 1, l] = self.l_probes_V[l][0].data[self.nsamples:,:].T
 
-            real_spikes = np.argmax(self.l_probes_S[l][0].data[:self.nsamples], axis=1)
-            imag_spikes = np.argmax(self.l_probes_S[l][0].data[self.nsamples:], axis=1)
-            self.spikes[:, 0, l] = spikingFT.utils.ft_utils.bit_reverse(real_spikes,
+                real_spikes = np.argmax(self.l_probes_S[l][0].data[:self.nsamples], axis=1)
+                imag_spikes = np.argmax(self.l_probes_S[l][0].data[self.nsamples:], axis=1)
+                self.spikes[:, 0, l] = spikingFT.utils.ft_utils.bit_reverse(real_spikes,
+                        base=4, nlayers=self.nlayers)
+                self.spikes[:, 1, l] = spikingFT.utils.ft_utils.bit_reverse(imag_spikes,
+                        base=4, nlayers=self.nlayers)
+        else:
+            real_spikes = np.argmax(self.l_probes_S[-1][0].data[:self.nsamples], axis=1)
+            imag_spikes = np.argmax(self.l_probes_S[-1][0].data[self.nsamples:], axis=1)
+            self.spikes[:, 0, -1] = spikingFT.utils.ft_utils.bit_reverse(real_spikes,
                     base=4, nlayers=self.nlayers)
-            self.spikes[:, 1, l] = spikingFT.utils.ft_utils.bit_reverse(imag_spikes,
+            self.spikes[:, 1, -1] = spikingFT.utils.ft_utils.bit_reverse(imag_spikes,
                     base=4, nlayers=self.nlayers)
+
         self.output = (self.nlayers+0.5)*self.sim_time - self.spikes[:,:, -1]
 
 
