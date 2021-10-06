@@ -102,6 +102,7 @@ def special_cases(filename="../config/experiment_special_cases.json"):
         figs.append(plot_single_chirp(sim_handler, chirp_n, False))
         figs[-1].savefig("./{}/error_plot_{}.pdf".format(folder_path, chirp_n),
                          dpi=150, bbox_inches='tight')
+        plt.show()
     return
 
 

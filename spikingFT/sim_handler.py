@@ -73,7 +73,7 @@ class SimHandler():
         # Parse the simulation framework and instantiate the corresponding class
         framework = snn_config["framework"]
         mode = snn_config["mode"]
-        if framework == "loihi":
+        if framework == "loihi" and mode == 'dft':
             snn = spikingFT.models.snn_loihi.SNNLoihi(**snn_config)
         elif framework == "brian":
             snn = spikingFT.models.snn_brian.SNNBrian(**snn_config)
