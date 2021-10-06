@@ -42,23 +42,24 @@ class Plotter(ABC):
         plt.rcParams['font.size'] = 18
         #    plt.rcParams['font.family'] = 'Times New Roman'
         plt.rcParams['axes.labelsize'] = 0.7*plt.rcParams['font.size']
-        # plt.rcParams['axes.titlesize'] = 1.1*plt.rcParams['font.size']
-        # plt.rcParams['legend.fontsize'] = 0.9*plt.rcParams['font.size']
-        # plt.rcParams['xtick.labelsize'] = 0.8*plt.rcParams['font.size']
-        # plt.rcParams['ytick.labelsize'] = 0.8*plt.rcParams['font.size']
-        # plt.rcParams['xtick.major.size'] = 3
-        # plt.rcParams['xtick.minor.size'] = 3
-        # plt.rcParams['xtick.major.width'] = 1
-        # plt.rcParams['xtick.minor.width'] = 1
-        # plt.rcParams['ytick.major.size'] = 3
-        # plt.rcParams['ytick.minor.size'] = 3
-        # plt.rcParams['ytick.major.width'] = 1
-        # plt.rcParams['ytick.minor.width'] = 1
-        # plt.rcParams['legend.frameon'] = True
-        # plt.rcParams['legend.loc'] = 'upper right'
-        # plt.rcParams['axes.linewidth'] = 1
-        # plt.rcParams['lines.linewidth'] = 1
-        # plt.rcParams['lines.markersize'] = 3
+        plt.rcParams['axes.titlesize'] = 1.1*plt.rcParams['font.size']
+        plt.rcParams['figure.titlesize'] = 1.3*plt.rcParams['font.size']
+        plt.rcParams['legend.fontsize'] = 0.9*plt.rcParams['font.size']
+        plt.rcParams['xtick.labelsize'] = 0.8*plt.rcParams['font.size']
+        plt.rcParams['ytick.labelsize'] = 0.8*plt.rcParams['font.size']
+        plt.rcParams['xtick.major.size'] = 3
+        plt.rcParams['xtick.minor.size'] = 3
+        plt.rcParams['xtick.major.width'] = 1
+        plt.rcParams['xtick.minor.width'] = 1
+        plt.rcParams['ytick.major.size'] = 3
+        plt.rcParams['ytick.minor.size'] = 3
+        plt.rcParams['ytick.major.width'] = 1
+        plt.rcParams['ytick.minor.width'] = 1
+        plt.rcParams['legend.frameon'] = True
+        plt.rcParams['legend.loc'] = 'upper right'
+        plt.rcParams['axes.linewidth'] = 1
+        plt.rcParams['lines.linewidth'] = 1
+        plt.rcParams['lines.markersize'] = 3
         plt.rcParams['axes.grid'] = False
         plt.rcParams['grid.color'] = "lightgrey"
         if self.style=="classic":
@@ -236,17 +237,22 @@ class SNNLayersPlotter(Plotter):
 class RelErrorPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.chirp_n = 0
 
-    def plot_component(self, data, ax_left, component="", legend=False, xlabel=False):
+    def plot_component(self,
+                       data,
+                       ax_left,
+                       component="",
+                       legend=False,
+                       xlabel=False
+                      ):
         ax_right = ax_left.twinx()
         l1 = ax_left.plot(data[0], label="signal", color='#348ABD', linewidth=.5)
-        l2 = ax_left.plot(data[1], label="ref", color='#FBC15E', linewidth=.5)
-        l3 = ax_right.plot(data[-1], linestyle="--", label="error", color='#E24A33', linewidth=.1)
-        ax_right.set_ylim([0., 0.25])
-        ax_left.set_ylim([0., 1])
+        l2 = ax_left.plot(data[1], label="ref", color='#E24A33', linewidth=.5)
+        ax_right.set_ylim([0., 0.1])
+        ax_left.set_ylim([-1., 1])
         ax_left.set_ylabel("FT", rotation=0, labelpad=15)
-        ax_right.set_ylabel(r'$\varepsilon$', rotation=0, labelpad=10)
-        lines = l1 + l2 +l3
+        lines = l1 + l2
         labels = [l.get_label() for l in lines]
         if legend:
             ax_left.legend(lines, labels, bbox_to_anchor=(0.0, 0.9, 1., .102),
@@ -260,8 +266,8 @@ class RelErrorPlotter(Plotter):
             ax.spines['right'].set_visible(False)
             ax.tick_params(axis="y", which="both",length=0)
         # Align right and left ticks
-        align_yaxes([ax_left, ax_right])
-        # ax.set_facecolor('white')
+        ax_left.set_yticks(np.arange(-1, 2, 1.0))
+        ax_right.set_yticks([])
         ax.grid(axis='y')
 
     def plot(self, plot_name, plot_n):
@@ -274,7 +280,9 @@ class RelErrorPlotter(Plotter):
             self.plot_component(self.data[plot_n], ax, "Abs", xlabel=True)
         else:
             raise ValueError("Invalid plot name: {}".format(plot_name))
+        self.fig.suptitle("Scenario {}".format(self.chirp_n+1))
         self.fig.set_size_inches(8, 12)
+
 
 class RMSEPlotter(Plotter):
     def __init__(self, **kwargs):
