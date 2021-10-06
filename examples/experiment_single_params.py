@@ -44,7 +44,7 @@ def plot_simulation(nsamples, sim_time, spikes, voltage):
     fig.savefig("./simulation_plot.pdf", dpi=150, bbox_inches='tight')
 
 
-def plot_error(nsamples, sim_time, data, output, rel_error):
+def plot_error(nsamples, sim_time, data, output, rel_error, chirp_n=0):
     """
     Plot relative error histograms
     """
@@ -66,11 +66,12 @@ def plot_error(nsamples, sim_time, data, output, rel_error):
         (sft_modulus, ft_modulus, abs_error)
     ]
     error_plotter = spikingFT.utils.plotter.RelErrorPlotter(**kwargs)
+    error_plotter.chirp_n = chirp_n
     fig = error_plotter()
     return fig
 
 
-def plot_single_chirp(sim_handler, plot_spikes=True):
+def plot_single_chirp(sim_handler, chirp_n=0, plot_spikes=True):
     nsamples = sim_handler.snn.nsamples
     sim_time = sim_handler.config["snn_config"]["sim_time"]
     spikes = sim_handler.snn.spikes
@@ -78,7 +79,13 @@ def plot_single_chirp(sim_handler, plot_spikes=True):
     if plot_spikes:
         plot_simulation(nsamples, sim_time, spikes, voltage)
     rel_error = sim_handler.metrics["rel_error"]
-    fig = plot_error(nsamples, sim_time, sim_handler.data, sim_handler.output, rel_error)
+    fig = plot_error(nsamples,
+                     sim_time,
+                     sim_handler.data,
+                     sim_handler.output,
+                     rel_error,
+                     chirp_n
+                    )
     return fig
 
 
@@ -92,7 +99,7 @@ def special_cases(filename="../config/experiment_special_cases.json"):
     pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
     for chirp_n in range(n_chirps):
         sim_handler.run(chirp_n)
-        figs.append(plot_single_chirp(sim_handler, False))
+        figs.append(plot_single_chirp(sim_handler, chirp_n, False))
         figs[-1].savefig("./{}/error_plot_{}.pdf".format(folder_path, chirp_n),
                          dpi=150, bbox_inches='tight')
     return
