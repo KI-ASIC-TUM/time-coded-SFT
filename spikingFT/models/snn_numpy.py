@@ -29,7 +29,10 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         # Neuron properties
         # Max possible voltage during charging stage is the zero-mode intensity
         # for a wave containing a flat x_max divided by two
-        self.v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
+        self.v_threshold =  kwargs.get(
+            "v_threshold",
+            np.sum(self.real_weights[0,:]) * self.sim_time / 4
+        )
         # Network variables
         self.n_chirps = 1
         self.spikes = np.zeros((self.nsamples, 2*self.n_chirps, self.nlayers))

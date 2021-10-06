@@ -371,3 +371,75 @@ def align_yaxes(axes, nbins=3):
     for axii, tii in zip(axes, new_ticks):
         axii.set_yticks(tii)
     return new_ticks
+
+
+def plot_snn_diagram(recorded_z, ylim, vth, sim_time=1, show=False):
+    """
+    Plot the evolution of the membrane voltage of given neurons
+    """
+    plt.rcParams['axes.facecolor'] = "white"
+    plt.rcParams['axes.edgecolor'] = "black"
+    nplots = 1
+    time_step = 2*sim_time/len(recorded_z)
+    fig, ax = plt.subplots(nrows=nplots, ncols=1, figsize=(20, 5*nplots))
+    tsi = sim_time - time_step
+    ax.plot(np.arange(0, sim_time*2, time_step), recorded_z, color="lightsteelblue")
+    ax.set_ylim(-0.15, ylim)
+    # Plot lines marking different neuron parameters
+    ax.axhline(y=0, xmax=0.05, color="grey", linestyle="--", linewidth=.5)
+    ax.axhline(y=vth, color="grey", linestyle="--", linewidth=.5)
+    ax.axvline(x=0, color="red", linestyle="--", linewidth=1)
+    ax.axvline(x=tsi, color="red", linestyle="--", linewidth=1)
+    ax.axvline(x=sim_time*2, color="red", linestyle="--", linewidth=1)
+    # Keep only two labels on the yticks, indicating rest and threshold V
+    ax.set_yticks([0, vth])
+    labels = ["" for item in ax.get_yticklabels()]
+    labels[0] = r"$u_{r}$"
+    labels[1] = r"$u_{th}$"
+    ax.set_yticklabels(labels)
+    # ax.set_ylabel(r"$u_i$ (mV)")
+    ax.set_xlabel("Time (s)")
+
+    plt.tight_layout()
+    # Annotate the two different stages of the simulation
+    ax.annotate("Silent stage", xy=(0, -0.1), xytext=(0.5, -0.1),
+        size=18, va="center", ha="center",
+        arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3", color="k")
+    )
+    ax.annotate("Silent stage", xy=(tsi, -0.1), xytext=(0.5, -0.1),
+        size=18, va="center", ha="center",
+        arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3", color="k")
+    )
+    ax.annotate("Spiking stage", xy=(tsi, -0.1), xytext=(1.5, -0.1),
+        size=18, va="center", ha="center",
+        arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3", color="k")
+    )
+    ax.annotate("Spiking stage", xy=(2, -0.1), xytext=(1.5, -0.1),
+        size=18, va="center", ha="center",
+        arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3", color="k")
+    )
+    # Annotate the spiking time of the neuron
+    ax.annotate("", xy=(tsi, 0.005), xytext=(1.205, 0.005),
+        size=15, va="center", ha="center",
+        arrowprops=dict(arrowstyle="<|-", connectionstyle="arc3", color="k")
+    )
+    ax.annotate(r"$t_i$", xy=(1.144, 0.0062), xytext=(1.11, 0.02),
+        size=15, va="center", ha="center",
+    )
+    # Add membrane update equations
+    ax.annotate(r"$u_i(t) = \sum_j{w_{ij}(t-t_j)}$", xy=(0.34, 0.06),
+        xytext=(0.25, 0.2), size=15, va="center", ha="center",
+        bbox=dict(boxstyle="round", fc="w", color="tab:blue"),
+        arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3,rad=0.2", color="black"),
+    )
+    ax.annotate(r"$\dfrac{u_i(t) - u_i(t-1)}{\Delta t} = I_{ext}$", xy=(1.07, 0.3),
+        xytext=(1.4, 0.2), size=15, va="center", ha="center",
+        bbox=dict(boxstyle="round", fc="w", color="tab:blue"),
+        arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3,rad=-0.2", color="black"),
+    )
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    if show:
+        plt.show()
+
+    return fig
