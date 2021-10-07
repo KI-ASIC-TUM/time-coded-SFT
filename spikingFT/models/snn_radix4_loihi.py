@@ -83,14 +83,15 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
             logger.debug('Weight rescaling:') 
             logger.debug('\tMaximum threshold: {0}'.format(self.TH_MANT))
-            logger.debug('\tActual threshold: {0}'.format(thres))
-            logger.debug('\tRescaling weights by 2**{0} = {1} '.format(-weightExp, 2**(-weightExp))
+            logger.debug('\tActual threshold: {0}'.format(thresh))
+            logger.debug('\tlog2 scale: {0} '.format(np.log2(thresh/self.TH_MANT)))
+            logger.debug('\tRescaling weights by 2**{0} = {1} '.format(-weightExp, 2**(-weightExp)))
             logger.debug('\tNew threshold: {0}'.format(4*254*self.sim_time/2*2**self.weightExp[l]))
 
-            self.l_thresholds.append(4*254*self.sim_time/2*2**self.weight_exp[l])
+            self.l_thresholds.append(4*254*self.sim_time/2*2**self.weightExp[l])
             #self.l_thresholds.append(np.max(np.sum(np.abs(weight_matrix), axis=axis))*(self.sim_time)/2)
 
-            self.l_offsets.append(np.sum(self.l_weights[l]*2**self.weight_exp[l], axis =
+            self.l_offsets.append(np.sum(self.l_weights[l]*2**self.weightExp[l], axis =
                 axis)*self.sim_time/2)
 
         # Initialize NETWORK and COMPARTMENTS
@@ -126,7 +127,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
 
         logger.debug('Creating Compartments ...')
-        core_distribution_factor = 64
+        core_distribution_factor = 256
+        core_step = 256
         
         l_g = [] # nlayers list of compartment groups
         for n in range(self.nlayers):
@@ -139,8 +141,10 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
                     compartmentCurrentDecay=self.current_decay,
                     compartmentVoltageDecay=0,
                     functionalState=nx.COMPARTMENT_FUNCTIONAL_STATE.IDLE,
+                    #logicalCoreId=np.mod(i,core_step) +
+                    # np.mod(n,2)*int(self.nsamples*2/core_step),
                     logicalCoreId=int(i/core_distribution_factor) +
-                     n*int(self.nsamples*2/core_distribution_factor),
+                     np.mod(n,2)*int(self.nsamples*2/core_distribution_factor),
                     refractoryDelay=self.REFRACTORY_T
                 )
                 l.append(self.net.createCompartment(prototype=l_p))
@@ -235,7 +239,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             weights2[idx3] = 0
             weights3[idx2] = 0
 
-            con = nx.ConnectionPrototype(signMode=1, weightExponent=self.weight_exp[i],
+            con = nx.ConnectionPrototype(signMode=1, weightExponent=self.weightExp[i],
                 compressionMode=0)
             
             #self.l_g[i-1].connect(self.l_g[i], prototype=con2,
@@ -303,17 +307,18 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         for i in range(self.nlayers):
             
 
-            slope = 2*self.l_thresholds[i]/self.sim_time*np.ones(2*self.nsamples)-np.sum(self.l_weights[i], axis=1)*2**self.weight_exp[i]
+            slope = 2*self.l_thresholds[i]/self.sim_time*np.ones(2*self.nsamples)-np.sum(self.l_weights[i], axis=1)*2**self.weightExp[i]
             scale = slope.max()/254
-            weightExp = np.floor(np.log2(slope.max()/254)+1)
+            weightExp = np.floor(np.log2(slope.max()/254)+1-1e-8)
             
             logger.debug('Weight rescaling:') 
             logger.debug('\tMaximum weight: {0}'.format(254))
-            logger.debug('\tActual threshold: {0}'.format(slope.max()))
-            logger.debug('\tRescaling by 2**{0} = {1} '.format(weightExp, 2**(-weightExp))
-            logger.debug('\tNew threshold: {0}'.format(slope.max()/2**(-weightExp)))
+            logger.debug('\tActual weight: {0}'.format(slope.max()))
+            logger.debug('\tlog2 scale: {0} '.format(np.log2(scale)))
+            logger.debug('\tRescaling by 2**{0} = {1} '.format(weightExp, 2**(-weightExp)))
+            logger.debug('\tNew weight: {0}'.format(slope.max()*2**(-weightExp)))
 
-            clock_con = nx.ConnectionPrototype(signMode=1, weightExponent=exp, compressionMode=0)
+            clock_con = nx.ConnectionPrototype(signMode=1, weightExponent=weightExp, compressionMode=0)
             
             bias = 2*self.l_thresholds[i]/self.sim_time
             clock = self.net.createSpikeGenProcess(numPorts=1)
@@ -389,8 +394,13 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         #TODO: For now use auxillary neurons
 
+        # SNIP
+        compiler = nx.N2Compiler()
+        board = compiler.compile(self.net)
+        board.start()
+
         logger.debug('Running simulation ... ')
-        self.net.run(self.total_sim_time)
+        board.run(self.total_sim_time)
 
         logger.info('Finishing Loihi execution. Disconnecting board ...')
         self.net.disconnect()
