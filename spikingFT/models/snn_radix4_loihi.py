@@ -7,6 +7,7 @@ import logging
 logger = logging.getLogger('spiking-FT')
 import numpy as np
 import pathlib
+import os
 # Local libraries
 try:
     import nxsdk.api.n2a as nx
@@ -57,6 +58,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
         # Initialize parent class and unpack class-specific variables
         super().__init__(**kwargs)
+        #os.environ['PARTITION'] = "nahuku32"
+        #os.environ['BOARD'] = "ncl-ext-ghrd-01"
         self.current_decay = kwargs.get("current_decay")
         self.measure_performance = kwargs.get("measure_performance", False)
         self.debug = False
@@ -127,8 +130,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
 
         logger.debug('Creating Compartments ...')
-        core_distribution_factor = 256
-        core_step = 256
+        core_distribution_factor = 64
+        core_step = 8
         
         l_g = [] # nlayers list of compartment groups
         for n in range(self.nlayers):
@@ -174,7 +177,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
                 l_probes_V.append(self.l_g[n].probe(nx.ProbeParameter.COMPARTMENT_VOLTAGE,
                     probeConditions=None))
                 l_probes_S.append(self.l_g[n].probe(nx.ProbeParameter.SPIKE,
-                    probeConditions=None))
+                    probeConditions=nx.SpikeProbeCondition()))
         else:
             logger.debug('Creating Probes of Layer {0} ...'.format(self.nlayers))
             l_probes_S.append(self.l_g[-1].probe(nx.ProbeParameter.SPIKE,
@@ -247,6 +250,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             #self.l_g[i-1].connect(self.l_g[i], prototype=con3,
             #        weight=weights3)
             mask = np.abs(self.l_weights[i])>0
+            logger.debug('Number of connections in layer {0}: {1} of {2}'.format(i, np.sum(mask), self.nsamples**2*4))
 
             self.l_g[i-1].connect(self.l_g[i], prototype=con,
                     weight=self.l_weights[i], connectionMask=mask)
@@ -320,7 +324,6 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
             clock_con = nx.ConnectionPrototype(signMode=1, weightExponent=weightExp, compressionMode=0)
             
-            bias = 2*self.l_thresholds[i]/self.sim_time
             clock = self.net.createSpikeGenProcess(numPorts=1)
             clock.addSpikes(spikeInputPortNodeIds=0, spikeTimes=[self.sim_time*(i+1)])
             clock.connect(self.l_g[i], prototype=clock_con,
@@ -396,14 +399,14 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         # SNIP
         compiler = nx.N2Compiler()
-        board = compiler.compile(self.net)
-        board.start()
+        self.board = compiler.compile(self.net)
+        self.board.start()
 
         logger.debug('Running simulation ... ')
-        board.run(self.total_sim_time)
+        self.board.run(self.total_sim_time)
 
         logger.info('Finishing Loihi execution. Disconnecting board ...')
-        self.net.disconnect()
+        self.board.disconnect()
 
     def parse_probes(self):
         if self.debug:
@@ -434,15 +437,17 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.init_inputs(data.real, data.imag)
         # Connect all layers
         self.connect()
+
         # Instantiate measurement probes
         if self.measure_performance:
-            network.performance_profiling()
+            self.performance_profiling()
 
         #TODO: use snip
         #self.init_snip()
 
 
         # Run the network
+        #
         self.simulate()
         logger.debug('Done.')
         self.parse_probes()
