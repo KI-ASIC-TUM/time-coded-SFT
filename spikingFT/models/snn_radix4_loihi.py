@@ -62,7 +62,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         os.environ['BOARD'] = "ncl-ext-ghrd-05"
         self.current_decay = kwargs.get("current_decay")
         self.measure_performance = kwargs.get("measure_performance", False)
-        self.debug = False
+        self.probes_readout = None
 
         # TODO: total sim time vs sim time
         self.total_sim_time = int(self.sim_time*(self.nlayers+2))
@@ -130,14 +130,21 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
 
         logger.debug('Creating Compartments ...')
-        core_distribution_factor = 64
-        core_step = 8
+        core_distribution_factor = 256
+        core_step = 64
+        ncomp_per_layer = int(self.nsamples/16)
         
         l_g = [] # nlayers list of compartment groups
         for n in range(self.nlayers):
             l = []
             g = self.net.createCompartmentGroup()
             logger.debug('Creating CompartmentPrototypes of Layer {0} ...'.format(n))
+            if np.mod(n,2) == 0:
+                step = 4**(n-1)
+                core_id = np.arange(0,ncomp_per_group[l], 1)
+                core_id = np.tile(core_id, )+n*ncomp_per_layer*2
+            logger.debug(core_id)
+            logger.debug(len(core_id))
             for i in range(self.nsamples*2):
                 l_p = nx.CompartmentPrototype(
                     vThMant=self.l_thresholds[n] + self.l_offsets[n][i],
@@ -146,8 +153,9 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
                     functionalState=nx.COMPARTMENT_FUNCTIONAL_STATE.IDLE,
                     #logicalCoreId=np.mod(i,core_step) +
                     # np.mod(n,2)*int(self.nsamples*2/core_step),
-                    logicalCoreId=int(i/core_distribution_factor) +
-                     np.mod(n,2)*int(self.nsamples*2/core_distribution_factor),
+                    #logicalCoreId=int(i/core_distribution_factor) +
+                    # np.mod(n,2)*int(self.nsamples*2/core_distribution_factor),
+                    #logicalCoreId=core_id[i],
                     refractoryDelay=self.REFRACTORY_T
                 )
                 l.append(self.net.createCompartment(prototype=l_p))
@@ -171,17 +179,20 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         l_probes_V = []
         l_probes_S = []
         
-        if self.debug:
+        if self.probes_readout == 'all':
             for n in range(self.nlayers):
                 logger.debug('Creating Probes of Layer {0} ...'.format(n))
                 l_probes_V.append(self.l_g[n].probe(nx.ProbeParameter.COMPARTMENT_VOLTAGE,
                     probeConditions=None))
                 l_probes_S.append(self.l_g[n].probe(nx.ProbeParameter.SPIKE,
                     probeConditions=nx.SpikeProbeCondition()))
-        else:
+        elif self.probes_readout == 'last':            
             logger.debug('Creating Probes of Layer {0} ...'.format(self.nlayers))
+            customSpikeProbeCond = nx.SpikeProbeCondition(dt=1, tStart=(self.nlayers)*self.sim_time)
             l_probes_S.append(self.l_g[-1].probe(nx.ProbeParameter.SPIKE,
-                probeConditions=None))
+                probeConditions=customSpikeProbeCond))
+        else:            
+            logger.debug('No probes.')
 
     
         logger.debug('Done.')
@@ -399,9 +410,15 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
     def simulate(self):
 
+        logger.debug('Compiling ...')
+
         compiler = nx.N2Compiler()
         self.board = compiler.compile(self.net)
+        logger.debug('Done.')
+        
+        logger.debug('Start board ...')
         self.board.start()
+        logger.debug('Done.')
 
         logger.debug('Running simulation ... ')
         self.board.run(self.total_sim_time, aSync=True)
@@ -411,7 +428,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.board.disconnect()
 
     def parse_probes(self):
-        if self.debug:
+        if self.probes_readout == 'all':
             for l in range(self.nlayers):
                 self.voltage[:, :, 0, l] = self.l_probes_V[l][0].data[:self.nsamples,:].T
                 self.voltage[:, :, 1, l] = self.l_probes_V[l][0].data[self.nsamples:,:].T
@@ -422,13 +439,15 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
                         base=4, nlayers=self.nlayers)
                 self.spikes[:, 1, l] = spikingFT.utils.ft_utils.bit_reverse(imag_spikes,
                         base=4, nlayers=self.nlayers)
-        else:
+        elif self.probes_readout == 'last':
             real_spikes = np.argmax(self.l_probes_S[-1][0].data[:self.nsamples], axis=1)
             imag_spikes = np.argmax(self.l_probes_S[-1][0].data[self.nsamples:], axis=1)
             self.spikes[:, 0, -1] = spikingFT.utils.ft_utils.bit_reverse(real_spikes,
                     base=4, nlayers=self.nlayers)
             self.spikes[:, 1, -1] = spikingFT.utils.ft_utils.bit_reverse(imag_spikes,
                     base=4, nlayers=self.nlayers)
+        else:
+            logger.debug('No probes.')
 
         self.output = (self.nlayers+0.5)*self.sim_time - self.spikes[:,:, -1]
 
