@@ -58,8 +58,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
         # Initialize parent class and unpack class-specific variables
         super().__init__(**kwargs)
-        #os.environ['PARTITION'] = "nahuku32"
-        #os.environ['BOARD'] = "ncl-ext-ghrd-01"
+        os.environ['PARTITION'] = "loihi_2h"
+        os.environ['BOARD'] = "ncl-ext-ghrd-05"
         self.current_decay = kwargs.get("current_decay")
         self.measure_performance = kwargs.get("measure_performance", False)
         self.debug = False
@@ -249,7 +249,9 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             #        weight=weights2)
             #self.l_g[i-1].connect(self.l_g[i], prototype=con3,
             #        weight=weights3)
-            mask = np.abs(self.l_weights[i])>0
+            mask = np.abs(self.l_weights[i])>1
+            if i==0:
+                mask[:,self.nsamples:] = 0
             logger.debug('Number of connections in layer {0}: {1} of {2}'.format(i, np.sum(mask), self.nsamples**2*4))
 
             self.l_g[i-1].connect(self.l_g[i], prototype=con,
@@ -374,38 +376,38 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
                 binSize=2)
         )
 
-    def simulate(self):
+    def simulate_with_snip(self):
 
         #TODO: Use snip instead of auxiallary neurons
 
-        ##charging_stage_bias = int(self.TH_MANT*2/self.sim_time)
-        #logger.debug("Running simulation")
-        ## Write bias value during charging stage to the corresponding channel
-        #self.bias_channel.write(1, [charging_stage_bias])
-        ## Run charging stage
-        #self.board.run(self.sim_time*2, aSync=True)
-        ## Run spiking stage
-        #spiking_stage_bias = np.zeros(2, int)
-        #for bias in spiking_stage_bias[1:]:
-        #    self.time_channel.read(1)[0]
-        #    self.bias_channel.write(1, [bias])
-        ## Finish and disconnect
-        #logger.info("Finishing Loihi execution. Disconnecting board")
-        ## Run spiking stage
-        #self.board.finishRun()
-        #self.board.disconnect()
+        charging_stage_bias = int(self.l_thresholds[0]*2/self.sim_time)
+        logger.debug("Running simulation")
+        # Write bias value during charging stage to the corresponding channel
+        self.bias_channel.write(1, [charging_stage_bias])
+        # Run charging stage
+        self.board.run(self.sim_time*2, aSync=True)
+        # Run spiking stage
+        spiking_stage_bias = np.zeros(2, int)
+        for bias in spiking_stage_bias[1:]:
+            self.time_channel.read(1)[0]
+            self.bias_channel.write(1, [bias])
+        # Finish and disconnect
+        logger.info("Finishing Loihi execution. Disconnecting board")
+        # Run spiking stage
+        self.board.finishRun()
+        self.board.disconnect()
 
-        #TODO: For now use auxillary neurons
+    def simulate(self):
 
-        # SNIP
         compiler = nx.N2Compiler()
         self.board = compiler.compile(self.net)
         self.board.start()
 
         logger.debug('Running simulation ... ')
-        self.board.run(self.total_sim_time)
+        self.board.run(self.total_sim_time, aSync=True)
 
         logger.info('Finishing Loihi execution. Disconnecting board ...')
+        self.board.finishRun()
         self.board.disconnect()
 
     def parse_probes(self):

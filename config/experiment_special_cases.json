@@ -5,9 +5,9 @@
     {
         "snn_config":
         {
-            "sim_time": 128,
+            "sim_time": 257,
             "time_step": 1,
-            "mode": "dft",
+            "mode": "fft",
             "framework": "loihi",
             "current_decay": 0,
             "measure_performance":false
@@ -15,7 +15,7 @@
 
         "data":
         {
-            "samples_per_chirp": 256,
+            "samples_per_chirp": 1024,
             "chirps_per_frame": 1,
             "antennas": 1,
             "nframes": 1
