@@ -58,11 +58,11 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
         # Initialize parent class and unpack class-specific variables
         super().__init__(**kwargs)
-        os.environ['PARTITION'] = "loihi_2h"
-        os.environ['BOARD'] = "ncl-ext-ghrd-05"
+        #os.environ['PARTITION'] = "nahuku32"
+        #os.environ['BOARD'] = "ncl-ext-ghrd-02"
         self.current_decay = kwargs.get("current_decay")
         self.measure_performance = kwargs.get("measure_performance", False)
-        self.probes_readout = None
+        self.probes_readout = 'last'
 
         # TODO: total sim time vs sim time
         self.total_sim_time = int(self.sim_time*(self.nlayers+2))
@@ -130,7 +130,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
 
         logger.debug('Creating Compartments ...')
-        core_distribution_factor = 256
+        core_distribution_factor = 128
         core_step = 64
         ncomp_per_layer = int(self.nsamples/16)
         
@@ -139,20 +139,14 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             l = []
             g = self.net.createCompartmentGroup()
             logger.debug('Creating CompartmentPrototypes of Layer {0} ...'.format(n))
-            if np.mod(n,2) == 0:
-                step = 4**(n-1)
-                core_id = np.arange(0,ncomp_per_group[l], 1)
-                core_id = np.tile(core_id, )+n*ncomp_per_layer*2
-            logger.debug(core_id)
-            logger.debug(len(core_id))
             for i in range(self.nsamples*2):
                 l_p = nx.CompartmentPrototype(
                     vThMant=self.l_thresholds[n] + self.l_offsets[n][i],
                     compartmentCurrentDecay=self.current_decay,
                     compartmentVoltageDecay=0,
                     functionalState=nx.COMPARTMENT_FUNCTIONAL_STATE.IDLE,
-                    #logicalCoreId=np.mod(i,core_step) +
-                    # np.mod(n,2)*int(self.nsamples*2/core_step),
+                    logicalCoreId=np.mod(i,core_step) +
+                     np.mod(n,2)*int(self.nsamples*2/core_step),
                     #logicalCoreId=int(i/core_distribution_factor) +
                     # np.mod(n,2)*int(self.nsamples*2/core_distribution_factor),
                     #logicalCoreId=core_id[i],
@@ -262,7 +256,9 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             #        weight=weights3)
             mask = np.abs(self.l_weights[i])>1
             if i==0:
-                mask[:,self.nsamples:] = 0
+                mask[self.nsamples:,self.nsamples:] = 0
+            #elif i==self.nlayers-1:
+            #    mask[self.nsamples:,:] = 0
             logger.debug('Number of connections in layer {0}: {1} of {2}'.format(i, np.sum(mask), self.nsamples**2*4))
 
             self.l_g[i-1].connect(self.l_g[i], prototype=con,
@@ -368,12 +364,20 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         time stamps t_H and t_LMT of the two probes differ
         """
+        logger.debug('Compiling ...')
+
+        compiler = nx.N2Compiler()
+        self.board = compiler.compile(self.net)
+        logger.debug('Done.')
+
+        
+
         logger.debug("Instantiating performance boards")
         self.et_probe = self.board.probe(
             probeType=nx.ProbeParameter.EXECUTION_TIME,
             probeCondition=nx.PerformanceProbeCondition(
                 tStart=1,
-                tEnd=self.sim_time*2,
+                tEnd=self.total_sim_time,
                 bufferSize=1024,
                 binSize=2)
         )
@@ -382,10 +386,11 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             probeType=nx.ProbeParameter.ENERGY,
             probeCondition=nx.PerformanceProbeCondition(
                 tStart=1,
-                tEnd=self.sim_time*2,
+                tEnd=self.total_sim_time,
                 bufferSize=1024,
                 binSize=2)
         )
+
 
     def simulate_with_snip(self):
 
@@ -405,7 +410,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         # Finish and disconnect
         logger.info("Finishing Loihi execution. Disconnecting board")
         # Run spiking stage
-        self.board.finishRun()
+        #self.board.finishRun()
         self.board.disconnect()
 
     def simulate(self):
@@ -416,9 +421,9 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.board = compiler.compile(self.net)
         logger.debug('Done.')
         
-        logger.debug('Start board ...')
+        logger.debug('start board ...')
         self.board.start()
-        logger.debug('Done.')
+        logger.debug('done.')
 
         logger.debug('Running simulation ... ')
         self.board.run(self.total_sim_time, aSync=True)
@@ -426,6 +431,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         logger.info('Finishing Loihi execution. Disconnecting board ...')
         self.board.finishRun()
         self.board.disconnect()
+        #self.power_stats = self.board.energyTimeMonitor.powerProfileStats
 
     def parse_probes(self):
         if self.probes_readout == 'all':
@@ -452,6 +458,17 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.output = (self.nlayers+0.5)*self.sim_time - self.spikes[:,:, -1]
 
 
+    def parse_energy_probe(self):
+        """
+        Calculate consumed energy from the collected power stats
+        """
+        power_vals = np.array(self.power_stats.power['core']['dynamic'])
+        time_vals = np.array(self.power_stats.timePerTimestep)
+        energy = power_vals * time_vals
+        return energy
+
+
+
     def run(self, data):
 
         # Create spike generators
@@ -460,8 +477,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.connect()
 
         # Instantiate measurement probes
-        if self.measure_performance:
-            self.performance_profiling()
+        #if self.measure_performance:
+        #    self.performance_profiling()
 
         #TODO: use snip
         #self.init_snip()
@@ -471,6 +488,10 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         #
         self.simulate()
         logger.debug('Done.')
+         
+        #if self.measure_performance:
+        #    self.parse_energy_probe()
+
         self.parse_probes()
         logger.debug('Run finished.')
         return self.output

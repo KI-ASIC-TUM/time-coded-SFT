@@ -142,7 +142,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             l1_imag_g: compartment group with nsamples compartments for
              the imag coefficients of the DFT
         """
-        core_distribution_factor = 64
+        core_distribution_factor = 32
         # Real layer
         l1_real = []
         l1_real_g = self.net.createCompartmentGroup()
@@ -197,12 +197,12 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         real_gen.connect(
             self.l1_real_g,
             prototype=in_l1,
-            weight=self.real_weights
+            weight=self.real_weights,
         )
         imag_gen.connect(
             self.l1_imag_g,
             prototype=in_l1,
-            weight=self.imag_weights
+            weight=self.imag_weights,
         )
         # Specify spiking time of each generator
         logger.debug("Assigning spike times to input spike generators")
