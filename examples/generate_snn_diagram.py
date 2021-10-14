@@ -11,7 +11,7 @@ import spikingFT.utils.plotter
 import spikingFT.utils.metrics
 
 
-def main(conf_filename="../config/test_experiment.json"):
+def main(conf_filename="../config/generate_snn_diagram.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename, autorun=True)
     voltage = sim_handler.snn.voltage[:, 3, 0]
