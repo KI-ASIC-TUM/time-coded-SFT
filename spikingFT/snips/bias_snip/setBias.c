@@ -3,8 +3,8 @@
 #include "setBias.h"
 
 // need to be set
-#define SIM_TIME 200
-#define N_SAMPLES 128
+#define SIM_TIME 128
+#define N_SAMPLES 256
 
 // really constant constant
 #define MAX_DECAY 4095

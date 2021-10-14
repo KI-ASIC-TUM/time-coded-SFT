@@ -5,7 +5,7 @@
     {
         "snn_config":
         {
-            "sim_time": 200,
+            "sim_time": 128,
             "time_step": 1,
             "mode": "dft",
             "framework": "loihi",
@@ -15,8 +15,8 @@
 
         "data":
         {
-            "samples_per_chirp": 128,
-            "chirps_per_frame": 64,
+            "samples_per_chirp": 256,
+            "chirps_per_frame": 1,
             "antennas": 1,
             "nframes": 1
         }
