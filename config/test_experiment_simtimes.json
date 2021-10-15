@@ -3,25 +3,25 @@
 
     "experiment":
     {
-        "sim_times": [50, 100, 150, 200, 300, 400, 500],
-        "samples_per_chirp": [64, 256, 1024]
+        "sim_times": [128, 129, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259],
+        "samples_per_chirp": [1024]
     },
 
     "config":
     {
         "snn_config":
         {
-            "sim_time": 200,
+            "sim_time": 63,
             "time_step": 1,
-            "mode": "dft",
-            "framework": "numpy",
+            "mode": "fft",
+            "framework": "loihi",
             "current_decay": 0,
             "measure_performance": false
         },
 
         "data":
         {
-            "samples_per_chirp": 64,
+            "samples_per_chirp": 1024,
             "chirps_per_frame": 1,
             "antennas": 1,
             "nframes": 1

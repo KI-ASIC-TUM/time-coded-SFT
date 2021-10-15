@@ -1,0 +1,3248 @@
+Brian2 cannot be found. It will not be possible to run simulation with Brian2.
+INFO: Starting up spiking-FT:
+- Configuration file: ../config/test_experiment_simtimes.json
+- Simulation time: 63
+- Time step: 1
+- FT mode: fft
+- Framework: loihi
+- Test performance: False
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65024.0
+DEBUG: 	log2 scale: -0.005712949625332765 
+DEBUG: 	Rescaling weights by 2**-0.0 = 1.0 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65024.0
+DEBUG: 	log2 scale: -0.005712949625332765 
+DEBUG: 	Rescaling weights by 2**-0.0 = 1.0 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65024.0
+DEBUG: 	log2 scale: -0.005712949625332765 
+DEBUG: 	Rescaling weights by 2**-0.0 = 1.0 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65024.0
+DEBUG: 	log2 scale: -0.005712949625332765 
+DEBUG: 	Rescaling weights by 2**-0.0 = 1.0 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65024.0
+DEBUG: 	log2 scale: -0.005712949625332765 
+DEBUG: 	Rescaling weights by 2**-0.0 = 1.0 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 1016.0
+DEBUG: 	log2 scale: 2.0 
+DEBUG: 	Rescaling by 2**2.0 = 0.25 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 1016.0
+DEBUG: 	log2 scale: 2.0 
+DEBUG: 	Rescaling by 2**2.0 = 0.25 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 1016.0
+DEBUG: 	log2 scale: 2.0 
+DEBUG: 	Rescaling by 2**2.0 = 0.25 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 1016.0
+DEBUG: 	log2 scale: 2.0 
+DEBUG: 	Rescaling by 2**2.0 = 0.25 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 1016.0
+DEBUG: 	log2 scale: 2.0 
+DEBUG: 	Rescaling by 2**2.0 = 0.25 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:35937
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.20s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 2.24s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.44s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.14ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634224950.6485834/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.54ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 1.99s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.17s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.03683667469094987
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65532.0
+DEBUG: 	log2 scale: 0.005514305797921478 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65532.0
+DEBUG: 	log2 scale: 0.005514305797921478 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65532.0
+DEBUG: 	log2 scale: 0.005514305797921478 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65532.0
+DEBUG: 	log2 scale: 0.005514305797921478 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 65532.0
+DEBUG: 	log2 scale: 0.005514305797921478 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:35653
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.19s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 2.21s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.38s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.18ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634224988.7908182/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.39ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 2.00s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.17s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.05918425279040889
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 66040.0
+DEBUG: 	log2 scale: 0.01665486340312167 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 33020.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 66040.0
+DEBUG: 	log2 scale: 0.01665486340312167 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 33020.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 66040.0
+DEBUG: 	log2 scale: 0.01665486340312167 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 33020.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 66040.0
+DEBUG: 	log2 scale: 0.01665486340312167 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 33020.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 66040.0
+DEBUG: 	log2 scale: 0.01665486340312167 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 33020.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:40059
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.23s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 2.27s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.35s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.15ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225027.1414323/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 1.95ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 2.01s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.18s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.03692804378385029
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 71120.0
+DEBUG: 	log2 scale: 0.12357006731963358 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 35560.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 71120.0
+DEBUG: 	log2 scale: 0.12357006731963358 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 35560.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 71120.0
+DEBUG: 	log2 scale: 0.12357006731963358 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 35560.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 71120.0
+DEBUG: 	log2 scale: 0.12357006731963358 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 35560.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 71120.0
+DEBUG: 	log2 scale: 0.12357006731963358 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 35560.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:43903
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.21s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 2.39s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.34s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.18ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225065.3655653/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.65ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.03s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 2.15s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.18s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.04544677799194336
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 76200.0
+DEBUG: 	log2 scale: 0.22310574087054824 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 38100.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 76200.0
+DEBUG: 	log2 scale: 0.22310574087054824 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 38100.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 76200.0
+DEBUG: 	log2 scale: 0.22310574087054824 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 38100.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 76200.0
+DEBUG: 	log2 scale: 0.22310574087054824 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 38100.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 76200.0
+DEBUG: 	log2 scale: 0.22310574087054824 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 38100.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:32811
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.23s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.89s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.36s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.16ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225103.8487422/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.13ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 2.31s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.19s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.028330037896079466
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 81280.0
+DEBUG: 	log2 scale: 0.31621514526202965 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 40640.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 81280.0
+DEBUG: 	log2 scale: 0.31621514526202965 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 40640.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 81280.0
+DEBUG: 	log2 scale: 0.31621514526202965 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 40640.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 81280.0
+DEBUG: 	log2 scale: 0.31621514526202965 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 40640.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 81280.0
+DEBUG: 	log2 scale: 0.31621514526202965 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 40640.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:42375
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.22s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.90s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.37s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.18ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225142.1795163/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 6.58ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 2.46s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.19s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.03552796700452782
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 86360.0
+DEBUG: 	log2 scale: 0.403677986512369 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 43180.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 86360.0
+DEBUG: 	log2 scale: 0.403677986512369 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 43180.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 86360.0
+DEBUG: 	log2 scale: 0.403677986512369 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 43180.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 86360.0
+DEBUG: 	log2 scale: 0.403677986512369 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 43180.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 86360.0
+DEBUG: 	log2 scale: 0.403677986512369 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 43180.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:39309
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.22s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 2.69s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.39s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225181.6091857/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.36ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 2.58s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.20s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.043997632077554465
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 91440.0
+DEBUG: 	log2 scale: 0.4861401467043419 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 45720.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 91440.0
+DEBUG: 	log2 scale: 0.4861401467043419 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 45720.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 91440.0
+DEBUG: 	log2 scale: 0.4861401467043419 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 45720.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 91440.0
+DEBUG: 	log2 scale: 0.4861401467043419 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 45720.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 91440.0
+DEBUG: 	log2 scale: 0.4861401467043419 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 45720.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:44047
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.22s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 2.80s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.40s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225220.4131904/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.50ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 2.77s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.21s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.028012081300314302
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 96520.0
+DEBUG: 	log2 scale: 0.564142658705615 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 48260.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 96520.0
+DEBUG: 	log2 scale: 0.564142658705615 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 48260.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 96520.0
+DEBUG: 	log2 scale: 0.564142658705615 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 48260.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 96520.0
+DEBUG: 	log2 scale: 0.564142658705615 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 48260.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 96520.0
+DEBUG: 	log2 scale: 0.564142658705615 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 48260.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:36619
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.23s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 2.91s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.53s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225259.7875109/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 3.14ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 2.91s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.21s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.034341424089179985
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 101600.0
+DEBUG: 	log2 scale: 0.6381432401493918 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 50800.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 101600.0
+DEBUG: 	log2 scale: 0.6381432401493918 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 50800.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 101600.0
+DEBUG: 	log2 scale: 0.6381432401493918 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 50800.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 101600.0
+DEBUG: 	log2 scale: 0.6381432401493918 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 50800.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 101600.0
+DEBUG: 	log2 scale: 0.6381432401493918 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 50800.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:40381
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.29s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.93s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.40s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225298.4817703/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 3.32ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.16s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.22s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.02228815693168887
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 106680.0
+DEBUG: 	log2 scale: 0.7085325680407899 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 53340.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 106680.0
+DEBUG: 	log2 scale: 0.7085325680407899 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 53340.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 106680.0
+DEBUG: 	log2 scale: 0.7085325680407899 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 53340.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 106680.0
+DEBUG: 	log2 scale: 0.7085325680407899 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 53340.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 106680.0
+DEBUG: 	log2 scale: 0.7085325680407899 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 53340.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:44173
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.25s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.89s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.46s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.18ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225338.196768/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.03ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.33s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.23s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.027349127207619502
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 111760.0
+DEBUG: 	log2 scale: 0.7756467638993269 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 55880.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 111760.0
+DEBUG: 	log2 scale: 0.7756467638993269 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 55880.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 111760.0
+DEBUG: 	log2 scale: 0.7756467638993269 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 55880.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 111760.0
+DEBUG: 	log2 scale: 0.7756467638993269 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 55880.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 111760.0
+DEBUG: 	log2 scale: 0.7756467638993269 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 55880.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:41371
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.26s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.89s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.40s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225378.383072/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.85ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.42s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.47s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.24s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.034313861991131234
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 116840.0
+DEBUG: 	log2 scale: 0.8397771013190425 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 58420.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 116840.0
+DEBUG: 	log2 scale: 0.8397771013190425 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 58420.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 116840.0
+DEBUG: 	log2 scale: 0.8397771013190425 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 58420.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 116840.0
+DEBUG: 	log2 scale: 0.8397771013190425 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 58420.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 116840.0
+DEBUG: 	log2 scale: 0.8397771013190425 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 58420.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:38807
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.25s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.90s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.43s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.15ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225417.458437/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.07ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.62s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.25s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.021906943464631606
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 121920.0
+DEBUG: 	log2 scale: 0.9011776459831857 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 60960.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 121920.0
+DEBUG: 	log2 scale: 0.9011776459831857 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 60960.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 121920.0
+DEBUG: 	log2 scale: 0.9011776459831857 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 60960.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 121920.0
+DEBUG: 	log2 scale: 0.9011776459831857 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 60960.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 121920.0
+DEBUG: 	log2 scale: 0.9011776459831857 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 60960.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:35085
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.25s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.91s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.42s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.18ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225458.015557/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.77ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.03s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.80s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.25s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.01805826569807427
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127000.0
+DEBUG: 	log2 scale: 0.9600713350367542 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63500.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127000.0
+DEBUG: 	log2 scale: 0.9600713350367542 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63500.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127000.0
+DEBUG: 	log2 scale: 0.9600713350367542 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63500.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127000.0
+DEBUG: 	log2 scale: 0.9600713350367542 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63500.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127000.0
+DEBUG: 	log2 scale: 0.9600713350367542 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63500.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:39099
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.26s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.88s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.45s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225497.348713/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 3.10ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.95s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.26s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.022469315965097856
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127508.0
+DEBUG: 	log2 scale: 0.9658306043254392 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63754.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127508.0
+DEBUG: 	log2 scale: 0.9658306043254392 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63754.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127508.0
+DEBUG: 	log2 scale: 0.9658306043254392 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63754.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127508.0
+DEBUG: 	log2 scale: 0.9658306043254392 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63754.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 127508.0
+DEBUG: 	log2 scale: 0.9658306043254392 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 63754.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:43089
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.27s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.91s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.46s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225538.9585469/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.98ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.93s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.26s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.028699518287862602
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128016.0
+DEBUG: 	log2 scale: 0.9715669738745836 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64008.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128016.0
+DEBUG: 	log2 scale: 0.9715669738745836 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64008.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128016.0
+DEBUG: 	log2 scale: 0.9715669738745836 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64008.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128016.0
+DEBUG: 	log2 scale: 0.9715669738745836 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64008.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128016.0
+DEBUG: 	log2 scale: 0.9715669738745836 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64008.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:35897
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.27s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 3.73s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.49s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.14ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225580.61734/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 1.92ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.96s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.26s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.02271431769853307
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128524.0
+DEBUG: 	log2 scale: 0.9772806250689774 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64262.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128524.0
+DEBUG: 	log2 scale: 0.9772806250689774 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64262.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128524.0
+DEBUG: 	log2 scale: 0.9772806250689774 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64262.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128524.0
+DEBUG: 	log2 scale: 0.9772806250689774 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64262.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 128524.0
+DEBUG: 	log2 scale: 0.9772806250689774 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64262.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:34225
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.31s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.90s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.49s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225620.2331748/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 1.94ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.03s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.42s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.97s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.26s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.028970070348180135
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129032.0
+DEBUG: 	log2 scale: 0.9829717371468332 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64516.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129032.0
+DEBUG: 	log2 scale: 0.9829717371468332 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64516.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129032.0
+DEBUG: 	log2 scale: 0.9829717371468332 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64516.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129032.0
+DEBUG: 	log2 scale: 0.9829717371468332 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64516.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129032.0
+DEBUG: 	log2 scale: 0.9829717371468332 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64516.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:42641
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.27s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.88s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.50s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225660.0118542/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.97ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.03s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.44s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.99s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.26s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.02225583843715637
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129540.0
+DEBUG: 	log2 scale: 0.9886404872335252 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64770.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129540.0
+DEBUG: 	log2 scale: 0.9886404872335252 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64770.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129540.0
+DEBUG: 	log2 scale: 0.9886404872335252 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64770.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129540.0
+DEBUG: 	log2 scale: 0.9886404872335252 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64770.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 129540.0
+DEBUG: 	log2 scale: 0.9886404872335252 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 64770.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:36865
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.28s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.90s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.49s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.18ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225702.095285/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.88ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.88s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.26s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.03468267876920728
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130048.0
+DEBUG: 	log2 scale: 0.9942870503746672 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130048.0
+DEBUG: 	log2 scale: 0.9942870503746672 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130048.0
+DEBUG: 	log2 scale: 0.9942870503746672 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130048.0
+DEBUG: 	log2 scale: 0.9942870503746672 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130048.0
+DEBUG: 	log2 scale: 0.9942870503746672 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65024.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:33505
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.28s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.88s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.54s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225741.6360357/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.89ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.89s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.28s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.022355892824001564
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130556.0
+DEBUG: 	log2 scale: 0.9999115995685453 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65278.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130556.0
+DEBUG: 	log2 scale: 0.9999115995685453 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65278.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130556.0
+DEBUG: 	log2 scale: 0.9999115995685453 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65278.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130556.0
+DEBUG: 	log2 scale: 0.9999115995685453 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65278.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 130556.0
+DEBUG: 	log2 scale: 0.9999115995685453 
+DEBUG: 	Rescaling weights by 2**-1.0 = 0.5 
+DEBUG: 	New threshold: 65278.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 508.0
+DEBUG: 	log2 scale: 1.0 
+DEBUG: 	Rescaling by 2**1.0 = 0.5 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:40509
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.28s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 4.27s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.51s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225783.7282076/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 1.81ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.93s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.28s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.018732342649078776
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131064.0
+DEBUG: 	log2 scale: 1.0055143057979214 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131064.0
+DEBUG: 	log2 scale: 1.0055143057979214 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131064.0
+DEBUG: 	log2 scale: 1.0055143057979214 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131064.0
+DEBUG: 	log2 scale: 1.0055143057979214 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131064.0
+DEBUG: 	log2 scale: 1.0055143057979214 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32766.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:34729
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.29s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.89s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.52s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225823.4380198/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 1.88ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.43s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.03s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.93s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.28s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.07166269521447782
+INFO: Execution finished
+INFO: Loading data
+INFO: Data loaded:
+- Source: BBM
+- Nº frames: 1
+- Nº chirps: 1
+- Nº samples: 1024
+- Nº antennas: 1
+INFO: Encoding data to spikes
+INFO: Initializing SNN simulation
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131572.0
+DEBUG: 	log2 scale: 1.011095338061221 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32893.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131572.0
+DEBUG: 	log2 scale: 1.011095338061221 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32893.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131572.0
+DEBUG: 	log2 scale: 1.011095338061221 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32893.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131572.0
+DEBUG: 	log2 scale: 1.011095338061221 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32893.0
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum threshold: 65282
+DEBUG: 	Actual threshold: 131572.0
+DEBUG: 	log2 scale: 1.011095338061221 
+DEBUG: 	Rescaling weights by 2**-2.0 = 0.25 
+DEBUG: 	New threshold: 32893.0
+DEBUG: Creating Compartments ...
+DEBUG: Creating CompartmentPrototypes of Layer 0 ...
+DEBUG: Creating CompartmentPrototypes of Layer 1 ...
+DEBUG: Creating CompartmentPrototypes of Layer 2 ...
+DEBUG: Creating CompartmentPrototypes of Layer 3 ...
+DEBUG: Creating CompartmentPrototypes of Layer 4 ...
+DEBUG: Done.
+DEBUG: Creating ConnectionPrototype ...
+DEBUG: Creating auxillary neurons ...
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 0.
+DEBUG: Reset neuron connected to layer 0.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 1.
+DEBUG: Reset neuron connected to layer 1.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 2.
+DEBUG: Reset neuron connected to layer 2.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 3.
+DEBUG: Reset neuron connected to layer 3.
+DEBUG: Weight rescaling:
+DEBUG: 	Maximum weight: 254
+DEBUG: 	Actual weight: 254.0
+DEBUG: 	log2 scale: 0.0 
+DEBUG: 	Rescaling by 2**0.0 = 1.0 
+DEBUG: 	New weight: 254.0
+DEBUG: Clock neuron connected to layer 4.
+DEBUG: Reset neuron connected to layer 4.
+DEBUG: Done.
+DEBUG: Creating Probes ...
+DEBUG: Creating Probes of Layer 5 ...
+DEBUG: Done.
+INFO: Running SNN simulation
+DEBUG: Creating input spike generators
+DEBUG: Assigning spike times to input spike generators
+DEBUG: Connecting layers ...
+DEBUG: Creating connection prototype ...
+DEBUG: Start connecting ...
+DEBUG: Number of connections in layer 0: 10216 of 4194304
+DEBUG: Layer 0 connected to Layer 1
+DEBUG: Number of connections in layer 1: 14208 of 4194304
+DEBUG: Layer 1 connected to Layer 2
+DEBUG: Number of connections in layer 2: 13824 of 4194304
+DEBUG: Layer 2 connected to Layer 3
+DEBUG: Number of connections in layer 3: 12288 of 4194304
+DEBUG: Layer 3 connected to Layer 4
+DEBUG: Number of connections in layer 4: 8192 of 4194304
+DEBUG: Layer 4 connected to Layer 5
+DEBUG: Done.
+DEBUG: Compiling ...
+DEBUG: Done.
+DEBUG: start board ...
+    Host server up... [1;30mINFO[0m:[34mDRV[0m:  SLURM is being run in background
+[1;30mINFO[0m:[34mDRV[0m:  Connecting to 10.212.98.108:39249
+[1;30mINFO[0m:[34mDRV[0m:      Host server up..............Done 0.29s
+    Encoding axons/synapses... [1;30mINFO[0m:[34mDRV[0m:      Encoding axons/synapses.....Done 1.90s
+    Compiling Embedded snips... [1;30mINFO[0m:[34mDRV[0m:      Compiling Embedded snips....Done 0.52s
+    Compiling MPDS Registers... [1;30mINFO[0m:[34mDRV[0m:      Compiling MPDS Registers....Done 0.13ms
+    Booting up... [1;30mINFO[0m:[34mHST[0m:  Args chip=0 cpu=0 /homes/nreeb/loihi/lib/python3.8/site-packages/nxsdk/driver/compilers/../../../temp/1634225864.3758671/launcher_chip0_lmt0.bin --chips=1 --epoch=0 --remote-relay=1 
+[1;30mINFO[0m:[34mHST[0m:  Nx...
+[1;30mINFO[0m:[34mDRV[0m:      Booting up..................Done 0.69s
+    Encoding probes... [1;30mINFO[0m:[34mDRV[0m:      Encoding probes.............Done 2.84ms
+DEBUG: done.
+DEBUG: Running simulation ... 
+    Transferring probes... [1;30mINFO[0m:[34mDRV[0m:      Transferring probes.........Done 0.02s
+    Configuring registers... [1;30mINFO[0m:[34mDRV[0m:      Configuring registers.......Done 0.42s
+    Transferring spikes... [1;30mINFO[0m:[34mDRV[0m:      Transferring spikes.........Done 0.02s
+INFO: Finishing Loihi execution. Disconnecting board ...
+    Executing... [1;30mINFO[0m:[34mDRV[0m:      Executing...................Done 3.95s
+    Processing timeseries... [1;30mINFO[0m:[34mDRV[0m:      Processing timeseries.......Done 0.28s
+[1;30mINFO[0m:[34mHST[0m:  chip=0 cpu=0 halted, status=0x0
+DEBUG: Done.
+DEBUG: Run finished.
+DEBUG: Resulting RMSE: 0.06541733912340786
+INFO: Execution finished
