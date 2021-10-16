@@ -1,0 +1,24 @@
+{
+    "datapath": "data/TI_radar/multiple_targets/tc31_R_vec.npy",
+
+    "config":
+    {
+        "snn_config":
+        {
+            "sim_time": 258,
+            "time_step": 0.1,
+            "mode": "fft",
+            "framework": "brian",
+            "current_decay": 0,
+            "measure_performance": false
+        },
+
+        "data":
+        {
+            "samples_per_chirp": 256,
+            "chirps_per_frame": 1,
+            "antennas": 1,
+            "nframes": 1
+        }
+    }
+}
