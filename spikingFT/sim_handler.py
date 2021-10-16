@@ -51,6 +51,7 @@ class SimHandler():
         """
         logger.info("Encoding data to spikes")
         sim_time = self.config["snn_config"]["sim_time"]
+        logger.info("No. time steps: {0}".format(sim_time))
 
         encoder = spikingFT.utils.encoding.TimeEncoder(t_max=sim_time,
                                                        x_max=self.data.max(),
