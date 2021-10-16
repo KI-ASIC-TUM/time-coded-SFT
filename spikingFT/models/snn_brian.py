@@ -9,6 +9,7 @@ import spikingFT.models.snn
 class SNNBrian(spikingFT.models.snn.FourierTransformSNN):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.PLATFORM = 'brian'
         return
 
     def run(self, data):

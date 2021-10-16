@@ -76,8 +76,8 @@ class SimHandler():
         mode = snn_config["mode"]
         if framework == "loihi" and mode == 'dft':
             snn = spikingFT.models.snn_loihi.SNNLoihi(**snn_config)
-        elif framework == "brian":
-            snn = spikingFT.models.snn_brian.SNNBrian(**snn_config)
+        #elif framework == "brian":
+        #    snn = spikingFT.models.snn_brian.SNNBrian(**snn_config)
         elif framework == "numpy":
             snn = spikingFT.models.snn_numpy.SNNNumpy(**snn_config)
         elif framework == "loihi" and mode == 'fft':

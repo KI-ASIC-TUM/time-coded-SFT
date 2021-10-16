@@ -112,6 +112,17 @@ def special_cases(filename="../config/experiment_special_cases.json"):
         plt.show()
     return
 
+def file_case(conf_filename="../config/experiment_multiple_targets.json"):
+    # Instantiate a simulation handler and run spiking FT with sample data
+    sim_handler = spikingFT.startup.startup(conf_filename)
+    real_spikes = sim_handler.snn.output[:,0]
+    imag_spikes = sim_handler.snn.output[:,1]
+
+    filename = sim_handler.datapath.name
+
+    np.save(filename, real_spikes+1j*imag_spikes)
+
+    return
 
 def main(conf_filename="../config/test_experiment_brian.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
@@ -122,4 +133,4 @@ def main(conf_filename="../config/test_experiment_brian.json"):
 
 
 if __name__ == "__main__":
-    special_cases()
+    file_case()

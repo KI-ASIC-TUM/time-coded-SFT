@@ -23,6 +23,8 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
     Attributes:
     TODO: add attributes
     """
+
+
     PLATFORM = "brian"
 
     def __init__(self, **kwargs):
@@ -37,7 +39,6 @@ class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
         # Initialize SIMULATION parameters
         self.time_step = kwargs.get("time_step")
-        logger.debug(self.time_step)
         self.total_sim_time = (self.nlayers+1)*self.sim_time
 
         # Initialize NEURON MODEL

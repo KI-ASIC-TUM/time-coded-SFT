@@ -18,6 +18,9 @@ def get_source(dpath):
         source = "TI_sensor"
     elif dpath.name == "special_cases":
         source = "TI_sensor_special"
+    elif dpath.suffix == ".npy":
+        #source = "TI_file"
+        source = dpath
     elif dpath.name == "BBM":
         source = "BBM"
     else:
@@ -71,11 +74,23 @@ def ti_special_get_datacube():
     data_cube = raw_data.reshape((1, raw_data.shape[0], raw_data.shape[1], 1))
     return data_cube
 
+def ti_file_get_datacube(filename):
+    """
+    Read file with TI sensor special cases and arrange it in a data cube
+    """
+    raw_data = np.load(filename)
+    # Add extra dimensions for having the standard data format
+    shape = np.shape(raw_data)
+    data_cube = raw_data.reshape((1, 1, shape[0], 1))
+
+    return data_cube
+
 
 def get_data(source, config):
     """
     Load a datacube and collect a subset based on provided config
     """
+    logger.debug(source)
     # Dataset dimensions limits
     if source == "TI_sensor":
         max_frames = 120
@@ -91,6 +106,11 @@ def get_data(source, config):
         max_frames = 1
         max_antennas = 1
         max_chirps = 128
+        max_samples = 1024
+    elif source.suffix == ".npy":
+        max_frames = 1
+        max_antennas = 1
+        max_chirps = 1
         max_samples = 1024
     # Load configuration
     nframes = config["nframes"]
@@ -121,6 +141,12 @@ def get_data(source, config):
         datacube = ti_get_datacube()
     elif source == "TI_sensor_special":
         datacube = ti_special_get_datacube()
+    elif source.suffix == ".npy":
+        datacube = ti_file_get_datacube(source)
+        nframes = datacube.shape[0]
+        nchirps = datacube.shape[1]
+        nsamples = datacube.shape[2]
+        nantennas = datacube.shape[3]
     elif source == "BBM":
         datacube = bbm_get_datacube()
     data = datacube[:nframes, :nchirps, :nsamples, :nantennas]
