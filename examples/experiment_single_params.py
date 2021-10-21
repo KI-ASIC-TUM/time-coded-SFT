@@ -53,11 +53,7 @@ def plot_error(nsamples, sim_time, data, output, rel_error, chirp_n=0):
     sft_real = real_spikes / (sim_time/2)
     sft_imag = imag_spikes / (sim_time/2)
     sft_modulus = np.sqrt(sft_real**2 + sft_imag**2)
-    sft_imag = sft_imag / np.max(np.abs(sft_imag))
-    sft_real = sft_real / np.max(np.abs(sft_real))
     ft_real, ft_imag, ft_modulus = get_ft_components(nsamples, data)
-    ft_real = ft_real / np.max(np.abs(ft_real))
-    ft_imag = ft_imag / np.max(np.abs(ft_imag))
 
     sft_modulus = sft_modulus / np.max(sft_modulus)
     ft_modulus = ft_modulus / np.max(ft_modulus)
@@ -115,8 +111,8 @@ def special_cases(filename="../config/experiment_special_cases.json"):
 def file_case(conf_filename="../config/experiment_multiple_targets.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
-    real_spikes = sim_handler.snn.output[:,0]
-    imag_spikes = sim_handler.snn.output[:,1]
+    real_spikes = sim_handler.output[:,0]
+    imag_spikes = sim_handler.output[:,1]
 
     filename = sim_handler.datapath.name
 
@@ -133,4 +129,4 @@ def main(conf_filename="../config/test_experiment_brian.json"):
 
 
 if __name__ == "__main__":
-    file_case()
+    special_cases()

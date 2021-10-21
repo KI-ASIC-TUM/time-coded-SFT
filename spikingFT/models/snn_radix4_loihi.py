@@ -91,7 +91,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             logger.debug('\tRescaling weights by 2**{0} = {1} '.format(-weightExp, 2**(-weightExp)))
             logger.debug('\tNew threshold: {0}'.format(4*254*self.sim_time/2*2**self.weightExp[l]))
 
-            self.l_thresholds.append(4*254*self.sim_time/2*2**self.weightExp[l])
+            self.l_thresholds.append(0.8*4*254*self.sim_time/2*2**self.weightExp[l])
             #self.l_thresholds.append(np.max(np.sum(np.abs(weight_matrix), axis=axis))*(self.sim_time)/2)
 
             self.l_offsets.append(np.sum(self.l_weights[l]*2**self.weightExp[l], axis =
