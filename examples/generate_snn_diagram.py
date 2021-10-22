@@ -21,7 +21,7 @@ def main(conf_filename="../config/test_experiment.json"):
         voltage.max(),
         show=True
     )
-    fig.savefig("./snn_diagram.pdf", dpi=150, bbox_inches='tight')
+    fig.savefig("./snn_membrane_diagram.pdf", dpi=150, bbox_inches='tight')
     return
 
 
