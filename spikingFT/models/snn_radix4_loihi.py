@@ -82,7 +82,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
             thresh = 4*254*self.sim_time/2
             weightExp = np.floor(np.log2(thresh/self.TH_MANT)+1)
-            weightExp = 2
+            # weightExp = 1 # best results so far
             self.weightExp.append(-weightExp)
 
             logger.debug('Weight rescaling:') 
@@ -91,7 +91,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             logger.debug('\tlog2 scale: {0} '.format(np.log2(thresh/self.TH_MANT)))
             logger.debug('\tRescaling weights by 2**{0} = {1} '.format(-weightExp, 2**(-weightExp)))
             logger.debug('\tNew threshold: {0}'.format(4*254*self.sim_time/2*2**self.weightExp[l]))
-
+            
+            # factor of 0.8 is arbitrary and depends on data
             self.l_thresholds.append(0.8*4*254*self.sim_time/2*2**self.weightExp[l])
             #self.l_thresholds.append(np.max(np.sum(np.abs(weight_matrix), axis=axis))*(self.sim_time)/2)
 
@@ -204,7 +205,9 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             imag_encoded_data (array): dimensions (nsamples/1) ttfs encoding
         """
         logger.debug("Creating input spike generators")
-        #encoded_data = np.hstack([encoded_data.real, encoded_data.imag])
+
+        encoded_data = np.hstack([encoded_data.real, encoded_data.imag])
+
         gen = self.net.createSpikeGenProcess(numPorts=self.nsamples*2)
         
         # Specify spiking time of each generator

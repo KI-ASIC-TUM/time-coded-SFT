@@ -59,7 +59,7 @@ class SimHandler():
                                                        x_max=data.max(),
                                                        x_min=data.min()
                                                       )
-        encoded_data = encoder.run(data)
+        encoded_data = encoder.run(self.data)
         return encoded_data
 
     def initialize_snn(self):
