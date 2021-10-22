@@ -166,5 +166,5 @@ class TimeEncoder(Encoder):
             self.spike_trains = encoded_imag * 1j
             self.spike_trains += encoded_real
         else:
-            self.spike_trains = self.encode(values).astype(np.complex64)
+            self.spike_trains = self.encode(values)
         return self.spike_trains

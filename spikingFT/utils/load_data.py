@@ -18,11 +18,11 @@ def get_source(dpath):
         source = "TI_sensor"
     elif dpath.name == "special_cases":
         source = "TI_sensor_special"
+    elif dpath.name == "BBM":
+        source = "BBM"
     elif dpath.suffix == ".npy":
         #source = "TI_file"
         source = dpath
-    elif dpath.name == "BBM":
-        source = "BBM"
     else:
         raise ValueError("Invalid data path: {}".format(dpath))
     return source
@@ -141,14 +141,14 @@ def get_data(source, config):
         datacube = ti_get_datacube()
     elif source == "TI_sensor_special":
         datacube = ti_special_get_datacube()
+    elif source == "BBM":
+        datacube = bbm_get_datacube()
     elif source.suffix == ".npy":
         datacube = ti_file_get_datacube(source)
         nframes = datacube.shape[0]
         nchirps = datacube.shape[1]
         nsamples = datacube.shape[2]
         nantennas = datacube.shape[3]
-    elif source == "BBM":
-        datacube = bbm_get_datacube()
     data = datacube[:nframes, :nchirps, :nsamples, :nantennas]
     msg = "Data loaded:\n- Source: {}\n- Nº frames: {}".format(source, nframes)
     msg += "\n- Nº chirps: {}\n- Nº samples: {}".format(nchirps, nsamples)

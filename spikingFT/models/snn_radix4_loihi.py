@@ -82,6 +82,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
 
             thresh = 4*254*self.sim_time/2
             weightExp = np.floor(np.log2(thresh/self.TH_MANT)+1)
+            weightExp = 2
             self.weightExp.append(-weightExp)
 
             logger.debug('Weight rescaling:') 
@@ -194,7 +195,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         return l_probes_V, l_probes_S
 
 
-    def init_inputs(self, real_encoded_data, imag_encoded_data):
+    def init_inputs(self, encoded_data):
         """
         Generates N real and N imaginary input generators, N=nsamples
         
@@ -203,9 +204,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             imag_encoded_data (array): dimensions (nsamples/1) ttfs encoding
         """
         logger.debug("Creating input spike generators")
-
-        encoded_data = np.hstack([real_encoded_data, imag_encoded_data])
-
+        #encoded_data = np.hstack([encoded_data.real, encoded_data.imag])
         gen = self.net.createSpikeGenProcess(numPorts=self.nsamples*2)
         
         # Specify spiking time of each generator
@@ -255,8 +254,8 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
             #self.l_g[i-1].connect(self.l_g[i], prototype=con3,
             #        weight=weights3)
             mask = np.abs(self.l_weights[i])>1
-            if i==0:
-                mask[self.nsamples:,self.nsamples:] = 0
+            #if i==0:
+            #    mask[self.nsamples:,self.nsamples:] = 0
             #elif i==self.nlayers-1:
             #    mask[self.nsamples:,:] = 0
             logger.debug('Number of connections in layer {0}: {1} of {2}'.format(i, np.sum(mask), self.nsamples**2*4))
@@ -455,7 +454,9 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         else:
             logger.debug('No probes.')
 
-        self.output = (self.nlayers+0.5)*self.sim_time - self.spikes[:,:, -1]
+        logger.debug(self.spikes[:,:,-1])
+        self.output = (0.5)*self.sim_time - self.spikes[:,:, -1] + 1.5
+        logger.debug(self.output)
 
 
     def parse_energy_probe(self):
@@ -472,7 +473,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
     def run(self, data):
 
         # Create spike generators
-        self.init_inputs(data.real, data.imag)
+        self.init_inputs(data)
         # Connect all layers
         self.connect()
 

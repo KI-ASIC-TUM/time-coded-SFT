@@ -244,13 +244,16 @@ class RelErrorPlotter(Plotter):
                        ax_left,
                        component="",
                        legend=False,
-                       xlabel=False
+                       xlabel=False,
                       ):
         ax_right = ax_left.twinx()
         l1 = ax_left.plot(data[0], label="signal", color='#348ABD', linewidth=.5)
         l2 = ax_left.plot(data[1], label="ref", color='#E24A33', linewidth=.5)
         ax_right.set_ylim([0., 0.1])
-        ax_left.set_ylim([-1., 1])
+        if component=="Log Abs":
+            ax_left.set_ylim([0, 1])
+        else:
+            ax_left.set_ylim([-1., 1])
         ax_left.set_ylabel("FT", rotation=0, labelpad=15)
         lines = l1 + l2
         labels = [l.get_label() for l in lines]
@@ -266,7 +269,10 @@ class RelErrorPlotter(Plotter):
             ax.spines['right'].set_visible(False)
             ax.tick_params(axis="y", which="both",length=0)
         # Align right and left ticks
-        ax_left.set_yticks(np.arange(-1, 2, 1.0))
+        if component=="Log Abs":
+            ax_left.set_yticks(np.arange(0, 2, 1.0))
+        else:
+            ax_left.set_yticks(np.arange(-1, 2, 1.0))
         ax_right.set_yticks([])
         ax.grid(axis='y')
 
@@ -277,7 +283,7 @@ class RelErrorPlotter(Plotter):
         elif plot_name == "imag_spectrum":
             self.plot_component(self.data[plot_n], ax, "Im")
         elif plot_name == "modulus":
-            self.plot_component(self.data[plot_n], ax, "Abs", xlabel=True)
+            self.plot_component(self.data[plot_n], ax, "Log Abs", xlabel=True)
         else:
             raise ValueError("Invalid plot name: {}".format(plot_name))
         self.fig.suptitle("Scenario {}".format(self.chirp_n+1))
@@ -299,7 +305,7 @@ class RMSEPlotter(Plotter):
         ax.spines['left'].set_visible(False)
         ax.grid(axis='y')
         ax.tick_params(axis="y", which="both",length=0)
-        ax.set_ylim(0, 0.05)
+        ax.set_ylim(0, 0.25)
         ax.locator_params(axis='x', nbins=5)
         return
 
@@ -317,7 +323,7 @@ class RMSEPlotter(Plotter):
         ax.spines['left'].set_visible(False)
         ax.grid(axis='y')
         ax.tick_params(axis="y", which="both",length=0)
-        ax.set_ylim(0, 0.05)
+        ax.set_ylim(0, 0.18)
         ax.locator_params(axis='x', nbins=5)
         ax.legend()
         return

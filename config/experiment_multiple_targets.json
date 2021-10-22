@@ -1,5 +1,5 @@
 {
-    "datapath": "data/TI_radar/multiple_targets/tc31_D_vec.npy",
+    "datapath": "data/TI_radar/multiple_targets/tc31_R_vec.npy",
 
     "config":
     {
@@ -15,7 +15,7 @@
 
         "data":
         {
-            "samples_per_chirp": 64,
+            "samples_per_chirp": 256,
             "chirps_per_frame": 1,
             "antennas": 1,
             "nframes": 1

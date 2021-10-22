@@ -53,11 +53,13 @@ class SimHandler():
         sim_time = self.config["snn_config"]["sim_time"]
         logger.info("No. time steps: {0}".format(sim_time))
 
+        data = np.hstack([self.data.real, self.data.imag])
+
         encoder = spikingFT.utils.encoding.TimeEncoder(t_max=sim_time,
-                                                       x_max=self.data.max(),
-                                                       x_min = self.data.min()
+                                                       x_max=data.max(),
+                                                       x_min=data.min()
                                                       )
-        encoded_data = encoder.run(self.data)
+        encoded_data = encoder.run(data)
         return encoded_data
 
     def initialize_snn(self):
@@ -121,7 +123,7 @@ class SimHandler():
         Routine for initializing and running the SNN with the desired params
         """
         # Load encoded data
-        self.data = self.get_data()[:, chirp_n, :, 0].real
+        self.data = self.get_data()[:, chirp_n, :, 0]
         # Reduce data dimensionality, by ignoring chirp and antenna dimensions
         self.encoded_data = self.encode_data()
         # Instantiate the snn class with the specified configuration
