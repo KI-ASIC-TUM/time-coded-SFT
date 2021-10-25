@@ -71,10 +71,12 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
                 "Loihi only admits unitary time steps. "
                 "The provided value will be ignored: {}".format(t_step)
             )
+        # Weight correction exponent
+        self.beta = -4
         # Calculate and set threshold voltage
-        v_threshold = np.sum(self.real_weights[0,:]) * self.sim_time / 4
-        v_threshold *= 8
-        self.vth_mant = int(v_threshold / (2**self.TH_EXP))
+        v_threshold = np.sum(self.real_weights[0,:]) * 2**self.beta * self.sim_time / 4
+        # self.vth_mant = int(v_threshold / (2**self.TH_EXP))
+        self.vth_mant = int(v_threshold)
         if self.vth_mant > self.TH_MANT_MAX:
             logger.warn("V_th mantissa is larger than maximum possible value: "
                         "{} > {} --> The value will be reset to the maximum"
@@ -192,7 +194,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         logger.debug("Creating input spike generators")
         real_gen = self.net.createSpikeGenProcess(numPorts=self.nsamples)
         imag_gen = self.net.createSpikeGenProcess(numPorts=self.nsamples)
-        in_l1 = nx.ConnectionPrototype(signMode=1, weightExponent=-3)
+        in_l1 = nx.ConnectionPrototype(signMode=1, weightExponent=self.beta)
         # Connect input generators to the first layer of the SNN
         real_gen.connect(
             self.l1_real_g,
