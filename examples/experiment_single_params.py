@@ -50,13 +50,20 @@ def plot_error(nsamples, sim_time, data, output, rel_error, chirp_n=0):
     """
     real_spikes = output[:, 0][1:int(nsamples/2)]
     imag_spikes = output[:, 1][1:int(nsamples/2)]
-    sft_real = real_spikes / (sim_time/2)
-    sft_imag = imag_spikes / (sim_time/2)
-    sft_modulus = np.sqrt(sft_real**2 + sft_imag**2)
     ft_real, ft_imag, ft_modulus = get_ft_components(nsamples, data)
+    sft_real = real_spikes
+    sft_imag = imag_spikes
+    sft_max = np.max(np.abs(np.hstack([sft_real, sft_imag])))
+    ft_max = np.max(np.abs(np.hstack([ft_real, ft_imag])))
+    sft_real = sft_real / sft_max
+    sft_imag = sft_imag / sft_max
+    ft_real = ft_real / ft_max
+    ft_imag = ft_imag / ft_max
+    sft_modulus = np.sqrt(sft_real**2 + sft_imag**2)
+    ft_modulus = np.sqrt(ft_real**2 + ft_imag**2)
 
-    sft_modulus = sft_modulus / np.max(sft_modulus)
-    ft_modulus = ft_modulus / np.max(ft_modulus)
+    sft_modulus = np.log10(9*sft_modulus/sft_modulus.max()+1)
+    ft_modulus = np.log10(9*ft_modulus/ft_modulus.max()+1)
 
     real_error = rel_error[:, 0]
     imag_error = rel_error[:, 1]

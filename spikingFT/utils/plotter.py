@@ -247,8 +247,8 @@ class RelErrorPlotter(Plotter):
                        xlabel=False,
                       ):
         ax_right = ax_left.twinx()
-        l1 = ax_left.plot(data[0], label="signal", color='#348ABD', linewidth=.5)
-        l2 = ax_left.plot(data[1], label="ref", color='#E24A33', linewidth=.5)
+        l1 = ax_left.plot(data[0], label="signal", color='#348ABD', linewidth=.2)
+        l2 = ax_left.plot(data[1], label="ref", color='#E24A33', linewidth=.2)
         ax_right.set_ylim([0., 0.1])
         if component=="Log Abs":
             ax_left.set_ylim([0, 1])
