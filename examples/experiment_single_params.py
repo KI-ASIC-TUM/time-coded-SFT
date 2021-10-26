@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script for testing the SNNNumpy class with sample data
+Script for testing the SNN class with sample data
 """
 # Standard libraries
 import matplotlib.pyplot as plt
@@ -115,16 +115,13 @@ def special_cases(filename="../config/experiment_special_cases.json"):
         plt.show()
     return
 
-def file_case(conf_filename="../config/experiment_multiple_targets.json"):
+def multitarget_case(conf_filename="../config/experiment_multiple_targets.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     real_spikes = sim_handler.output[:,0]
     imag_spikes = sim_handler.output[:,1]
-
     filename = sim_handler.datapath.name
-
     np.save(filename, real_spikes+1j*imag_spikes)
-
     return
 
 def main(conf_filename="../config/test_experiment_loihi.json"):

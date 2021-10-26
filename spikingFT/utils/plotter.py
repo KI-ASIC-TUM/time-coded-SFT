@@ -41,12 +41,12 @@ class Plotter(ABC):
     def formatter(self):
         plt.rcParams['font.size'] = 18
         #    plt.rcParams['font.family'] = 'Times New Roman'
-        plt.rcParams['axes.labelsize'] = 0.7*plt.rcParams['font.size']
+        plt.rcParams['axes.labelsize'] = plt.rcParams['font.size']
         plt.rcParams['axes.titlesize'] = 1.1*plt.rcParams['font.size']
         plt.rcParams['figure.titlesize'] = 1.3*plt.rcParams['font.size']
-        plt.rcParams['legend.fontsize'] = 0.9*plt.rcParams['font.size']
-        plt.rcParams['xtick.labelsize'] = 0.8*plt.rcParams['font.size']
-        plt.rcParams['ytick.labelsize'] = 0.8*plt.rcParams['font.size']
+        plt.rcParams['legend.fontsize'] = plt.rcParams['font.size']
+        plt.rcParams['xtick.labelsize'] = plt.rcParams['font.size']
+        plt.rcParams['ytick.labelsize'] = plt.rcParams['font.size']
         plt.rcParams['xtick.major.size'] = 3
         plt.rcParams['xtick.minor.size'] = 3
         plt.rcParams['xtick.major.width'] = 1
@@ -247,14 +247,16 @@ class RelErrorPlotter(Plotter):
                        xlabel=False,
                       ):
         ax_right = ax_left.twinx()
-        l1 = ax_left.plot(data[0], label="signal", color='#348ABD', linewidth=.2)
-        l2 = ax_left.plot(data[1], label="ref", color='#E24A33', linewidth=.2)
+        l1 = ax_left.plot(data[0], label="signal", color='#348ABD',
+                          linewidth=.1, alpha=0.7)
+        l2 = ax_left.plot(data[1], label="ref", color='#E24A33',
+                          linewidth=.1, alpha=0.7)
         ax_right.set_ylim([0., 0.1])
-        if component=="Log Abs":
+        if component=="Magnitude":
             ax_left.set_ylim([0, 1])
         else:
             ax_left.set_ylim([-1., 1])
-        ax_left.set_ylabel("FT", rotation=0, labelpad=15)
+        ax_left.set_ylabel("y", rotation=0, labelpad=15)
         lines = l1 + l2
         labels = [l.get_label() for l in lines]
         if legend:
@@ -262,15 +264,15 @@ class RelErrorPlotter(Plotter):
                            loc='upper right', ncol=3)
         if xlabel:
             ax_left.set_xlabel("Bin Nº")
-        ax_left.set_title("{}(F)".format(component))
+        ax_left.set_title("{}".format(component))
         for ax in (ax_right, ax_left):
             ax.spines['top'].set_visible(False)
             ax.spines['left'].set_visible(False)
             ax.spines['right'].set_visible(False)
             ax.tick_params(axis="y", which="both",length=0)
         # Align right and left ticks
-        if component=="Log Abs":
-            ax_left.set_yticks(np.arange(0, 2, 1.0))
+        if component=="Magnitude":
+            ax_left.set_yticks(np.arange(0, 1.1, 0.5))
         else:
             ax_left.set_yticks(np.arange(-1, 2, 1.0))
         ax_right.set_yticks([])
@@ -279,11 +281,11 @@ class RelErrorPlotter(Plotter):
     def plot(self, plot_name, plot_n):
         ax = self.axis[plot_n]
         if plot_name == "real_spectrum":
-            self.plot_component(self.data[plot_n], ax, "Re", legend=True)
+            self.plot_component(self.data[plot_n], ax, "Real", legend=True)
         elif plot_name == "imag_spectrum":
-            self.plot_component(self.data[plot_n], ax, "Im")
+            self.plot_component(self.data[plot_n], ax, "Imaginary")
         elif plot_name == "modulus":
-            self.plot_component(self.data[plot_n], ax, "Log Abs", xlabel=True)
+            self.plot_component(self.data[plot_n], ax, "Magnitude", xlabel=True)
         else:
             raise ValueError("Invalid plot name: {}".format(plot_name))
         self.fig.suptitle("Scenario {}".format(self.chirp_n+1))
@@ -336,55 +338,6 @@ class RMSEPlotter(Plotter):
             self.plot_multiple_lines(self.data[plot_n], ax)
         else:
             raise ValueError("Invalid plot name: {}".format(plot_name))
-
-
-def align_yaxes(axes, nbins=3):
-    """
-    Align the ticks of multiple y axes
-
-    Args:
-        axes (list): list of axes objects whose yaxis ticks are to be aligned.
-    Returns:
-        new_ticks (list): a list of new ticks for each axis in <axes>.
-        A new sets of ticks are computed for each axis in <axes> but with equal
-        length.
-    """
-    nax = len(axes)
-    ticks = [aii.get_yticks() for aii in axes]
-    aligns = [ticks[ii][0] for ii in range(nax)]
-    bounds = [aii.get_ylim() for aii in axes]
-    # align at some points
-    ticks_align = [ticks[ii]-aligns[ii] for ii in range(nax)]
-    # scale the range to 1-100
-    ranges = [tii[-1]-tii[0] for tii in ticks]
-    lgs = [-np.log10(rii)+2. for rii in ranges]
-    igs = [np.floor(ii) for ii in lgs]
-    log_ticks = [ticks_align[ii]*(10.**igs[ii]) for ii in range(nax)]
-    # put all axes ticks into a single array, then compute new ticks for all
-    comb_ticks = np.concatenate(log_ticks)
-    comb_ticks.sort()
-    locator = plt.MaxNLocator(nbins=nbins, steps=[1, 2, 2.5, 3, 4, 5, 8, 10])
-    new_ticks = locator.tick_values(comb_ticks[0], comb_ticks[-1])
-    new_ticks = [new_ticks/10.**igs[ii] for ii in range(nax)]
-    new_ticks = [new_ticks[ii]+aligns[ii] for ii in range(nax)]
-    # find the lower bound
-    idx_l = 0
-    for i in range(len(new_ticks[0])):
-        if any([new_ticks[jj][i] > bounds[jj][0] for jj in range(nax)]):
-            idx_l = i-1
-            break
-    # find the upper bound
-    idx_r = 0
-    for i in range(len(new_ticks[0])):
-        if all([new_ticks[jj][i] > bounds[jj][1] for jj in range(nax)]):
-            idx_r = i
-            break
-    # trim tick lists by bounds
-    new_ticks = [tii[idx_l:idx_r+1] for tii in new_ticks]
-    # set ticks for each axis
-    for axii, tii in zip(axes, new_ticks):
-        axii.set_yticks(tii)
-    return new_ticks
 
 
 def plot_snn_diagram(recorded_z, ylim, vth, sim_time=1, show=False):
