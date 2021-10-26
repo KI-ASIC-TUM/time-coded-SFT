@@ -362,12 +362,14 @@ def plot_snn_diagram(recorded_z, ylim, vth, sim_time=1, show=False):
     ax.axvline(x=sim_time*2, color="red", linestyle="--", linewidth=1)
     # Keep only two labels on the yticks, indicating rest and threshold V
     ax.set_yticks([0, vth])
-    labels = ["" for item in ax.get_yticklabels()]
-    labels[0] = r"$u_{r}$"
-    labels[1] = r"$u_{th}$"
-    ax.set_yticklabels(labels)
-    # ax.set_ylabel(r"$u_i$ (mV)")
-    ax.set_xlabel("Time (s)")
+    y_labels = ["" for item in ax.get_yticklabels()]
+    y_labels[0] = r"$u_{r}$"
+    y_labels[1] = r"$u_{th}$"
+    ax.set_yticklabels(y_labels, {"fontsize": 18})
+    # Set x axis ticks and labels
+    ax.set_xticks([0, tsi, sim_time*2])
+    x_labels = [r"$t_0$", r"$t_{si}$", r"$t_T$"]
+    ax.set_xticklabels(x_labels, {"fontsize": 18})
 
     plt.tight_layout()
     # Annotate the two different stages of the simulation
