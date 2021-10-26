@@ -323,9 +323,11 @@ class RMSEPlotter(Plotter):
         ax.set_ylabel("RMSE")
         ax.set_xlabel("Nº simulation steps")
         ax.spines['left'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
         ax.grid(axis='y')
         ax.tick_params(axis="y", which="both",length=0)
-        ax.set_ylim(0, 0.18)
+        ax.set_ylim(0, 0.25)
         ax.locator_params(axis='x', nbins=5)
         ax.legend()
         return
