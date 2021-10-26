@@ -322,8 +322,8 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         """
         Set-up, run, and parse the results of the SNN simulation
         """
-        #if not self.measure_performance:
-            #self.init_probes()
+        if not self.measure_performance:
+            self.init_probes()
         # Create spike generators and connect them to compartments
         self.connect_inputs(data.real, data.real)
         self.init_snip()
