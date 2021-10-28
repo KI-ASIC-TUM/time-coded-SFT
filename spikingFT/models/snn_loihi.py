@@ -74,7 +74,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         # Weight correction exponent
         self.beta = -4
         # Calculate and set threshold voltage
-        v_threshold = np.sum(self.real_weights[0,:]) * 2**self.beta * self.sim_time / 4
+        v_threshold = np.sum(self.real_weights[0,:]) * 2**self.beta * self.sim_time / 6
         # self.vth_mant = int(v_threshold / (2**self.TH_EXP))
         self.vth_mant = int(v_threshold)
         if self.vth_mant > self.TH_MANT_MAX:

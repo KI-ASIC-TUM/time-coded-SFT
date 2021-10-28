@@ -5,7 +5,7 @@
     {
         "snn_config":
         {
-            "sim_time": 128,
+            "sim_time": 256,
             "time_step": 1,
             "mode": "dft",
             "framework": "loihi",
