@@ -247,9 +247,9 @@ class RelErrorPlotter(Plotter):
                        xlabel=False,
                       ):
         ax_right = ax_left.twinx()
-        l1 = ax_left.plot(data[0], label="signal", color='#348ABD',
+        l1 = ax_left.plot(data[0], label="S-FT", color='#348ABD',
                           linewidth=.1)
-        l2 = ax_left.plot(data[1], label="ref", color='#E24A33',
+        l2 = ax_left.plot(data[1], label="acc", color='#E24A33',
                           linewidth=.1)
         ax_right.set_ylim([0., 0.1])
         if component=="Magnitude":

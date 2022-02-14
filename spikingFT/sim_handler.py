@@ -130,7 +130,6 @@ class SimHandler():
         self.snn = self.initialize_snn()
         # Run the SNN with the collected data
         self.output = self.run_snn()
-        if not self.config["snn_config"]["measure_performance"]:
-            self.test()
+        self.test()
         logger.info("Execution finished")
         return self.output
