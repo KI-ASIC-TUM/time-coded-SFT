@@ -35,6 +35,8 @@ class SimHandler():
         self.snn = None
         self.metrics = {}
 
+        self.raw_data = self.get_data()[:, :, :, 0]
+
     def get_data(self):
         """
         Load the simulation data from the specified path
@@ -123,7 +125,7 @@ class SimHandler():
         Routine for initializing and running the SNN with the desired params
         """
         # Load encoded data
-        self.data = self.get_data()[:, chirp_n, :, 0]
+        self.data = self.raw_data[:, chirp_n, :]
         # Reduce data dimensionality, by ignoring chirp and antenna dimensions
         self.encoded_data = self.encode_data()
         # Instantiate the snn class with the specified configuration

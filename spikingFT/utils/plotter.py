@@ -237,6 +237,7 @@ class SNNLayersPlotter(Plotter):
 class RelErrorPlotter(Plotter):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.source = kwargs.get("source", "ref")
         self.chirp_n = 0
 
     def plot_component(self,
@@ -249,7 +250,7 @@ class RelErrorPlotter(Plotter):
         ax_right = ax_left.twinx()
         l1 = ax_left.plot(data[0], label="S-FT", color='#348ABD',
                           linewidth=.1)
-        l2 = ax_left.plot(data[1], label="acc", color='#E24A33',
+        l2 = ax_left.plot(data[1], label=self.source, color='#E24A33',
                           linewidth=.1)
         ax_right.set_ylim([0., 0.1])
         if component=="Magnitude":

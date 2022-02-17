@@ -126,7 +126,7 @@ def get_data(source, config):
     if not 1 <= nantennas <= max_antennas:
         err_msg = "Invalid number of antennas: {}. ".format(nantennas)
         err_msg += "Maximum amount of antennas is {}".format(max_antennas)
-        raise ValuError(err_msg)
+        raise ValueError(err_msg)
     if not 1 <= nchirps <= max_chirps:
         err_msg = "Invalid number of chirps: {}. ".format(nchirps)
         err_msg += "Maximum amount of chirps is {}".format(max_chirps)
