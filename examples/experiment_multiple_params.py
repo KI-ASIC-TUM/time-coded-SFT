@@ -62,7 +62,7 @@ def multiple_nsamples(sim_handler):
     fig.savefig("./rmse_plot_multi.pdf", dpi=150)
 
 
-def main(conf_filename="../config/test_experiment_simtimes.json"):
+def main(conf_filename="../config/experiment_simtimes.json"):
     # Instantiate a simulation handler with specified configuration
     sim_handler = spikingFT.startup.startup(conf_filename, autorun=False)
     # single_nsamples(sim_handler)

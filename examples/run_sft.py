@@ -8,8 +8,9 @@ import numpy as np
 import pathlib
 # Local libraries
 import spikingFT.startup
-import spikingFT.utils.plotter
 import spikingFT.utils.metrics
+import spikingFT.utils.plotter
+import spikingFT.utils.parse_args
 
 
 def load_handler(conf_filename):
@@ -144,16 +145,14 @@ def plot_results(path, n_samples, n_chirps, comparison_source="numpy"):
     return
 
 
-def main(conf_filename="../config/experiment_special_cases.json",
-         from_file=True,
-         plot=True):
+def main(conf_filename, from_file, plot):
     """
     @param conf_filename: str with the path to the SNN configuration
     @param from_file: bool indicating whether to run or not the s-ft.
       if True, the s-ft output is read from a local file
     @param plot: bool for indicating whether to plot results
     """
-    # Load simulation handler
+    # Load simulation handler and data parameters
     sim_handler, results_path = load_handler(conf_filename)
     n_samples = sim_handler.config["data"]["samples_per_chirp"]
     n_chirps = sim_handler.config["data"]["chirps_per_frame"]
@@ -168,4 +167,5 @@ def main(conf_filename="../config/experiment_special_cases.json",
 
 
 if __name__ == "__main__":
-    main()
+    fname, show_plot, from_file = spikingFT.utils.parse_args.parse_args()
+    main(fname, from_file, show_plot)

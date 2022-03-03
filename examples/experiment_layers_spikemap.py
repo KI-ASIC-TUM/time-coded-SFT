@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
-Script for testing the SNNNumpy class with sample data
+Script for generating the neural dynamics of a multilayer S-FFT
+
+The plotting library is tuned for the specific configuration that is
+indicated in the default config file. If this data is changed,
+the auxiliary functions should be changed accordingly.
 """
 # Standard libraries
 import matplotlib.pyplot as plt
@@ -10,7 +14,7 @@ import spikingFT.startup
 import spikingFT.utils.plotter
 
 
-def main(conf_filename="../config/test_experiment_brian.json"):
+def main(conf_filename="../config/generate_multilayer_spikemap.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     nsamples = sim_handler.snn.nsamples
