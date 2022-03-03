@@ -14,18 +14,32 @@ try:
 except ImportError:
     logger.warn("Brian2 cannot be found. "
                 "It will not be possible to run simulation with Brian2.")
-import spikingFT.models.snn_radix4
+import spikingFT.models.snn
 
-class SNNRadix4Brian(spikingFT.models.snn_radix4.FastFourierTransformSNN):
+class SNNRadix4Brian(spikingFT.models.snn.FourierTransformSNN):
     """
     Class for setting up a network in Brian2 for the spiking FT
 
     Attributes:
-    TODO: add attributes
+    time_step (float): size of time step 
+    total_sim_time (float): (n_layer+1)*sim_time
+    l_threshold (list): thresholds per layer
+    l_offsets (list): offsets per layer
+    l_weights (list): weight matrices per layer
+    layers (list): list of brian2 population
+    synapses (list): list of brian2 synapses
+    aux_neurons (list): list of brian2 spike generators
+    aux_synapses (list): list of brian2 synapses
+    net (object): brian2 network
+    l_probes_S (list): list of brian2 spike probes
+    l_probes_V (list): list of brian2 state probes
+    spikes (array): array containing spikes
+    voltages (array): array containing voltage values
     """
 
 
     PLATFORM = "brian"
+    FFT = True
 
     def __init__(self, **kwargs):
         """

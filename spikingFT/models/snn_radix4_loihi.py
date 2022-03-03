@@ -14,10 +14,10 @@ try:
 except ImportError:
     logger.warn("Intel NxSDK cannot be found. "
                 "It will not be possible to run simulations with Loihi")
-import spikingFT.models.snn_radix4
+import spikingFT.models.snn
 import spikingFT.utils.ft_utils
 
-class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
+class SNNRadix4Loihi(spikingFT.models.snn.FourierTransformSNN):
     """
     Class for setting up a network on Loihi for the spiking FT
 
@@ -44,6 +44,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         e_probe: energy consumption probe
     """
     PLATFORM = "loihi"
+    FFT = True
     MAX_TH_MANT = 131071
     TH_MANT = (MAX_TH_MANT - int(MAX_TH_MANT/2) - 254)
     REFRACTORY_T = 63
