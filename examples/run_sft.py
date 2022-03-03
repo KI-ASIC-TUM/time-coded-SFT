@@ -20,7 +20,7 @@ def load_handler(conf_filename):
     platform = sim_handler.config["snn_config"]["framework"]
     mode = sim_handler.config["snn_config"]["mode"]
     # Get path to results folder
-    folder_path = "./{}_{}_results/".format(mode, platform)
+    folder_path = "./{}_{}_results".format(mode, platform)
     pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
     return sim_handler, folder_path
 
@@ -145,7 +145,7 @@ def plot_results(path, n_samples, n_chirps, comparison_source="numpy"):
 
 
 def main(conf_filename="../config/experiment_special_cases.json",
-         from_file=True,
+         from_file=False,
          plot=True):
     """
     @param conf_filename: str with the path to the SNN configuration

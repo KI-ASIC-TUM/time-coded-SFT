@@ -162,13 +162,13 @@ def multitarget_case(conf_filename="../config/experiment_multiple_targets.json")
     np.save(filename, real_spikes+1j*imag_spikes)
     return
 
-def main(conf_filename="../config/test_experiment_loihi.json"):
+def main(conf_filename="../config/experiment_special_cases.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
-    fig = plot_single_chirp(1024, sim_handler.data, sim_handler)
+    fig = plot_single_chirp(sim_handler.data, sim_handler)
     fig.savefig("./error_plot.pdf", dpi=150, bbox_inches='tight')
     return
 
 
 if __name__ == "__main__":
-    plot_from_files()
+    main()
