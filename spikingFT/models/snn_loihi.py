@@ -46,6 +46,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         e_probe: energy consumption probe
     """
     PLATFORM = "loihi"
+    FFT = False
     # Loihi threshold equation: v_th = th_mant * 2**th_exp
     TH_MANT_MAX = 131071
     TH_EXP = 6
