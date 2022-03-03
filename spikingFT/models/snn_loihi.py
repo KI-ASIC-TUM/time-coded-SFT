@@ -196,15 +196,26 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         imag_gen = self.net.createSpikeGenProcess(numPorts=self.nsamples)
         in_l1 = nx.ConnectionPrototype(signMode=1, weightExponent=self.beta)
         # Connect input generators to the first layer of the SNN
+        # MISSING CONNECTIONS
         real_gen.connect(
             self.l1_real_g,
             prototype=in_l1,
             weight=self.real_weights,
         )
-        imag_gen.connect(
+        real_gen.connect(
             self.l1_imag_g,
             prototype=in_l1,
             weight=self.imag_weights,
+        )
+        imag_gen.connect(
+            self.l1_real_g,
+            prototype=in_l1,
+            weight=self.imag_weights,
+        )
+        imag_gen.connect(
+            self.l1_imag_g,
+            prototype=in_l1,
+            weight=-self.real_weights,
         )
         # Specify spiking time of each generator
         logger.debug("Assigning spike times to input spike generators")
