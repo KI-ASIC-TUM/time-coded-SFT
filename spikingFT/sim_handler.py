@@ -124,8 +124,9 @@ class SimHandler():
         """
         Routine for initializing and running the SNN with the desired params
         """
+        nsamples = self.config["data"]["samples_per_chirp"]
         # Load encoded data
-        self.data = self.raw_data[:, chirp_n, :]
+        self.data = self.raw_data[:, chirp_n, :nsamples]
         # Reduce data dimensionality, by ignoring chirp and antenna dimensions
         self.encoded_data = self.encode_data()
         # Instantiate the snn class with the specified configuration

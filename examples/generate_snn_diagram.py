@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
-Script for testing the SNNNumpy class with sample data
+Script for generating sample diagram of the S-FT
+
+The plotting library is tuned for the specific radar chirp that is
+indicated in the default configuration file. If this data is changed,
+the plotting function should be changed accordingly.
 """
 # Standard libraries
 import matplotlib.pyplot as plt
@@ -14,7 +18,7 @@ import spikingFT.utils.metrics
 def main(conf_filename="../config/generate_snn_diagram.json"):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename, autorun=True)
-    voltage = sim_handler.snn.voltage[:, 3, 0]
+    voltage = sim_handler.snn.voltage[:, 1, 0]
     fig = spikingFT.utils.plotter.plot_snn_diagram(
         voltage,
         sim_handler.snn.v_threshold*1.1,

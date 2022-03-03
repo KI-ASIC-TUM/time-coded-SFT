@@ -3,48 +3,13 @@
 Module for loading metadata and starting the simulation
 """
 # Standard libraries
-import argparse
 import json
 import logging
 import pathlib
 import time
 # Local libraries
 import spikingFT.sim_handler
-
-
-def parse_args():
-    """
-    Obtain the simulation options from the input arguments
-    """
-    def str2bool(v):
-        if isinstance(v, bool):
-            return v
-        if v.lower() in ('yes', 'true', 't', 'y', '1'):
-            return True
-        elif v.lower() in ('no', 'false', 'f', 'n', '0'):
-            return False
-        else:
-            raise argparse.ArgumentTypeError('Boolean value expected.')
-
-    parser = argparse.ArgumentParser(
-        usage="main.py [-h] [-s] config_file")
-    parser.add_argument("config_file",
-                        type=str,
-                        help="Relative location of the configuration file"
-                       )
-    parser.add_argument("-s",
-                        type=str2bool,
-                        default=False,
-                        nargs='?',
-                        const=True,
-                        metavar="",
-                        help="Show the plot after the simulation"
-                       )
-    # Get the values from the argument list
-    args = parser.parse_args()
-    config_file = args.config_file
-    show_plot = args.s
-    return (config_file, show_plot)
+import spikingFT.utils.parse_args
 
 
 def load_config(conf_file):
@@ -107,7 +72,7 @@ def run(datapath, config, autorun):
     return sim_handler
 
 
-def startup(conf_file, show_plot=True, autorun=True):
+def startup(conf_file, autorun=True):
     """
     Run the DFT and CFAR on BBM data
     """
@@ -128,5 +93,5 @@ def startup(conf_file, show_plot=True, autorun=True):
 
 
 if __name__ == "__main__":
-    conf_file, show_plot = parse_args()
-    startup(conf_file, show_plot)
+    conf_file, _, _ = spikingFT.utils.parse_args.parse_args()
+    startup(conf_file)

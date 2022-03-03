@@ -391,7 +391,7 @@ def plot_snn_diagram(recorded_z, ylim, vth, sim_time=1, show=False):
         arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3", color="k")
     )
     # Annotate the spiking time of the neuron
-    ax.annotate("", xy=(tsi, 0.005), xytext=(1.205, 0.005),
+    ax.annotate("", xy=(tsi, 0.005), xytext=(1.25, 0.005),
         size=15, va="center", ha="center",
         arrowprops=dict(arrowstyle="<|-", connectionstyle="arc3", color="k")
     )
@@ -399,12 +399,12 @@ def plot_snn_diagram(recorded_z, ylim, vth, sim_time=1, show=False):
         size=15, va="center", ha="center",
     )
     # Add membrane update equations
-    ax.annotate(r"$u_i(t) = \sum_j{w_{ij}(t-t_j)}$", xy=(0.34, 0.06),
+    ax.annotate(r"$u_i(t) = \sum_j{w_{ij}(t-t_j)}$", xy=(0.24, 0.06),
         xytext=(0.25, 0.2), size=15, va="center", ha="center",
         bbox=dict(boxstyle="round", fc="w", color="tab:blue"),
         arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3,rad=0.2", color="black"),
     )
-    ax.annotate(r"$\dfrac{u_i(t) - u_i(t-1)}{\Delta t} = I_{ext}$", xy=(1.07, 0.3),
+    ax.annotate(r"$\dfrac{u_i(t) - u_i(t-1)}{\Delta t} = I_{ext}$", xy=(1.12, 0.3),
         xytext=(1.4, 0.2), size=15, va="center", ha="center",
         bbox=dict(boxstyle="round", fc="w", color="tab:blue"),
         arrowprops=dict(arrowstyle="-|>", connectionstyle="arc3,rad=-0.2", color="black"),
