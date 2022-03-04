@@ -20,6 +20,12 @@ You can install the library as a python package using the following command:
 
     pip install git+https://github.com/KI-ASIC-TUM/time-coded-SFT.git
 
+Alternatively, you can download the source and install the library locally.
+This way, you can access and manipulate the provided examples:
+
+    git clone https://github.com/KI-ASIC-TUM/time-coded-SFT.git
+    pip install time-coded-SFT
+
 
 # Usage
 

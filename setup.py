@@ -3,11 +3,11 @@ from setuptools import setup, find_packages
 
 setup(
     name="spikingFT",
-    version="0.1",
-    description="Package for implementing the FT in neuromorphic hardware",
-    url="https://gitlab.lrz.de/ki-asic/spiking_FT_Loihi",
+    version="1.0",
+    description="Package for implementing the S-FT in neuromorphic hardware",
+    url="https://github.com/KI-ASIC-TUM/time-coded-SFT",
     author="Technical University of Munich. Informatik VI",
-    packages=find_packages(exclude=["examples"]),
+    packages=find_packages(),
     install_requires=[
         "numpy>=1.16",
         "matplotlib>=3.1.2",
