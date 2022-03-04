@@ -366,11 +366,11 @@ def plot_snn_diagram(recorded_z, ylim, vth, sim_time=1, show=False):
     y_labels = ["" for item in ax.get_yticklabels()]
     y_labels[0] = r"$u_{r}$"
     y_labels[1] = r"$u_{th}$"
-    ax.set_yticklabels(y_labels, {"fontsize": 18})
+    ax.set_yticklabels(y_labels, fontdict={"fontsize": 18})
     # Set x axis ticks and labels
     ax.set_xticks([0, tsi, sim_time*2])
     x_labels = [r"$t_0$", r"$t_{si}$", r"$t_T$"]
-    ax.set_xticklabels(x_labels, {"fontsize": 18})
+    ax.set_xticklabels(x_labels, fontdict={"fontsize": 18})
 
     plt.tight_layout()
     # Annotate the two different stages of the simulation
