@@ -6,6 +6,7 @@ Script for testing the SNNNumpy class with sample data
 import logging
 import matplotlib.pyplot as plt
 import numpy as np
+import pathlib
 # Local libraries
 import run_sft
 import spikingFT.startup
@@ -70,7 +71,7 @@ def multiple_nsamples(sim_handler):
     logger.info("Figure saved in {}".format(folder_path))
 
 
-def main(conf_filename="../config/experiment_simtimes.json"):
+def main(conf_filename):
     # Instantiate a simulation handler with specified configuration
     sim_handler = spikingFT.startup.startup(conf_filename, autorun=False)
     # single_nsamples(sim_handler)
@@ -79,4 +80,6 @@ def main(conf_filename="../config/experiment_simtimes.json"):
 
 
 if __name__ == "__main__":
-    main()
+    main_path = pathlib.Path(__file__).resolve().parent.parent
+    conf_path = main_path.joinpath("config/experiment_simtimes.json")
+    main(conf_path)

@@ -55,7 +55,7 @@ def conf_logger():
 
     # Create console handler
     stream_handler = logging.StreamHandler()
-    stream_handler.setLevel(logging.DEBUG)
+    stream_handler.setLevel(logging.INFO)
     formatter = logging.Formatter('%(levelname)s: %(message)s')
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)

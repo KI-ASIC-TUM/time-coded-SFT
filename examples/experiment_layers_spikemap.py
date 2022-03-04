@@ -10,6 +10,7 @@ the auxiliary functions should be changed accordingly.
 import logging
 import matplotlib.pyplot as plt
 import numpy as np
+import pathlib
 # Local libraries
 import run_sft
 import spikingFT.startup
@@ -18,7 +19,7 @@ import spikingFT.utils.plotter
 logger = logging.getLogger('spiking-FT')
 
 
-def main(conf_filename="../config/generate_multilayer_spikemap.json"):
+def main(conf_filename):
     # Instantiate a simulation handler and run spiking FT with sample data
     sim_handler = spikingFT.startup.startup(conf_filename)
     nsamples = sim_handler.snn.nsamples
@@ -64,4 +65,6 @@ def main(conf_filename="../config/generate_multilayer_spikemap.json"):
 
 
 if __name__ == "__main__":
-    main()
+    main_path = pathlib.Path(__file__).resolve().parent.parent
+    conf_path = main_path.joinpath("config/generate_multilayer_spikemap.json")
+    main(conf_path)
