@@ -32,7 +32,7 @@ def bbm_get_datacube():
     """
     Read file with the BBM simulator data and arrange it in a data cube
     """
-    rootpath = pathlib.Path(__file__).parent.parent.parent
+    rootpath = pathlib.Path(__file__).parent.parent
     filename = rootpath.joinpath("data/BBM/samples_ch_1.txt")
     data_cube = None
     with open(filename, "r") as f:
@@ -57,7 +57,7 @@ def ti_get_datacube():
     """
     Read file with the TI dataset and arrange it in a data cube
     """
-    rootpath = pathlib.Path(__file__).parent.parent.parent
+    rootpath = pathlib.Path(__file__).parent.parent
     filename = rootpath.joinpath("data/TI_radar/1024/corner_reflector_1.npz")
     data_cube = np.load(filename)['arr_0']
     return data_cube
@@ -67,7 +67,7 @@ def ti_special_get_datacube():
     """
     Read file with TI sensor special cases and arrange it in a data cube
     """
-    rootpath = pathlib.Path(__file__).parent.parent.parent
+    rootpath = pathlib.Path(__file__).parent.parent
     filename = rootpath.joinpath("data/TI_radar/special_cases/data_tum.npy")
     raw_data = np.load(filename)
     # Add extra dimensions for having the standard data format

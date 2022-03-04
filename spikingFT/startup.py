@@ -23,7 +23,7 @@ def load_config(conf_file):
     with open(conf_file) as f:
         config_data = json.load(f)
     path = config_data["datapath"]
-    datapath = pathlib.Path(__file__).resolve().parent.parent.joinpath(path)
+    datapath = pathlib.Path(__file__).resolve().parent.joinpath(path)
     # Load the configuration parameters
     config = config_data["config"]
     # Add experiment configuration, if exists

@@ -35,7 +35,7 @@ def run_sft(sim_handler, path):
     n_chirps = sim_handler.config["data"]["chirps_per_frame"]
     n_samples = sim_handler.config["data"]["samples_per_chirp"]
     # Run S-FT
-    output = np.zeros((n_chirps, n_samples), dtype=np.complex)
+    output = np.zeros((n_chirps, n_samples), dtype=complex)
     for chirp_n in range(n_chirps):
         sim_handler.run(chirp_n)
         real_spikes = sim_handler.output[:, 0]
@@ -52,6 +52,7 @@ def run_fft_np(raw_data, nsamples):
     Run FFT from NumPy on data and save it to local file
     """
     fft_np = np.fft.fft(raw_data[0, :, :])
+    pathlib.Path("./fft").mkdir(parents=True, exist_ok=True)
     np.save("./fft/fft_np_{}".format(nsamples), fft_np)
     logger.info("NumPy results saved in fft/")
     return
