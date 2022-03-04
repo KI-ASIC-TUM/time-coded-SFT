@@ -7,11 +7,15 @@ indicated in the default config file. If this data is changed,
 the auxiliary functions should be changed accordingly.
 """
 # Standard libraries
+import logging
 import matplotlib.pyplot as plt
 import numpy as np
 # Local libraries
+import run_sft
 import spikingFT.startup
 import spikingFT.utils.plotter
+
+logger = logging.getLogger('spiking-FT')
 
 
 def main(conf_filename="../config/generate_multilayer_spikemap.json"):
@@ -49,7 +53,13 @@ def main(conf_filename="../config/generate_multilayer_spikemap.json"):
     kwargs["figsize"] = (6, 7)
     sim_plotter = spikingFT.utils.plotter.SNNLayersPlotter(**kwargs)
     fig = sim_plotter()
-    fig.savefig("./simulation_plot.pdf", dpi=150, bbox_inches='tight')
+    # Get path to results folder and save figure
+    folder_path = run_sft.load_path(sim_handler)
+    fig.savefig("{}/simulation_plot.pdf".format(folder_path),
+                dpi=150,
+                bbox_inches='tight'
+               )
+    logger.info("Figure saved in {}".format(folder_path))
     return
 
 

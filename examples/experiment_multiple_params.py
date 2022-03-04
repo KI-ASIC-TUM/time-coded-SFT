@@ -3,11 +3,15 @@
 Script for testing the SNNNumpy class with sample data
 """
 # Standard libraries
+import logging
 import matplotlib.pyplot as plt
 import numpy as np
 # Local libraries
+import run_sft
 import spikingFT.startup
 import spikingFT.utils. plotter
+
+logger = logging.getLogger('spiking-FT')
 
 
 def iterate_over_samples(sim_handler, sim_times):
@@ -37,7 +41,9 @@ def single_nsamples(sim_handler):
     kwargs["data"] = [(errors, nsteps)]
     error_plotter = spikingFT.utils.plotter.RMSEPlotter(**kwargs)
     fig = error_plotter()
-    fig.savefig("./single_rmse.pdf", dpi=150)
+    folder_path = run_sft.load_path(sim_handler)
+    fig.savefig("{}/single_rmse.pdf".format(folder_path), dpi=150)
+    logger.info("Figure saved in {}".format(folder_path))
 
 
 def multiple_nsamples(sim_handler):
@@ -59,7 +65,9 @@ def multiple_nsamples(sim_handler):
     kwargs["data"] = [(errors, nsteps, samples_per_chirp)]
     error_plotter = spikingFT.utils.plotter.RMSEPlotter(**kwargs)
     fig = error_plotter()
-    fig.savefig("./rmse_plot_multi.pdf", dpi=150)
+    folder_path = run_sft.load_path(sim_handler)
+    fig.savefig("{}/rmse_plot_multi.pdf".format(folder_path), dpi=150)
+    logger.info("Figure saved in {}".format(folder_path))
 
 
 def main(conf_filename="../config/experiment_simtimes.json"):

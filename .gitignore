@@ -4,3 +4,6 @@
 **.pyc
 **/.ipynb_checkpoints/**
 **.pdf
+
+**/dft**/
+**/fft**/
