@@ -38,7 +38,8 @@ For trying out different configurations, you can create your own _json_ config f
     python3 run_sft.py [-s] [-f] --config <path-to-your-config-file>
 
     -s Indicates if you want to show the resulting plot after generating it
-    -f Indicates if you want to use output data from previous simulation stored in a file, instead of running again the SNN
+    -f Indicates if you want to use output data from previous simulation stored
+       in a file, instead of running again the SNN
 
 
 
@@ -48,7 +49,7 @@ In the _config_ folder you can find examples of configuration files. The paramet
 * _time_step:_ Time elapsed per simulation step. It must be `1` for simulations in Loihi
 * _mode:_ Choose between _dft_ or _fft_
 * _framework:_ Choose between _numpy_, _brian_, or _loihi_
-* _current_decay_: Selects the decay of input current over time. For replicating the original S-FT, the value should be `0`
+* _current_decay_: Decay of input current over time. For replicating the original S-FT, the value should be `0`
 * _measure_performance:_ meant for measuring the energy and time performance in Loihi, this functinoality is not yet implemented
 * _samples_per_chirp_: Number of samples taken. If the _fft_ mode is chosen, the number of samples N can only be a power of 4, i.e., 16, 64, 256, 1024
 * _chirps_per_frame:_ How many chirps from the dataset to simulate
