@@ -17,6 +17,7 @@ class FourierTransformSNN(ABC):
     an instance of this class.
     The constant FFT defines whether the DFT or FFT version is used.
     """
+    FFT = None
     def __init__(self, **kwargs):
         """
         Initialize network

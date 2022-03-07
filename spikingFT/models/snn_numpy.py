@@ -14,6 +14,7 @@ logger = logging.getLogger('spiking-FT')
 
 class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
     PLATFORM = "numpy"
+    FFT = False
 
     def __init__(self, **kwargs):
         """
