@@ -54,6 +54,7 @@ class SNNRadix4Brian(spikingFT.models.snn.FourierTransformSNN):
         # Initialize SIMULATION parameters
         self.time_step = kwargs.get("time_step")
         self.total_sim_time = (self.nlayers+1)*self.sim_time
+        brian.defaultclock.dt = self.time_step * brian.ms
 
         # Initialize NEURON MODEL
         self.neuron_model = self.init_neuron_model()
