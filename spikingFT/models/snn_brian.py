@@ -59,9 +59,7 @@ class SNNBrian(spikingFT.models.snn.FourierTransformSNN):
         self.neuron_model = self.init_neuron_model()
 
         # Initialize NETWORK PARAMETRS
-
-        self.v_threshold =  np.sum(self.real_weights[0,:]) * self.total_sim_time / 2
-        print(self.v_threshold)
+        self.v_threshold =  np.sum(self.l_weights[0][0,:]) * self.total_sim_time / 2
 
         # Initialize NETWORK
         self.re_input = None
@@ -121,7 +119,7 @@ class SNNBrian(spikingFT.models.snn.FourierTransformSNN):
         return cos_charging_neurons, sin_charging_neurons
 
 
-    def init_inputs(self, encoded_data):
+    def init_inputs(self, real_encoded_data, imag_encoded_data):
         """
         Initializes input layer of SNN with the given encoded data.
 
@@ -136,8 +134,8 @@ class SNNBrian(spikingFT.models.snn.FourierTransformSNN):
         logger.debug('Initiliazing input layer and inputs ...')
 
         indices = np.arange(self.nsamples)
-        re_input_layer = brian.SpikeGeneratorGroup(self.nsamples, indices, encoded_data.real * brian.ms, name='re_input_neurons')
-        im_input_layer = brian.SpikeGeneratorGroup(self.nsamples, indices, encoded_data.imag * brian.ms, name='im_input_neurons')
+        re_input_layer = brian.SpikeGeneratorGroup(self.nsamples, indices, real_encoded_data * brian.ms, name='re_input_neurons')
+        im_input_layer = brian.SpikeGeneratorGroup(self.nsamples, indices, imag_encoded_data * brian.ms, name='im_input_neurons')
         
         logger.debug('Done.')
 
@@ -201,27 +199,27 @@ class SNNBrian(spikingFT.models.snn.FourierTransformSNN):
 
         re_re_synapse = brian.Synapses(self.re_input, self.re_charging_neurons, 
                                         model='w : 1', on_pre='g += w', name='re_re_synapses') 
-        sources, targets = self.real_weights.nonzero()
+        sources, targets = self.l_weights[0].nonzero()
         re_re_synapse.connect(i=sources, j=targets)
-        re_re_synapse.w = self.real_weights[sources, targets]
+        re_re_synapse.w = self.l_weights[0][sources, targets]
 
         im_re_synapse = brian.Synapses(self.im_input, self.re_charging_neurons, 
                                         model='w : 1', on_pre='g += w', name='im_re_synapses') 
-        sources, targets = self.imag_weights.nonzero()
+        sources, targets = self.l_weights[1].nonzero()
         im_re_synapse.connect(i=sources, j=targets)
-        im_re_synapse.w = self.imag_weights[sources, targets]
+        im_re_synapse.w = self.l_weights[1][sources, targets]
 
         re_im_synapse = brian.Synapses(self.re_input, self.im_charging_neurons, 
                                         model='w : 1', on_pre='g += w', name='re_im_synapses') 
-        sources, targets = (+self.imag_weights).nonzero()
+        sources, targets = (+self.l_weights[1]).nonzero()
         re_im_synapse.connect(i=sources, j=targets)
-        re_im_synapse.w = (+self.imag_weights)[sources, targets]
+        re_im_synapse.w = (+self.l_weights[1])[sources, targets]
 
         im_im_synapse = brian.Synapses(self.im_input, self.im_charging_neurons, 
                                         model='w : 1', on_pre='g += w', name='im_im_synapses') 
-        sources, targets = (-self.real_weights).nonzero()
+        sources, targets = (-self.l_weights[0]).nonzero()
         im_im_synapse.connect(i=sources, j=targets)
-        im_im_synapse.w = (-self.real_weights)[sources, targets]
+        im_im_synapse.w = (-self.l_weights[0])[sources, targets]
 
         logger.debug('Done.')
 
@@ -271,7 +269,7 @@ class SNNBrian(spikingFT.models.snn.FourierTransformSNN):
     def run(self, data):
 
         # Create spike generators
-        self.re_input, self.im_input = self.init_inputs(data)
+        self.re_input, self.im_input = self.init_inputs(data.real, data.imag)
         # Connect all layers:W
         self.re_re_synapse, self.im_re_synapse, self.re_im_synapse, self.im_im_synapse = self.connect()
         # Init probes
