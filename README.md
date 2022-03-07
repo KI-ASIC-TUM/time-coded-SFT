@@ -51,7 +51,7 @@ For trying out different configurations, you can create your own _json_ config f
 
 In the _config_ folder you can find examples of configuration files. The parameters are the following:
 
-* _sim_time:_ Indicates the total simulation time
+* _sim_time:_ Simulation time for each neuron stage. Each layer contains two stages (silent and spiking)
 * _time_step:_ Time elapsed per simulation step. It must be `1` for simulations in Loihi
 * _mode:_ Choose between _dft_ or _fft_
 * _framework:_ Choose between _numpy_, _brian_, or _loihi_
