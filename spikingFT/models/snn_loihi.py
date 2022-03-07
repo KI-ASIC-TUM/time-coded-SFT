@@ -193,7 +193,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         """
         logger.debug("Creating input spike generators")
         # Check if imaginary input exists
-        imag_input_true = ~(imag_encoded_data == np.zeros_like(imag_encoded_data))
+        imag_input_true = ~np.allclose(imag_encoded_data,np.zeros_like(imag_encoded_data))
 
         real_gen = self.net.createSpikeGenProcess(numPorts=self.nsamples)
         imag_gen = self.net.createSpikeGenProcess(numPorts=self.nsamples)
