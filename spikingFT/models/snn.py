@@ -24,6 +24,7 @@ class FourierTransformSNN(ABC):
         Parameters:
             nsamples (int): number of samples in radar chirp
             sim_time (int): Number of steps per network charging/spiking stage
+            l_weights (array): list of weight matrices or real[0] and imaginary[1] weight matrix
             output (array): output spikes of the network
         """
         self.output = None
@@ -35,9 +36,12 @@ class FourierTransformSNN(ABC):
 
         # WEIGHTS
         if self.FFT:
+            # Sparse weight matrices (radix4)
+            # One matrix includes real and imaginary parts (stacked)
             self.l_weights = self.calculate_weights_fft()
         else:
-            self.real_weights, self.imag_weights = self.calculate_weights_dft()
+            # Real[0] and imaginary[1] components of dft weight matrix
+            self.l_weights = self.calculate_weights_dft()
 
         return
 
@@ -63,7 +67,8 @@ class FourierTransformSNN(ABC):
             self.nsamples,
             self.PLATFORM
         )
-        return re_weights, im_weights
+        
+        return [re_weights, im_weights]
 
     @abstractmethod
     def run(self, data, *args):
