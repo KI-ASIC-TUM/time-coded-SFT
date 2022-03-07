@@ -33,8 +33,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
          coefficients of the DFT
         l1_imag_g: compartment group with nsamples compartments for the imag
          coefficients of the DFT
-        real_weights: connection weights for "real" compartments
-        imag_weights: connection weights for "imag" compartments
+        l_weights: connection weights for "real"[0] and "imaginary"[1] compartments
         board: loihi board which defines the compiler used
         bias_channel: channel for communicating bias data between ipynb and snip
         time_channel: channel for communicating time data between ipynb and snip
@@ -75,7 +74,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         # Weight correction exponent
         self.beta = -4
         # Calculate and set threshold voltage
-        v_threshold = np.sum(self.real_weights[0,:]) * 2**self.beta * self.sim_time / 6
+        v_threshold = np.sum(self.l_weights[0][0,:]) * 2**self.beta * self.sim_time / 6
         # self.vth_mant = int(v_threshold / (2**self.TH_EXP))
         self.vth_mant = int(v_threshold)
         if self.vth_mant > self.TH_MANT_MAX:
@@ -193,31 +192,37 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
             imag_encoded_data (array): dimensions (nsamples/1) ttfs encoding
         """
         logger.debug("Creating input spike generators")
+        # Check if imaginary input exists
+        imag_input_true = ~(imag_encoded_data == np.zeros_like(imag_encoded_data))
+
         real_gen = self.net.createSpikeGenProcess(numPorts=self.nsamples)
         imag_gen = self.net.createSpikeGenProcess(numPorts=self.nsamples)
         in_l1 = nx.ConnectionPrototype(signMode=1, weightExponent=self.beta)
+
         # Connect input generators to the first layer of the SNN
         # MISSING CONNECTIONS
         real_gen.connect(
             self.l1_real_g,
             prototype=in_l1,
-            weight=self.real_weights,
-        )
-        real_gen.connect(
-            self.l1_imag_g,
-            prototype=in_l1,
-            weight=self.imag_weights,
+            weight=self.l_weights[0],
         )
         imag_gen.connect(
             self.l1_real_g,
             prototype=in_l1,
-            weight=self.imag_weights,
+            weight=self.l_weights[1],
         )
-        imag_gen.connect(
-            self.l1_imag_g,
-            prototype=in_l1,
-            weight=-self.real_weights,
-        )
+
+        if imag_input_true:
+            real_gen.connect(
+                self.l1_imag_g,
+                prototype=in_l1,
+                weight=self.l_weights[1],
+            )
+            imag_gen.connect(
+                self.l1_imag_g,
+                prototype=in_l1,
+                weight=-self.l_weights[0],
+            )
         # Specify spiking time of each generator
         logger.debug("Assigning spike times to input spike generators")
         for i in range(self.nsamples):
@@ -337,7 +342,7 @@ class SNNLoihi(spikingFT.models.snn.FourierTransformSNN):
         if not self.measure_performance:
             self.init_probes()
         # Create spike generators and connect them to compartments
-        self.connect_inputs(data.real, data.real)
+        self.connect_inputs(data.real, data.imag)
         self.init_snip()
         # Instantiate measurement probes
         if self.measure_performance:
