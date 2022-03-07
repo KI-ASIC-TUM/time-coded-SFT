@@ -14,10 +14,10 @@ try:
 except ImportError:
     logger.warn("Intel NxSDK cannot be found. "
                 "It will not be possible to run simulations with Loihi")
-import spikingFT.models.snn_radix4
+import spikingFT.models.snn
 import spikingFT.utils.ft_utils
 
-class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
+class SNNRadix4Loihi(spikingFT.models.snn.FourierTransformSNN):
     """
     Class for setting up a network on Loihi for the spiking FT
 
@@ -44,6 +44,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         e_probe: energy consumption probe
     """
     PLATFORM = "loihi"
+    FFT = True
     MAX_TH_MANT = 131071
     TH_MANT = (MAX_TH_MANT - int(MAX_TH_MANT/2) - 254)
     REFRACTORY_T = 63
@@ -71,12 +72,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         self.l_thresholds = []
         self.l_offsets = []
         self.weightExp = []
-        if self.PLATFORM == 'loihi':
-            axis = 1
-        elif self.PLATFORM =='brian':
-            axis = 0
-        else:
-            axis = 0
+        axis = 1 if self.PLATFORM == 'loihi' else 0
 
         for l in range(self.nlayers):
 
@@ -196,7 +192,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         return l_probes_V, l_probes_S
 
 
-    def init_inputs(self, encoded_data):
+    def init_inputs(self, real_encoded_data, imag_encoded_data):
         """
         Generates N real and N imaginary input generators, N=nsamples
         
@@ -206,7 +202,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
         """
         logger.debug("Creating input spike generators")
 
-        encoded_data = np.hstack([encoded_data.real, encoded_data.imag])
+        encoded_data = np.hstack([real_encoded_data, imag_encoded_data])
 
         gen = self.net.createSpikeGenProcess(numPorts=self.nsamples*2)
         
@@ -476,7 +472,7 @@ class SNNRadix4Loihi(spikingFT.models.snn_radix4.FastFourierTransformSNN):
     def run(self, data):
 
         # Create spike generators
-        self.init_inputs(data)
+        self.init_inputs(data.real, data.imag)
         # Connect all layers
         self.connect()
 

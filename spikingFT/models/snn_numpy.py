@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Library containing 2D-DFT implementations
+Library containing an S-DFT implementation in NumPy
 """
 # Standard libraries
 import logging
@@ -14,6 +14,7 @@ logger = logging.getLogger('spiking-FT')
 
 class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
     PLATFORM = "numpy"
+    FFT = False
 
     def __init__(self, **kwargs):
         """
@@ -31,7 +32,7 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         # for a wave containing a flat x_max divided by two
         self.v_threshold =  kwargs.get(
             "v_threshold",
-            np.sum(self.real_weights[0,:]) * self.sim_time / 4
+            np.sum(self.l_weights[0][0,:]) * self.sim_time / 4
         )
         # Network variables
         self.n_chirps = 1
@@ -52,7 +53,7 @@ class SNNNumpy(spikingFT.models.snn.FourierTransformSNN):
         """
         l1 = SpikingNeuralLayer(
                 (self.nsamples, 2*self.n_chirps, self.nlayers),
-                (self.real_weights, self.imag_weights),
+                (self.l_weights[0], self.l_weights[1]),
                 v_threshold=self.v_threshold,
                 time_step=self.time_step
         )

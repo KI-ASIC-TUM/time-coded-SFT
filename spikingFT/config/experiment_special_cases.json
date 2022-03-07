@@ -6,9 +6,9 @@
         "snn_config":
         {
             "sim_time": 256,
-            "time_step": 1,
-            "mode": "fft",
-            "framework": "loihi",
+            "time_step": 0.1,
+            "mode":"dft",
+            "framework": "brian",
             "current_decay": 0,
             "measure_performance": false
         },

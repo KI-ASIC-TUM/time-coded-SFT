@@ -3,11 +3,16 @@
 Script for testing the SNNNumpy class with sample data
 """
 # Standard libraries
+import logging
 import matplotlib.pyplot as plt
 import numpy as np
+import pathlib
 # Local libraries
+import run_sft
 import spikingFT.startup
 import spikingFT.utils. plotter
+
+logger = logging.getLogger('spiking-FT')
 
 
 def iterate_over_samples(sim_handler, sim_times):
@@ -37,7 +42,9 @@ def single_nsamples(sim_handler):
     kwargs["data"] = [(errors, nsteps)]
     error_plotter = spikingFT.utils.plotter.RMSEPlotter(**kwargs)
     fig = error_plotter()
-    fig.savefig("./single_rmse.pdf", dpi=150)
+    folder_path = run_sft.load_path(sim_handler)
+    fig.savefig("{}/single_rmse.pdf".format(folder_path), dpi=150)
+    logger.info("Figure saved in {}".format(folder_path))
 
 
 def multiple_nsamples(sim_handler):
@@ -59,10 +66,12 @@ def multiple_nsamples(sim_handler):
     kwargs["data"] = [(errors, nsteps, samples_per_chirp)]
     error_plotter = spikingFT.utils.plotter.RMSEPlotter(**kwargs)
     fig = error_plotter()
-    fig.savefig("./rmse_plot_multi.pdf", dpi=150)
+    folder_path = run_sft.load_path(sim_handler)
+    fig.savefig("{}/rmse_plot_multi.pdf".format(folder_path), dpi=150)
+    logger.info("Figure saved in {}".format(folder_path))
 
 
-def main(conf_filename="../config/test_experiment_simtimes.json"):
+def main(conf_filename):
     # Instantiate a simulation handler with specified configuration
     sim_handler = spikingFT.startup.startup(conf_filename, autorun=False)
     # single_nsamples(sim_handler)
@@ -71,4 +80,6 @@ def main(conf_filename="../config/test_experiment_simtimes.json"):
 
 
 if __name__ == "__main__":
-    main()
+    main_path = pathlib.Path(__file__).resolve().parent.parent
+    conf_path = main_path.joinpath("config/experiment_simtimes.json")
+    main(conf_path)

@@ -3,7 +3,7 @@
 #include "setBias.h"
 
 // need to be set
-#define SIM_TIME 256
+#define SIM_TIME 151
 #define N_SAMPLES 256
 
 // really constant constant
@@ -13,14 +13,6 @@ int simTime = SIM_TIME;
 int nSamples = N_SAMPLES;
 
 int doRunMgmt(runState *s) {
-    // TODO cannot include stdio.h -> won't compile:  file reading and json functions won't work
-    /*
-    char buffer[100];
-    FILE *fp;
-    fp = fopen("./network_cornerstones.txt","r");
-    fgets (buffer, 100, fp);
-    fclose(fp);
-     */
     if(s->time_step%simTime == 0){
         return 1;
     }
@@ -32,9 +24,6 @@ void runMgmt(runState *s) {
     // Get channels
     int biasChannelID = getChannelID("biasChannel");
     int timeChannelID  = getChannelID("timeChannel");
-    // int simTimeChannelID  = getChannelID("simTimeChannel");
-    // int nSamplesChannelID  = getChannelID("nSamplesChannel");
-    //int voltageChannelID  = getChannelID("voltageChannel");
     if( biasChannelID == -1 || timeChannelID == -1) {
       printf("Invalid Channel ID\n");
       return;
@@ -43,8 +32,6 @@ void runMgmt(runState *s) {
     // get the value
     int bias;
     readChannel(biasChannelID,&bias,1);
-    // readChannel(simTimeChannelID,&simTime,1);
-    // readChannel(nSamplesChannelID,&nSamples,1);
 
     int i;
     for (i=0;i<(nSamples*2);++i){

@@ -3,26 +3,29 @@
 Run S-FT over FMCW individual chirps
 """
 # Standard libraries
+import logging
 import matplotlib.pyplot as plt
 import numpy as np
 import pathlib
 # Local libraries
 import spikingFT.startup
-import spikingFT.utils.plotter
 import spikingFT.utils.metrics
+import spikingFT.utils.plotter
+import spikingFT.utils.parse_args
+
+logger = logging.getLogger('spiking-FT')
 
 
-def load_handler(conf_filename):
+def load_path(sim_handler):
     """
-    Return simulation handler and results folder path
+    Return simulation folder path
     """
-    sim_handler = spikingFT.startup.startup(conf_filename, autorun=False)
     platform = sim_handler.config["snn_config"]["framework"]
     mode = sim_handler.config["snn_config"]["mode"]
     # Get path to results folder
-    folder_path = "./{}_{}_results/".format(mode, platform)
+    folder_path = "{}_{}_results/".format(mode, platform)
     pathlib.Path(folder_path).mkdir(parents=True, exist_ok=True)
-    return sim_handler, folder_path
+    return folder_path
 
 
 def run_sft(sim_handler, path):
@@ -32,14 +35,15 @@ def run_sft(sim_handler, path):
     n_chirps = sim_handler.config["data"]["chirps_per_frame"]
     n_samples = sim_handler.config["data"]["samples_per_chirp"]
     # Run S-FT
-    output = np.zeros((n_chirps, n_samples), dtype=np.complex)
+    output = np.zeros((n_chirps, n_samples), dtype=complex)
     for chirp_n in range(n_chirps):
         sim_handler.run(chirp_n)
         real_spikes = sim_handler.output[:, 0]
         imag_spikes = sim_handler.output[:, 1]
         output[chirp_n, :] = real_spikes + 1j*imag_spikes
     # Save results to local file
-    np.save("./{}/sft.npy".format(path), output)
+    np.save("{}/sft.npy".format(path), output)
+    logger.info("SFT results saved in {}".format(path))
     return
 
 
@@ -48,7 +52,9 @@ def run_fft_np(raw_data, nsamples):
     Run FFT from NumPy on data and save it to local file
     """
     fft_np = np.fft.fft(raw_data[0, :, :])
+    pathlib.Path("./fft").mkdir(parents=True, exist_ok=True)
     np.save("./fft/fft_np_{}".format(nsamples), fft_np)
+    logger.info("NumPy results saved in fft/")
     return
 
 
@@ -138,23 +144,23 @@ def plot_results(path, n_samples, n_chirps, comparison_source="numpy"):
     adjusted_data = adjust_ft_data(sft_results, fft_results)
     for chirp_n in range(n_chirps):
         fig = plot_chirp(adjusted_data[chirp_n], chirp_n, comparison_source)
-        fig.savefig("./{}/error_plot_{}.pdf".format(path, chirp_n),
+        fig.savefig("{}/error_plot_{}.pdf".format(path, chirp_n),
                     dpi=150, bbox_inches='tight')
         plt.show()
+    logger.info("Figures saved in {}".format(path))
     return
 
 
-def main(conf_filename="../config/experiment_special_cases.json",
-         from_file=True,
-         plot=True):
+def main(conf_filename, from_file, plot):
     """
     @param conf_filename: str with the path to the SNN configuration
     @param from_file: bool indicating whether to run or not the s-ft.
       if True, the s-ft output is read from a local file
     @param plot: bool for indicating whether to plot results
     """
-    # Load simulation handler
-    sim_handler, results_path = load_handler(conf_filename)
+    # Load simulation handler and data parameters
+    sim_handler = spikingFT.startup.startup(conf_filename, autorun=False)
+    results_path = load_path(sim_handler)
     n_samples = sim_handler.config["data"]["samples_per_chirp"]
     n_chirps = sim_handler.config["data"]["chirps_per_frame"]
     # Instantiate and run S-FT
@@ -168,4 +174,5 @@ def main(conf_filename="../config/experiment_special_cases.json",
 
 
 if __name__ == "__main__":
-    main()
+    fname, show_plot, from_file = spikingFT.utils.parse_args.parse_args()
+    main(fname, from_file, show_plot)

@@ -80,8 +80,8 @@ class SimHandler():
         mode = snn_config["mode"]
         if framework == "loihi" and mode == 'dft':
             snn = spikingFT.models.snn_loihi.SNNLoihi(**snn_config)
-        #elif framework == "brian":
-        #    snn = spikingFT.models.snn_brian.SNNBrian(**snn_config)
+        elif framework == "brian" and mode == 'dft':
+            snn = spikingFT.models.snn_brian.SNNBrian(**snn_config)
         elif framework == "numpy":
             snn = spikingFT.models.snn_numpy.SNNNumpy(**snn_config)
         elif framework == "loihi" and mode == 'fft':
@@ -124,8 +124,9 @@ class SimHandler():
         """
         Routine for initializing and running the SNN with the desired params
         """
+        nsamples = self.config["data"]["samples_per_chirp"]
         # Load encoded data
-        self.data = self.raw_data[:, chirp_n, :]
+        self.data = self.raw_data[:, chirp_n, :nsamples]
         # Reduce data dimensionality, by ignoring chirp and antenna dimensions
         self.encoded_data = self.encode_data()
         # Instantiate the snn class with the specified configuration
