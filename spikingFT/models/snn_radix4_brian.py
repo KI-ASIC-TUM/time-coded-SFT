@@ -62,12 +62,7 @@ class SNNRadix4Brian(spikingFT.models.snn.FourierTransformSNN):
 
         self.l_thresholds = []
         self.l_offsets = []
-        if self.PLATFORM == 'loihi':
-            axis = 1
-        elif self.PLATFORM =='brian':
-            axis = 0
-        else:
-            axis = 0
+        axis = 1 if self.PLATFORM == 'loihi' else 0
 
         for l in range(self.nlayers):
             self.l_weights[l] = 2*np.floor(self.l_weights[l]*127)
