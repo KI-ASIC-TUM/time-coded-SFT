@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Module containing a class for implementing the S-FT in Loihi
+Module containing a class for implementing the S-DFT in Loihi
 """
 # Standard libraries
 import logging

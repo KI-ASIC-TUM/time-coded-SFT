@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Library containing 2D-DFT implementations
+Library containing an S-DFT implementation in NumPy
 """
 # Standard libraries
 import logging
